@@ -1,0 +1,1 @@
+CircularProgressBar by Lopez Mikhael: https://android-arsenal.com/details/1/2845
