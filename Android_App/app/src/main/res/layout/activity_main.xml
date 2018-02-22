@@ -6,10 +6,13 @@
     android:layout_height="match_parent"
     tools:context="com.smartpullup.smartpullup.MainActivity">
 
-    <ProgressBar
-        android:layout_width="match_parent"
-        android:layout_height="500px"
-        android:progress="50"/>
+    <com.mikhaellopez.circularprogressbar.CircularProgressBar
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:cpb_background_progressbar_color="#FFCDD2"
+        app:cpb_background_progressbar_width="5dp"
+        app:cpb_progressbar_color="#F44336"
+        app:cpb_progressbar_width="10dp" />
 
 
 </RelativeLayout>
