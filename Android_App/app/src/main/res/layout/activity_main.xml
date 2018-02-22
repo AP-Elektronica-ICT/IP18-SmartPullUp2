@@ -1,18 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.smartpullup.smartpullup.MainActivity">
+    tools:context="com.smartpullup.smartpullup.MainActivity"
+    android:orientation="vertical">
 
     <com.mikhaellopez.circularprogressbar.CircularProgressBar
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:rotation="-90"
         app:cpb_background_progressbar_color="#FFCDD2"
-        app:cpb_background_progressbar_width="5dp"
+        app:cpb_background_progressbar_width="20dp"
         app:cpb_progressbar_color="#F44336"
-        app:cpb_progressbar_width="10dp" />
+        app:cpb_progressbar_width="30dp"
+        app:cpb_progress="10" />
 
 
-</RelativeLayout>
+</LinearLayout>
