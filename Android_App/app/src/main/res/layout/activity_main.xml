@@ -5,44 +5,74 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.smartpullup.smartpullup.MainActivity"
-    android:gravity="center_horizontal">
+    >
 
-    <ProgressBar
+    <RelativeLayout
         android:layout_width="350dp"
         android:layout_height="350dp"
-        android:rotation="180"
-        style="?android:progressBarStyleHorizontal"
-        android:max="200"
-        android:progress="100"
-        android:progressDrawable="@drawable/main_halfcircularprogressbar_outside_bg"/>
+        android:id="@+id/layout_progress"
+        android:layout_centerHorizontal="true">
 
-    <ProgressBar
-        android:layout_width="350dp"
-        android:layout_height="350dp"
-        android:rotation="180"
-        style="?android:progressBarStyleHorizontal"
-        android:max="200"
-        android:progress="100"
-        android:progressBackgroundTint="@color/LightGrey"
-        android:progressDrawable="@drawable/main_halfcircularprogressbar_inside_bg"/>
+        <ProgressBar
+            android:layout_width="350dp"
+            android:layout_height="350dp"
+            android:rotation="180"
+            style="?android:progressBarStyleHorizontal"
+            android:max="2"
+            android:progress="1"
+            android:progressDrawable="@drawable/main_halfcircularprogressbar_outside_bg"/>
 
-    <ProgressBar
-        android:layout_width="350dp"
-        android:layout_height="350dp"
-        android:rotation="180"
-        style="?android:progressBarStyleHorizontal"
-        android:max="200"
-        android:progress="100"
-        android:progressDrawable="@drawable/main_halfcircularprogressbar_outside"/>
+        <ProgressBar
+            android:layout_width="350dp"
+            android:layout_height="350dp"
+            android:rotation="180"
+            style="?android:progressBarStyleHorizontal"
+            android:max="2"
+            android:progress="1"
+            android:progressBackgroundTint="@color/LightGrey"
+            android:progressDrawable="@drawable/main_halfcircularprogressbar_inside_bg"/>
 
-    <ProgressBar
-        android:layout_width="350dp"
-        android:layout_height="350dp"
-        android:rotation="180"
-        style="?android:progressBarStyleHorizontal"
-        android:max="200"
-        android:progress="20"
-        android:progressDrawable="@drawable/main_halfcircularprogressbar_inside"/>
+        <ProgressBar
+            android:layout_width="350dp"
+            android:layout_height="350dp"
+            android:rotation="180"
+            android:id="@+id/progress_pullups"
+            style="?android:progressBarStyleHorizontal"
+            android:max="100"
+            android:progress="27"
+            android:progressDrawable="@drawable/main_halfcircularprogressbar_outside"/>
+
+        <ProgressBar
+            android:layout_width="350dp"
+            android:layout_height="350dp"
+            android:rotation="180"
+            android:id="@+id/progress_calories"
+            style="?android:progressBarStyleHorizontal"
+            android:max="200"
+            android:progress="0"
+            android:progressDrawable="@drawable/main_halfcircularprogressbar_inside"/>
+
+    </RelativeLayout>
+
+    <TextView
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="-250dp"
+        android:layout_below="@id/layout_progress"
+        android:text="target: 50"
+        android:textAlignment="center"
+        android:textSize="15dp"/>
+
+    <TextView
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="-220dp"
+        android:layout_below="@id/layout_progress"
+        android:text="27 pullups"
+        android:textAlignment="center"
+        android:textSize="25dp"/>
 
 
 </RelativeLayout>
