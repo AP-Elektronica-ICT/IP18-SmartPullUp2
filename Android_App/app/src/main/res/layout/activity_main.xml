@@ -43,4 +43,5 @@
         android:progress="20"
         android:progressDrawable="@drawable/main_halfcircularprogressbar_inside"/>
 
+
 </RelativeLayout>
