@@ -6,13 +6,41 @@
     android:layout_height="match_parent"
     tools:context="com.smartpullup.smartpullup.MainActivity">
 
-    <com.mikhaellopez.circularprogressbar.CircularProgressBar
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:cpb_background_progressbar_color="#FFCDD2"
-        app:cpb_background_progressbar_width="5dp"
-        app:cpb_progressbar_color="#F44336"
-        app:cpb_progressbar_width="10dp" />
+    <ProgressBar
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:rotation="180"
+        style="?android:progressBarStyleHorizontal"
+        android:max="200"
+        android:progress="100"
+        android:progressDrawable="@drawable/main_halfcircularprogressbar_outside_bg"/>
 
+    <ProgressBar
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:rotation="180"
+        style="?android:progressBarStyleHorizontal"
+        android:max="200"
+        android:progress="100"
+        android:progressBackgroundTint="@color/LightGrey"
+        android:progressDrawable="@drawable/main_halfcircularprogressbar_inside_bg"/>
+
+    <ProgressBar
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:rotation="180"
+        style="?android:progressBarStyleHorizontal"
+        android:max="200"
+        android:progress="50"
+        android:progressDrawable="@drawable/main_halfcircularprogressbar_outside"/>
+
+    <ProgressBar
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:rotation="180"
+        style="?android:progressBarStyleHorizontal"
+        android:max="200"
+        android:progress="20"
+        android:progressDrawable="@drawable/main_halfcircularprogressbar_inside"/>
 
 </RelativeLayout>
