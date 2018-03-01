@@ -2,6 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.smartpullup.smartpullup">
 
+    <uses-permission android:name="android.permission.BLUETOOTH" />
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -18,7 +21,8 @@
         </activity>
         <activity android:name=".MainActivity" />
         <activity android:name=".RegisterActivity" />
-        <activity android:name=".ConnectBarActivity"></activity>
+        <activity android:name=".ConnectBarActivity" />
+        <activity android:name=".ReceiverActivity"></activity>
     </application>
 
 </manifest>
