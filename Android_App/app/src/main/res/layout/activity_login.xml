@@ -24,7 +24,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
         android:layout_weight="1"
-        android:hint="Email"
+        android:hint="@string/email"
         android:textColor="#C39A94" />
 
     <EditText
@@ -35,7 +35,7 @@
         android:layout_margin="10dp"
         android:layout_weight="1"
         android:inputType="textPassword"
-        android:hint="Password"
+        android:hint="@string/password"
         android:textColor="#C39A94" />
 
     <Button
@@ -46,7 +46,7 @@
         android:layout_margin="10dp"
         android:layout_weight="1"
         android:background="@drawable/login_selector"
-        android:text="Login" />
+        android:text="@string/login" />
 
     <Button
         android:id="@+id/Btn_Register"
@@ -57,6 +57,6 @@
         android:layout_marginBottom="20dp"
         android:layout_weight="1"
         android:background="@drawable/login_selector2"
-        android:text="Register" />
+        android:text="@string/register" />
 
 </LinearLayout>

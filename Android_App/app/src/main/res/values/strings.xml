@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">Smart Pull Up</string>
+    <string name="email">E-mail</string>
+    <string name="password">Password</string>
+    <string name="login">Login</string>
+    <string name="register">Register</string>
+    <string name="firstname">First Name</string>
+    <string name="lastname">Last Name</string>
+    <string name="create_account">Create an account</string>
 </resources>
