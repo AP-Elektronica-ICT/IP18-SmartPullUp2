@@ -1,5 +1,6 @@
 package com.smartpullup.smartpullup;
 
+import android.app.ProgressDialog;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.content.Intent;
@@ -24,8 +25,8 @@ public class ConnectBarActivity extends AppCompatActivity {
 
 
     // declare button for launching website and textview for connection status
-    Button tlbutton;
-    TextView textView1;
+    TextView connectionMessage;
+
 
     // EXTRA string to send on to mainactivity
     public static String EXTRA_DEVICE_ADDRESS = "device_address";
@@ -47,9 +48,9 @@ public class ConnectBarActivity extends AppCompatActivity {
         //***************
         checkBTState();
 
-        textView1 = (TextView) findViewById(R.id.connecting);
-        textView1.setTextSize(40);
-        textView1.setText(" ");
+        connectionMessage = (TextView) findViewById(R.id.textView_connecting);
+        connectionMessage.setTextSize(40);
+        connectionMessage.setText(" ");
 
         // Initialize array adapter for paired devices
         mPairedDevicesArrayAdapter = new ArrayAdapter<String>(this, R.layout.device_name_bar);
@@ -67,7 +68,7 @@ public class ConnectBarActivity extends AppCompatActivity {
 
         // Add previosuly paired devices to the array
         if (pairedDevices.size() > 0) {
-            findViewById(R.id.title_paired_devices).setVisibility(View.VISIBLE);//make title viewable
+            findViewById(R.id.texView_title_paired_devices).setVisibility(View.VISIBLE);//make title viewable
             for (BluetoothDevice device : pairedDevices) {
                 mPairedDevicesArrayAdapter.add(device.getName() + "\n" + device.getAddress());
             }
@@ -80,7 +81,9 @@ public class ConnectBarActivity extends AppCompatActivity {
     private AdapterView.OnItemClickListener mDeviceClickListener = new AdapterView.OnItemClickListener() {
         public void onItemClick(AdapterView<?> av, View v, int arg2, long arg3) {
 
-            textView1.setText("Connecting...");
+            connectionMessage.setText("Connecting...");
+            //dialogConnecting.setMessage();
+
             // Get the device MAC address, which is the last 17 chars in the View
             String info = ((TextView) v).getText().toString();
             String address = info.substring(info.length() - 17);

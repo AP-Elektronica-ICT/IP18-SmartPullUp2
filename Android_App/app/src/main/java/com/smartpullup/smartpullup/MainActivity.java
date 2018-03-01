@@ -24,5 +24,6 @@ public class MainActivity extends AppCompatActivity {
     public void ConnectToBar(View view){
         Intent intentConnect = new Intent(MainActivity.this, ConnectBarActivity.class);
         startActivity(intentConnect);
+
     }
 }

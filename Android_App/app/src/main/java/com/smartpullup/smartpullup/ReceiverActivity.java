@@ -13,6 +13,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
@@ -21,8 +22,7 @@ import java.io.OutputStream;
 import java.util.UUID;
 
 public class ReceiverActivity extends AppCompatActivity {
-    Button btnOn, btnOff;
-    TextView txtArduino, txtString, txtStringLength, sensorView0, sensorView1, sensorView2, sensorView3;
+    TextView txtStringLength, sensorView0, upView, downView;
     Handler bluetoothIn;
 
     final int handlerState = 0;                        //used to identify handler message
@@ -31,6 +31,10 @@ public class ReceiverActivity extends AppCompatActivity {
     private StringBuilder recDataString = new StringBuilder();
 
     private ConnectedThread mConnectedThread;
+
+    JSONObject jsonObj = null;
+    String jsonData = null;
+
 
     // SPP UUID service - this should work for most devices
     private static final UUID BTMODULEUUID = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB");
@@ -44,47 +48,55 @@ public class ReceiverActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_receiver);
 
-        //Link the buttons and textViews to respective views
-        //btnOn = (Button) findViewById(R.id.buttonOn);
-        //btnOff = (Button) findViewById(R.id.buttonOff);
-        //txtString = (TextView) findViewById(R.id.txtString);
         txtStringLength = (TextView) findViewById(R.id.testView1);
         sensorView0 = (TextView) findViewById(R.id.sensorView0);
-        //sensorView1 = (TextView) findViewById(R.id.sensorView1);
-        //sensorView2 = (TextView) findViewById(R.id.sensorView2);
-        //sensorView3 = (TextView) findViewById(R.id.sensorView3);
+        upView = (TextView)findViewById(R.id.textView_up);
+        downView = (TextView)findViewById(R.id.textView_down);
 
         bluetoothIn = new Handler() {
             public void handleMessage(android.os.Message msg) {
-                if (msg.what == handlerState) {              //if message is what we want
-                    String readMessage = (String) msg.obj;                                                                // msg.arg1 = bytes from connect thread
-                    recDataString.append(readMessage);                                      //keep appending to string until ~
-                    int endOfLineIndex = recDataString.indexOf("}")+1;                    // determine the end-of-line
-                    if (endOfLineIndex > 0) {                                           // make sure there data before ~
+                if (msg.what == handlerState) {              //if string is what we want
+                    String readMessage = (String)msg.obj;                                 // msg.arg1 = bytes from connect thread
+                    recDataString.append(readMessage);                                      //keep appending to string until }
+                    int endOfLineIndex = recDataString.indexOf("}")+1;                    // determine the end-of-line and add the last }
+                    if (endOfLineIndex > 0) {                                           // make sure there data before }
                         String dataInPrint = recDataString.substring(0, endOfLineIndex);    // extract string
-                        //txtString.setText("Data Received = " + dataInPrint);
                         int dataLength = dataInPrint.length();                          //get length of data received
                         txtStringLength.setText("String Length = " + String.valueOf(dataLength));
 
-                        // if (recDataString.charAt(0) == '#')                             //if it starts with # we know it is what we are looking for
-                        //{
-                        String json = dataInPrint;             //get sensor value from string between indices 1-5
+                         if (recDataString.charAt(0) == '{')                             //if it starts with { we know it is what we are looking for
+                        {
+                        jsonData = dataInPrint;             //get sensor value from string
                         try {
 
-                            JSONObject obj = new JSONObject(json);
+                            jsonObj = new JSONObject(jsonData);
 
-                            Log.d("My App", obj.toString());
+                            String up = jsonObj.getString("up");
+
+                            Log.d("Up data", up);
+
+                            Log.d("Pull up bar", jsonObj.toString());
 
                         } catch (Throwable t) {
-                            Log.e("My App", "Could not parse malformed JSON: \"" + json + "\"");
+                            Log.e("My App", "Could not parse malformed JSON: \"" + jsonData + "\"");
                         }
-                        sensorView0.setText(json);    //update the textviews with sensor values
-                        //sensorView1.setText(" Sensor 1 Voltage = " + sensor1 + "V");
-                        //sensorView2.setText(" Sensor 2 Voltage = " + sensor2 + "V");
-                        //sensorView3.setText(" Sensor 3 Voltage = " + sensor3 + "V");
-                        //}
-                        recDataString.delete(0, recDataString.length());                    //clear all string data
-                        // strIncom =" ";
+
+                        sensorView0.setText(jsonData);    //update the textviews with sensor values
+
+                            try {
+                                upView.setText("Up count = " + jsonObj.getString("up"));
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                            try {
+                                downView.setText("Down count = " + jsonObj.getString("down"));
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+
+                        }
+                        recDataString.delete(0, recDataString.length());                   //clear all string data
+
                         dataInPrint = " ";
                     }
                 }
@@ -94,20 +106,6 @@ public class ReceiverActivity extends AppCompatActivity {
         btAdapter = BluetoothAdapter.getDefaultAdapter();       // get Bluetooth adapter
         checkBTState();
 
-        // Set up onClick listeners for buttons to send 1 or 0 to turn on/off LED
-//        btnOff.setOnClickListener(new OnClickListener() {
-//            public void onClick(View v) {
-//                mConnectedThread.write("0");    // Send "0" via Bluetooth
-//                Toast.makeText(getBaseContext(), "Turn off LED", Toast.LENGTH_SHORT).show();
-//            }
-//        });
-//
-//        btnOn.setOnClickListener(new OnClickListener() {
-//            public void onClick(View v) {
-//                mConnectedThread.write("1");    // Send "1" via Bluetooth
-//                Toast.makeText(getBaseContext(), "Turn on LED", Toast.LENGTH_SHORT).show();
-//            }
-//        });
     }
 
     private BluetoothSocket createBluetoothSocket(BluetoothDevice device) throws IOException {
