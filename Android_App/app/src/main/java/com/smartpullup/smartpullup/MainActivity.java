@@ -16,5 +16,7 @@ public class MainActivity extends AppCompatActivity {
         android.support.v4.app.FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         ft.replace(R.id.Content, ExerciseFragment, "exerciseFragment");
         ft.commit();
+
+
     }
 }

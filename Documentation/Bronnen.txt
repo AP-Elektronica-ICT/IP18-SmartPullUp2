@@ -1,1 +1,2 @@
 https://stackoverflow.com/questions/22499964/android-semi-circle-progress-bar
+read JSON from assets:https://www.codementor.io/tips/1304827783/reading-json-file-from-assets-in-android-
