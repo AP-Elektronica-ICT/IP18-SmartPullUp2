@@ -12,8 +12,8 @@
         android:layout_centerInParent="true"
         android:orientation="vertical">
         <TextView
-            android:text="Create an account"
-            android:textSize="25dp"
+            android:text="@string/create_account"
+            android:textSize="25sp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
 
@@ -22,31 +22,31 @@
             android:layout_width="300dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="50dp"
-            android:hint="First Name"/>
+            android:hint="@string/firstname"/>
 
         <EditText
             android:id="@+id/edit_LastName"
             android:layout_width="300dp"
             android:layout_height="wrap_content"
-            android:hint="Last Name"/>
+            android:hint="@string/lastname"/>
 
         <EditText
             android:id="@+id/edit_Email_R"
             android:layout_width="300dp"
             android:layout_height="wrap_content"
             android:inputType="textEmailAddress"
-            android:hint="E-mail"/>
+            android:hint="@string/email"/>
 
         <EditText
             android:id="@+id/edit_Password_R"
             android:layout_width="300dp"
             android:layout_height="wrap_content"
             android:inputType="textPassword"
-            android:hint="Password"/>
+            android:hint="@string/password"/>/>
 
         <Button
             android:id="@+id/btn_Register"
-            android:text="Register"
+            android:text="@string/register"
             android:layout_width="300dp"
             android:background="@drawable/login_selector2"
             android:layout_height="wrap_content"
