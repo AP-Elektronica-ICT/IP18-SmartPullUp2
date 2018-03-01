@@ -34,12 +34,14 @@
             android:id="@+id/edit_Email_R"
             android:layout_width="300dp"
             android:layout_height="wrap_content"
+            android:inputType="textEmailAddress"
             android:hint="E-mail"/>
 
         <EditText
             android:id="@+id/edit_Password_R"
             android:layout_width="300dp"
             android:layout_height="wrap_content"
+            android:inputType="textPassword"
             android:hint="Password"/>
 
         <Button
