@@ -18,32 +18,32 @@
             android:layout_height="wrap_content"/>
 
         <EditText
-            android:id="@+id/Edit_FirstName"
+            android:id="@+id/edit_FirstName"
             android:layout_width="300dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="50dp"
             android:hint="First Name"/>
 
         <EditText
-            android:id="@+id/Edit_LastName"
+            android:id="@+id/edit_LastName"
             android:layout_width="300dp"
             android:layout_height="wrap_content"
             android:hint="Last Name"/>
 
         <EditText
-            android:id="@+id/Edit_Email_R"
+            android:id="@+id/edit_Email_R"
             android:layout_width="300dp"
             android:layout_height="wrap_content"
             android:hint="E-mail"/>
 
         <EditText
-            android:id="@+id/Edit_Password_R"
+            android:id="@+id/edit_Password_R"
             android:layout_width="300dp"
             android:layout_height="wrap_content"
             android:hint="Password"/>
 
         <Button
-            android:id="@+id/Btn_Register"
+            android:id="@+id/btn_Register"
             android:text="Register"
             android:layout_width="300dp"
             android:background="@drawable/login_selector2"
