@@ -78,7 +78,7 @@ public class ReceiverActivity extends AppCompatActivity {
                             Log.d("Pull up bar", jsonObj.toString());
 
                         } catch (Throwable t) {
-                            Log.e("My App", "Could not parse malformed JSON: \"" + jsonData + "\"");
+                            Log.e("Pull up bar", "Could not parse malformed JSON: \"" + jsonData + "\"");
                         }
 
                         sensorView0.setText(jsonData);    //update the textviews with sensor values
