@@ -77,6 +77,31 @@
         android:text="27 pullups"
         android:textAlignment="center"
         android:textSize="25sp" />
+    <TextView
+        android:id="@+id/testView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text=""
+        android:textSize="20dp"/>
+    <TextView
+        android:id="@+id/sensorView0"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:textSize="20dp"/>
+    <TextView
+        android:id="@+id/textView_up"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/testView1"
+        android:textSize="20dp"/>
+    <TextView
+        android:id="@+id/textView_down"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/textView_up"
+        android:textSize="20dp"/>
 
 
 </RelativeLayout>
