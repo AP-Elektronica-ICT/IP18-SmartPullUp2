@@ -19,9 +19,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        //android.support.v4.app.FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        //ft.replace(R.id.Content, ExerciseFragment, "exerciseFragment");
-        //ft.commit();
+        mSectionsStatePagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
 
         mViewPager =(ViewPager) findViewById(R.id.container);
         setupViewPager(mViewPager);
@@ -36,11 +34,9 @@ public class MainActivity extends AppCompatActivity {
 
     private void setupViewPager(ViewPager viewPager){
         SectionsPagerAdapter adapter = new SectionsPagerAdapter(getSupportFragmentManager());
-        adapter.addFragment(new ExerciseFragment(), "FragmentExcercise");
-        adapter.addFragment(new LeaderboardFragment(), "FragmentLeaderboard");
-        adapter.addFragment(new ProfileFragment(), "FragmentProfile");
-    }
-    public void setViewPager(int FragmentNumber){
-        mViewPager.setCurrentItem(FragmentNumber);
+        adapter.addFragment(new ExerciseFragment());
+        adapter.addFragment(new LeaderboardFragment());
+        adapter.addFragment(new ProfileFragment());
+        viewPager.setAdapter(adapter);
     }
 }
