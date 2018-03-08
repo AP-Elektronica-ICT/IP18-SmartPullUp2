@@ -9,4 +9,8 @@
     <string name="firstname">First Name</string>
     <string name="lastname">Last Name</string>
     <string name="create_account">Create an account</string>
+
+    <string name="facebook_app_id">[APP_ID]</string>
+    <string name="fb_login_protocol_scheme">fb[APP_ID]</string>
+
 </resources>
