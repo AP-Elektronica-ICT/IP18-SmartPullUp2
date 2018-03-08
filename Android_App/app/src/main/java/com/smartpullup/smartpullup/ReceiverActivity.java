@@ -181,7 +181,7 @@ public class ReceiverActivity extends AppCompatActivity {
     }
 
     //create new class for connect thread
-    private class ConnectedThread extends Thread {
+    class ConnectedThread extends Thread {
         private final InputStream mmInStream;
         private final OutputStream mmOutStream;
 
