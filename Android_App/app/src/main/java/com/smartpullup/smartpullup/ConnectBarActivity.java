@@ -62,7 +62,7 @@ public class ConnectBarActivity extends AppCompatActivity {
 
         // Get the local Bluetooth adapter
         mBtAdapter = BluetoothAdapter.getDefaultAdapter();
-
+        //TODO: check if mBtAdapter != null
         // Get a set of currently paired devices and append to 'pairedDevices'
         Set<BluetoothDevice> pairedDevices = mBtAdapter.getBondedDevices();
 
