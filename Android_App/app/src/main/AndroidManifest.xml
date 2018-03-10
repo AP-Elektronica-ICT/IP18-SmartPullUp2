@@ -22,7 +22,11 @@
         <activity android:name=".MainActivity" />
         <activity android:name=".RegisterActivity" />
         <activity android:name=".ConnectBarActivity" />
-        <activity android:name=".ReceiverActivity"></activity>
+        <activity android:name=".ReceiverActivity" />
+
+        <service
+            android:name=".BTReceiverService"
+            android:exported="false"></service>
     </application>
 
 </manifest>
