@@ -5,8 +5,12 @@ import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
 import android.content.Intent;
+import android.os.Handler;
 import android.util.Log;
 import android.widget.Toast;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -29,9 +33,21 @@ public class BTReceiverService extends IntentService {
 
     String inputString = null;
 
+    Handler bluetoothIn;
+    final int handlerState = 0;                        //used to identify handler message
+    private StringBuilder recDataString = new StringBuilder();
+
+    JSONObject jsonObj = null;
+    String jsonData = null;
 
     public BTReceiverService() {
         super("BTReceiverService");
+    }
+
+    @Override
+    public void onCreate() {
+        super.onCreate();
+        HandleInData();
     }
 
     @Override
@@ -42,11 +58,7 @@ public class BTReceiverService extends IntentService {
 
     @Override
     protected void onHandleIntent(Intent intent) {
-        // Normally we would do some work here, like download a file.
-        // For our sample, we just sleep for 5 seconds.
 
-
-        cleanup();
 
         if(intent != null){
             btAdapter = BluetoothAdapter.getDefaultAdapter();
@@ -91,41 +103,10 @@ public class BTReceiverService extends IntentService {
                 return;
             }
 
-            ReceiveData();
-
-            //sendData("test");
-            //cleanup();   called in onDestroy()
+            Receiver();
+            HandleInData();
 
         }
-    }
-
-    @Override
-    public void onDestroy(){
-        cleanup();
-        //notify ui
-        super.onDestroy();
-    }
-
-    private void cleanup(){
-
-        try {
-            if (inputStream != null) {
-                inputStream.close();
-                inputStream = null;
-            }
-        } catch (Exception e) {
-            Log.e(TAG, "Failed to close output stream : " + e.getMessage());
-        }
-
-        try {
-            if (btSocket != null) {
-                btSocket.close();
-                btSocket = null;
-            }
-        }catch (Exception e) {
-            Log.e(TAG, "Failed to close connection : " + e.getMessage());
-        }
-
     }
 
     private BluetoothSocket createBluetoothSocket(BluetoothDevice bluetoothDevice) throws IOException {
@@ -141,20 +122,86 @@ public class BTReceiverService extends IntentService {
         return btSocket;
     }
 
-    private void ReceiveData() {
+    private void Receiver() {
 
 
         byte[] buffer = new byte[256];  // buffer store for the stream
         int bytes; // bytes returned from read()
 
-        try {
-            bytes = inputStream.read(buffer);
-            inputString = new String(buffer,0,bytes);
-            Log.d(TAG, "Receiving : " + inputString);
-        } catch (IOException e) {
-            Log.e(TAG, "failed to reade " + inputString);
+//        try {
+//            bytes = inputStream.read(buffer);
+//            inputString = new String(buffer,0,bytes);
+//            Log.d(TAG, "Receiving : " + inputString);
+//        } catch (IOException e) {
+//            Log.e(TAG, "failed to reade " + inputString);
+//        }
+        while (true) {
+            try {
+                bytes = inputStream.read(buffer);            //read bytes from input buffer
+                inputString = new String(buffer, 0, bytes);
+                //Log.d(TAG, "Receiving : " + inputString);
+                // Send the obtained bytes to the UI Activity via handler
+                bluetoothIn.obtainMessage(handlerState, bytes, -1, inputString).sendToTarget();
+
+            } catch (IOException e) {
+                Log.e(TAG, "failed to reade " + inputString);
+                break;
+            }
         }
     }
+
+    public void HandleInData(){
+        bluetoothIn = new Handler() {
+            public void handleMessage(android.os.Message msg) {
+                if (msg.what == handlerState) {              //if string is what we want
+                    String readMessage = (String)msg.obj;                                 // msg.arg1 = bytes from connect thread
+                    recDataString.append(readMessage);                                      //keep appending to string until }
+                    int endOfLineIndex = recDataString.indexOf("}")+1;                    // determine the end-of-line and add the last }
+                    if (endOfLineIndex > 0) {                                           // make sure there data before }
+                        String dataInPrint = recDataString.substring(0, endOfLineIndex);    // extract string
+                        int dataLength = dataInPrint.length();                          //get length of data received
+                        Log.i(TAG, "String Length = " + String.valueOf(dataLength));
+
+                        if (recDataString.charAt(0) == '{')                             //if it starts with { we know it is what we are looking for
+                        {
+                            jsonData = dataInPrint;             //get sensor value from string
+                            try {
+
+                                jsonObj = new JSONObject(jsonData);
+
+                                String up = jsonObj.getString("up");
+
+                                Log.d("Up", "Up= " + up);
+
+                                Log.d(TAG, "jsonObj.toString= " + jsonObj.toString());
+
+                            } catch (Throwable t) {
+                                Log.e(TAG, "Could not parse malformed JSON: \"" + jsonData + "\"");
+                            }
+
+                            //sensorView0.setText(jsonData);    //update the textviews with sensor values
+
+                            try {
+                                Log.i(TAG, "Up count = " + jsonObj.getString("up"));
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                            try {
+                                Log.i(TAG, "Down count = " + jsonObj.getString("down"));
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+
+                        }
+                        recDataString.delete(0, recDataString.length());                   //clear all string data
+
+                        dataInPrint = " ";
+                    }
+                }
+            }
+        };
+    }
+
 
 
 }

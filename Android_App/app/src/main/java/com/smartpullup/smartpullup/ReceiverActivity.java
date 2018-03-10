@@ -32,6 +32,8 @@ public class ReceiverActivity extends AppCompatActivity {
 
     private ConnectedThread mConnectedThread;
 
+    private static final String TAG = "DataTransmissionService";
+
     JSONObject jsonObj = null;
     String jsonData = null;
 
@@ -210,6 +212,7 @@ public class ReceiverActivity extends AppCompatActivity {
                     bytes = mmInStream.read(buffer);            //read bytes from input buffer
                     String readMessage = new String(buffer, 0, bytes);
                     // Send the obtained bytes to the UI Activity via handler
+                    //Log.d(TAG, "Receiving : " + readMessage);
                     bluetoothIn.obtainMessage(handlerState, bytes, -1, readMessage).sendToTarget();
                 } catch (IOException e) {
                     break;
