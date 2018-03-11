@@ -19,12 +19,7 @@ import java.lang.reflect.Method;
 public class BTReceiverService extends IntentService {
 
     public static final String ACTION_MyIntentService = "com.smartpullup.smartpullup.UPDATE";
-    public static final String ACTION_MyUpdate = "com.smartpullup.smartpullup.UPDATE";
-    public static final String EXTRA_KEY_IN = "EXTRA_IN";
     public static final String EXTRA_KEY_OUT = "EXTRA_OUT";
-    public static final String EXTRA_KEY_UPDATE = "EXTRA_UPDATE";
-    String msgFromActivity;
-    String extraOut;
 
     //private static final UUID BTMODULEUUID = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB");
     private static final String TAG = "DataTransmissionService";
@@ -162,12 +157,8 @@ public class BTReceiverService extends IntentService {
                         if (recDataString.charAt(0) == '{')                             //if it starts with { we know it is what we are looking for
                         {
                             jsonData = dataInPrint;             //get sensor value from string
-                            //return result
-                            Intent intentResponse = new Intent();
-                            intentResponse.setAction(ACTION_MyIntentService);
-                            intentResponse.addCategory(Intent.CATEGORY_DEFAULT);
-                            intentResponse.putExtra(EXTRA_KEY_OUT, jsonData);
-                            sendBroadcast(intentResponse);
+                            SendJsonStringBroadcast(jsonData);
+
                         }
                         recDataString.delete(0, recDataString.length());                   //clear all string data
 
@@ -176,6 +167,14 @@ public class BTReceiverService extends IntentService {
                 }
             }
         };
+    }
+
+    private void SendJsonStringBroadcast(String input){
+        Intent intentResponse = new Intent();
+        intentResponse.setAction(ACTION_MyIntentService);
+        intentResponse.addCategory(Intent.CATEGORY_DEFAULT);
+        intentResponse.putExtra(EXTRA_KEY_OUT, input);
+        sendBroadcast(intentResponse);
     }
 
 //    private void InputStringToJson(){

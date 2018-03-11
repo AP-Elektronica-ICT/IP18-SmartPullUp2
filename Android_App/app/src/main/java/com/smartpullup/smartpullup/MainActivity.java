@@ -14,6 +14,9 @@ import android.view.MenuItem;
 import android.support.design.widget.BottomNavigationView;
 import android.view.View;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 
 public class MainActivity extends AppCompatActivity {
 
@@ -21,8 +24,16 @@ public class MainActivity extends AppCompatActivity {
 
     public final ExerciseFragment ExerciseFragment = new ExerciseFragment();
 
-    private MyBroadcastReceiver myBroadcastReceiver;
-//    private MyBroadcastReceiver_Update myBroadcastReceiver_Update;
+    private JSONBroadcastReceiver JSONBroadcastReceiver;
+    private String JSONStructureInput = "";
+    JSONObject JSONInputData = null;
+
+    private String typeJsonData = null;
+    private int machine_ID_JsonData = 0;
+    private int upJsonData = 0;
+    private int downJsonData = 0;
+    private int weightJsonData = 0;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,16 +68,16 @@ public class MainActivity extends AppCompatActivity {
         transaction.replace(R.id.frame_layout, ExerciseFragment.newInstance());
         transaction.commit();
 
-        myBroadcastReceiver = new MyBroadcastReceiver();
-        //myBroadcastReceiver_Update = new MyBroadcastReceiver_Update();
+        //Start BroadcastReceiver
+        JSONBroadcastReceiver = new JSONBroadcastReceiver();
+
         //register BroadcastReceiver
         IntentFilter intentFilter = new IntentFilter(BTReceiverService.ACTION_MyIntentService);
         intentFilter.addCategory(Intent.CATEGORY_DEFAULT);
-        registerReceiver(myBroadcastReceiver, intentFilter);
+        registerReceiver(JSONBroadcastReceiver, intentFilter);
 
-//        IntentFilter intentFilter_update = new IntentFilter(BTReceiverService.ACTION_MyUpdate);
-//        intentFilter_update.addCategory(Intent.CATEGORY_DEFAULT);
-//        registerReceiver(myBroadcastReceiver_Update, intentFilter_update);
+
+
     }
 
     @Override
@@ -76,37 +87,45 @@ public class MainActivity extends AppCompatActivity {
 
         super.onPause();
     }
+
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        //un-register BroadcastReceiver
-        unregisterReceiver(myBroadcastReceiver);
-        //unregisterReceiver(myBroadcastReceiver_Update);
+        unregisterReceiver(JSONBroadcastReceiver);
     }
 
-    public class MyBroadcastReceiver extends BroadcastReceiver {
+    public class JSONBroadcastReceiver extends BroadcastReceiver {
 
         @Override
         public void onReceive(Context context, Intent intent) {
-            String result = intent.getStringExtra(BTReceiverService.EXTRA_KEY_OUT);
-            Log.i(TAG, result);
-            //textResult.setText(result);
+            JSONStructureInput = intent.getStringExtra(BTReceiverService.EXTRA_KEY_OUT);
+//            Log.i(TAG, JSONStructureInput);
+            //Making JSON obj from input string
+            try {
+                JSONInputData = new JSONObject(JSONStructureInput);
+
+                typeJsonData = JSONInputData.getString("type");
+                Log.i(TAG, "type= " + typeJsonData);
+                machine_ID_JsonData = JSONInputData.getInt("machine_ID");
+                Log.i(TAG, "machine ID= " + machine_ID_JsonData);
+                upJsonData = JSONInputData.getInt("up");
+                Log.i(TAG, "up= " + upJsonData);
+                downJsonData = JSONInputData.getInt("down");
+                Log.i(TAG, "down= " + downJsonData);
+                weightJsonData = JSONInputData.getInt("weight");
+                Log.i(TAG, "weight= " + weightJsonData);
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
         }
     }
 
-//    public class MyBroadcastReceiver_Update extends BroadcastReceiver {
-//
-//        @Override
-//        public void onReceive(Context context, Intent intent) {
-//            int update = intent.getIntExtra(BTReceiverService.EXTRA_KEY_UPDATE, 0);
-//            //progressBar.setProgress(update);
-//        }
-//    }
+
 
     public void ConnectToBar(View view) {
         Intent intentConnect = new Intent(MainActivity.this, ConnectBarActivity.class);
         startActivity(intentConnect);
     }
-
 
 }
