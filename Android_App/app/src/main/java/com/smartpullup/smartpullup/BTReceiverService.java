@@ -15,27 +15,26 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.Method;
-import java.util.UUID;
 
 
 public class BTReceiverService extends IntentService {
 
-    private static final UUID BTMODULEUUID = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB");
+    //private static final UUID BTMODULEUUID = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB");
     private static final String TAG = "DataTransmissionService";
+
+    Handler bluetoothIn;
+    final int handlerState = 0;         //used to identify handler message
 
     private BluetoothAdapter btAdapter = null;
     private BluetoothSocket btSocket = null;
     private InputStream inputStream = null;
     private BluetoothDevice device = null;
-
-    // String for MAC address
-    private static String address;
-
-    String inputString = null;
-
-    Handler bluetoothIn;
-    final int handlerState = 0;                        //used to identify handler message
     private StringBuilder recDataString = new StringBuilder();
+
+
+    private static String address;      // String for MAC address
+    private String inputBTString = null;
+
 
     JSONObject jsonObj = null;
     String jsonData = null;
@@ -47,12 +46,12 @@ public class BTReceiverService extends IntentService {
     @Override
     public void onCreate() {
         super.onCreate();
-        HandleInData();
+        HandleInputData();
     }
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        Toast.makeText(this, "service starting", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "BT service started", Toast.LENGTH_SHORT).show();
         return super.onStartCommand(intent,flags,startId);
     }
 
@@ -62,7 +61,7 @@ public class BTReceiverService extends IntentService {
 
         if(intent != null){
             btAdapter = BluetoothAdapter.getDefaultAdapter();
-            address = intent.getStringExtra("Command");
+            address = intent.getStringExtra("address");
 
             try {
                 Log.d(TAG, address);
@@ -104,7 +103,8 @@ public class BTReceiverService extends IntentService {
             }
 
             Receiver();
-            HandleInData();
+
+
 
         }
     }
@@ -124,33 +124,23 @@ public class BTReceiverService extends IntentService {
 
     private void Receiver() {
 
-
         byte[] buffer = new byte[256];  // buffer store for the stream
         int bytes; // bytes returned from read()
 
-//        try {
-//            bytes = inputStream.read(buffer);
-//            inputString = new String(buffer,0,bytes);
-//            Log.d(TAG, "Receiving : " + inputString);
-//        } catch (IOException e) {
-//            Log.e(TAG, "failed to reade " + inputString);
-//        }
         while (true) {
             try {
                 bytes = inputStream.read(buffer);            //read bytes from input buffer
-                inputString = new String(buffer, 0, bytes);
-                //Log.d(TAG, "Receiving : " + inputString);
-                // Send the obtained bytes to the UI Activity via handler
-                bluetoothIn.obtainMessage(handlerState, bytes, -1, inputString).sendToTarget();
+                inputBTString = new String(buffer, 0, bytes);
+                bluetoothIn.obtainMessage(handlerState, bytes, -1, inputBTString).sendToTarget();
 
             } catch (IOException e) {
-                Log.e(TAG, "failed to reade " + inputString);
+                Log.e(TAG, "failed to reade " + inputBTString);
                 break;
             }
         }
     }
 
-    public void HandleInData(){
+    private void HandleInputData(){
         bluetoothIn = new Handler() {
             public void handleMessage(android.os.Message msg) {
                 if (msg.what == handlerState) {              //if string is what we want
@@ -165,33 +155,6 @@ public class BTReceiverService extends IntentService {
                         if (recDataString.charAt(0) == '{')                             //if it starts with { we know it is what we are looking for
                         {
                             jsonData = dataInPrint;             //get sensor value from string
-                            try {
-
-                                jsonObj = new JSONObject(jsonData);
-
-                                String up = jsonObj.getString("up");
-
-                                Log.d("Up", "Up= " + up);
-
-                                Log.d(TAG, "jsonObj.toString= " + jsonObj.toString());
-
-                            } catch (Throwable t) {
-                                Log.e(TAG, "Could not parse malformed JSON: \"" + jsonData + "\"");
-                            }
-
-                            //sensorView0.setText(jsonData);    //update the textviews with sensor values
-
-                            try {
-                                Log.i(TAG, "Up count = " + jsonObj.getString("up"));
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                            }
-                            try {
-                                Log.i(TAG, "Down count = " + jsonObj.getString("down"));
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                            }
-
                         }
                         recDataString.delete(0, recDataString.length());                   //clear all string data
 
@@ -202,6 +165,35 @@ public class BTReceiverService extends IntentService {
         };
     }
 
-
+//    private void InputStringToJson(){
+//
+//        try {
+//
+//            jsonObj = new JSONObject(jsonData);
+//
+//            String up = jsonObj.getString("up");
+//
+//            Log.d(TAG, "Up= " + up);
+//
+//            Log.d(TAG, "jsonObj.toString= " + jsonObj.toString());
+//
+//        } catch (Throwable t) {
+//            Log.e(TAG, "Could not parse malformed JSON: \"" + jsonData + "\"");
+//        }
+//
+//        //sensorView0.setText(jsonData);    //update the textviews with sensor values
+//
+//        try {
+//            Log.i(TAG, "Up count = " + jsonObj.getString("up"));
+//        } catch (JSONException e) {
+//            e.printStackTrace();
+//        }
+//        try {
+//            Log.i(TAG, "Down count = " + jsonObj.getString("down"));
+//        } catch (JSONException e) {
+//            e.printStackTrace();
+//        }
+//
+//    }
 
 }

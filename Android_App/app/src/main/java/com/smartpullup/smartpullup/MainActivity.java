@@ -52,15 +52,18 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    protected void onPause() {
+        Intent MyIntentService = new Intent(this, BTReceiverService.class);
+        stopService(MyIntentService );
+
+        super.onPause();
+    }
+
     public void ConnectToBar(View view) {
         Intent intentConnect = new Intent(MainActivity.this, ConnectBarActivity.class);
         startActivity(intentConnect);
     }
 
-    public void TestIntentService(View view){
-        Intent MyIntentService = new Intent(this, BTReceiverService.class);
-        MyIntentService.putExtra("Command", "98:D3:36:81:05:F3");
-        startService(MyIntentService );
-    }
 
 }
