@@ -1,6 +1,7 @@
 package com.smartpullup.smartpullup;
 
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -8,6 +9,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.facebook.AccessToken;
@@ -33,15 +35,17 @@ public class LoginActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private CallbackManager mCallbackManager;
 
+    private RelativeLayout overlay;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        overlay = (RelativeLayout)findViewById(R.id.LoginProgressOverlay);
+
         //FirebaseDatabase.getInstance().setPersistenceEnabled(true);
         mAuth = FirebaseAuth.getInstance();
-
-        //initialize facebook functionality
 
         //Login with email and password
         Button loginButton = (Button)findViewById(R.id.btn_Login);
@@ -94,9 +98,24 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-        // Initialize Facebook Login button
+        // Initialize Facebook Login
         mCallbackManager = CallbackManager.Factory.create();
         LoginButton fbLoginButton = findViewById(R.id.login_button);
+        fbLoginButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                overlay.setVisibility(View.VISIBLE);
+
+                /*  AsyncTask t = new AsyncTask<Void, Integer, Void>(){
+
+                    @Override
+                    protected Void doInBackground(Void... voids) {
+
+                        return null;
+                    }
+                };*/
+            }
+        });
         fbLoginButton.setReadPermissions("email", "public_profile");
         fbLoginButton.registerCallback(mCallbackManager, new FacebookCallback<LoginResult>() {
             @Override
@@ -114,7 +133,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onError(FacebookException error) {
                 Log.d(TAG, "facebook:onError", error);
-                Toast.makeText(LoginActivity.this, "Something went wrong, please check your facebook account and try again", Toast.LENGTH_LONG);
+                Toast.makeText(LoginActivity.this, "Something went wrong, please check your facebook account and internet settings and try again", Toast.LENGTH_LONG);
             }
         });
     }
@@ -163,6 +182,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void goToMainActivity(){
+        overlay.setVisibility(View.GONE);
         Intent login = new Intent(LoginActivity.this,MainActivity.class);
         startActivity(login);
     }
