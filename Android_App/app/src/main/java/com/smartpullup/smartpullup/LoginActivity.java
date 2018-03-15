@@ -17,7 +17,9 @@ import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
 import com.facebook.FacebookSdk;
+import com.facebook.Profile;
 import com.facebook.appevents.AppEventsLogger;
+import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -28,11 +30,20 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FacebookAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class LoginActivity extends AppCompatActivity {
     private static final String TAG = "LoginActivity";
 
     private FirebaseAuth mAuth;
+    FirebaseUser currentUser;
+    private FirebaseDatabase database;
+    private DatabaseReference userDatabase;
+
     private CallbackManager mCallbackManager;
 
     private RelativeLayout overlay;
@@ -46,6 +57,8 @@ public class LoginActivity extends AppCompatActivity {
 
         //FirebaseDatabase.getInstance().setPersistenceEnabled(true);
         mAuth = FirebaseAuth.getInstance();
+        database = FirebaseDatabase.getInstance();
+        userDatabase = database.getReference("Users");
 
         //Login with email and password
         Button loginButton = (Button)findViewById(R.id.btn_Login);
@@ -118,12 +131,13 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onCancel() {
                 Log.d(TAG, "facebook:onCancel");
-                // ...
+                overlay.setVisibility(View.GONE);
             }
 
             @Override
             public void onError(FacebookException error) {
                 Log.d(TAG, "facebook:onError", error);
+                overlay.setVisibility(View.GONE);
                 Toast.makeText(LoginActivity.this, "Something went wrong, please check your facebook account and internet settings and try again", Toast.LENGTH_LONG);
             }
         });
@@ -133,7 +147,7 @@ public class LoginActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
 
-        FirebaseUser currentUser = mAuth.getCurrentUser();
+        currentUser = mAuth.getCurrentUser();
         if(currentUser != null){
             goToMainActivity();
         }
@@ -158,7 +172,7 @@ public class LoginActivity extends AppCompatActivity {
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
                             Log.d(TAG, "signInWithCredential:success");
-                            //FirebaseUser user = mAuth.getCurrentUser();
+                            currentUser = mAuth.getCurrentUser();
                             goToMainActivity();
                         } else {
                             // If sign in fails, display a message to the user.
@@ -172,7 +186,33 @@ public class LoginActivity extends AppCompatActivity {
 
     public void goToMainActivity(){
         overlay.setVisibility(View.GONE);
+        checkIfFirstLogin();
         Intent login = new Intent(LoginActivity.this,MainActivity.class);
         startActivity(login);
+    }
+
+    private void checkIfFirstLogin() {
+        userDatabase.equalTo(currentUser.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if(!dataSnapshot.exists()){
+                    Log.d(TAG + " fbLogin", Profile.getCurrentProfile().getFirstName());
+                    Log.d(TAG + " fbLogin", Profile.getCurrentProfile().getLastName());
+                    Log.d(TAG + " fbLogin", currentUser.getUid());
+                    Log.d(TAG + " fbLogin", currentUser.getEmail());
+
+                    Profile p = Profile.getCurrentProfile();
+
+                    User newuser = new User(currentUser.getUid(), p.getFirstName(), p.getLastName(), currentUser.getEmail());
+                    userDatabase.child(currentUser.getUid()).setValue(newuser);
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
     }
 }
