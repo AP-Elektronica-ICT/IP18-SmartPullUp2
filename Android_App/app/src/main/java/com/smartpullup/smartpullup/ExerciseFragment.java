@@ -12,10 +12,7 @@ import android.view.ViewGroup;
  */
 
 public class ExerciseFragment extends android.support.v4.app.Fragment {
-    public static ExerciseFragment newInstance() {
-       ExerciseFragment fragment = new ExerciseFragment();
-        return fragment;
-    }
+    private static final String TAG = "FragmentExcercise";
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

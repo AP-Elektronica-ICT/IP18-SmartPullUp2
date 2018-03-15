@@ -7,6 +7,9 @@ import android.content.IntentFilter;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -35,38 +38,25 @@ public class MainActivity extends AppCompatActivity {
     private int weightJsonData = 0;
 
 
+    private SectionsPagerAdapter mSectionsStatePagerAdapter;
+    private ViewPager mViewPager;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-       BottomNavigationView bottomNavigationView = (BottomNavigationView)
-                findViewById(R.id.navigation);
+        mSectionsStatePagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
 
-      bottomNavigationView.setOnNavigationItemSelectedListener
-                (new BottomNavigationView.OnNavigationItemSelectedListener() {
-                    @Override
-                    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                       Fragment selectedFragment = null;
-                        switch (item.getItemId()) {
-                            case R.id.action_item1:
-                                selectedFragment = ExerciseFragment.newInstance();
-                                break;
-                            case R.id.action_item2:
-                                selectedFragment = ProfileFragment.newInstance();
-                                break;
-                        }
+        mViewPager =(ViewPager) findViewById(R.id.container);
+        setupViewPager(mViewPager);
 
-                        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-                        transaction.replace(R.id.frame_layout, selectedFragment);
-                        transaction.commit();
-                        return true;
-                    }
-                });
+        TabLayout tabLayout = (TabLayout) findViewById(R.id.bottomNav);
+        tabLayout.setupWithViewPager(mViewPager);
 
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.frame_layout, ExerciseFragment.newInstance());
-        transaction.commit();
+        tabLayout.getTabAt(0).setIcon(R.drawable.ic_home);
+        tabLayout.getTabAt(1).setIcon(R.drawable.ic_podium);
+        tabLayout.getTabAt(2).setIcon(R.drawable.ic_person);
 
         //Start BroadcastReceiver
         JSONBroadcastReceiver = new JSONBroadcastReceiver();
@@ -75,9 +65,14 @@ public class MainActivity extends AppCompatActivity {
         IntentFilter intentFilter = new IntentFilter(BTReceiverService.ACTION_MyIntentService);
         intentFilter.addCategory(Intent.CATEGORY_DEFAULT);
         registerReceiver(JSONBroadcastReceiver, intentFilter);
+    }
 
-
-
+    private void setupViewPager(ViewPager viewPager){
+        SectionsPagerAdapter adapter = new SectionsPagerAdapter(getSupportFragmentManager());
+        adapter.addFragment(new ExerciseFragment());
+        adapter.addFragment(new LeaderboardFragment());
+        adapter.addFragment(new ProfileFragment());
+        viewPager.setAdapter(adapter);
     }
 
     @Override

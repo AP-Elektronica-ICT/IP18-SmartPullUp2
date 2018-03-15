@@ -11,13 +11,13 @@ import android.view.ViewGroup;
  * Created by bjorn on 1/03/2018.
  */
 
-public class ProfileFragment extends Fragment {
-    private static final String TAG = "FragmentProfile";
+public class LeaderboardFragment extends Fragment {
+    private static final String TAG = "FragmentLeaderboard";
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_profile, container, false);
+        View view = inflater.inflate(R.layout.fragment_leaderboard, container, false);
 
         return view;
     }
