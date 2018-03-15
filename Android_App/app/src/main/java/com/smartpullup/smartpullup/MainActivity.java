@@ -16,6 +16,7 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.support.design.widget.BottomNavigationView;
 import android.view.View;
+import android.widget.TextView;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -26,6 +27,8 @@ public class MainActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
 
     public final ExerciseFragment ExerciseFragment = new ExerciseFragment();
+
+    TextView pullUp_TextView = null;
 
     private JSONBroadcastReceiver JSONBroadcastReceiver;
     private String JSONStructureInput = "";
@@ -73,6 +76,7 @@ public class MainActivity extends AppCompatActivity {
         adapter.addFragment(new LeaderboardFragment());
         adapter.addFragment(new ProfileFragment());
         viewPager.setAdapter(adapter);
+
     }
 
     @Override
@@ -116,9 +120,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-
-
-    public void ConnectToBar(View view) {
+    private void ConnectToBar(View view) {
         Intent intentConnect = new Intent(MainActivity.this, ConnectBarActivity.class);
         startActivity(intentConnect);
     }

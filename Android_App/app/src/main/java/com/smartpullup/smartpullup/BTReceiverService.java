@@ -178,7 +178,6 @@ public class BTReceiverService extends IntentService {
     }
 
 //    private void InputStringToJson(){
-//
 //        try {
 //
 //            jsonObj = new JSONObject(jsonData);
