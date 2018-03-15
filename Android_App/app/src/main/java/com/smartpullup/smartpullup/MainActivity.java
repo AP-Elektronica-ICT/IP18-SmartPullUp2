@@ -88,6 +88,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        mAuth = FirebaseAuth.getInstance();
+
         mSectionsStatePagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
 
         mViewPager =(ViewPager) findViewById(R.id.container);
@@ -99,6 +101,10 @@ public class MainActivity extends AppCompatActivity {
         tabLayout.getTabAt(0).setIcon(R.drawable.ic_home);
         tabLayout.getTabAt(1).setIcon(R.drawable.ic_podium);
         tabLayout.getTabAt(2).setIcon(R.drawable.ic_person);
+
+        // get Bluetooth adapter
+        btAdapter = BluetoothAdapter.getDefaultAdapter();
+        checkBTState();
 
         //Start BroadcastReceiver
         JSONBroadcastReceiver = new JSONBroadcastReceiver();
@@ -186,8 +192,6 @@ public class MainActivity extends AppCompatActivity {
                                 e.printStackTrace();
                             }
 
-        mAuth = FirebaseAuth.getInstance();
-
                         }
                         recDataString.delete(0, recDataString.length());                   //clear all string data
 
@@ -197,10 +201,6 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         };
-
-        btAdapter = BluetoothAdapter.getDefaultAdapter();       // get Bluetooth adapter
-        checkBTState();
-
             } catch (JSONException e) {
                 e.printStackTrace();
             }

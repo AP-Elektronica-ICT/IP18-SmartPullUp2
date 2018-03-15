@@ -192,7 +192,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void checkIfFirstLogin() {
-        userDatabase.equalTo(currentUser.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
+        userDatabase.child(currentUser.getUid()).equalTo(currentUser.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 if(!dataSnapshot.exists()){
@@ -210,7 +210,7 @@ public class LoginActivity extends AppCompatActivity {
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
-
+                Log.d(TAG, databaseError.getMessage());
             }
         });
 
