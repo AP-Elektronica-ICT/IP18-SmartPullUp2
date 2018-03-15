@@ -114,7 +114,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onError(FacebookException error) {
                 Log.d(TAG, "facebook:onError", error);
-                // ...
+                Toast.makeText(LoginActivity.this, "Something went wrong, please check your facebook account and try again", Toast.LENGTH_LONG);
             }
         });
     }
