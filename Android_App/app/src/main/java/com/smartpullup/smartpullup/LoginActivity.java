@@ -105,15 +105,6 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 overlay.setVisibility(View.VISIBLE);
-
-                /*  AsyncTask t = new AsyncTask<Void, Integer, Void>(){
-
-                    @Override
-                    protected Void doInBackground(Void... voids) {
-
-                        return null;
-                    }
-                };*/
             }
         });
         fbLoginButton.setReadPermissions("email", "public_profile");
@@ -175,8 +166,6 @@ public class LoginActivity extends AppCompatActivity {
                             Toast.makeText(LoginActivity.this, "Authentication failed.",
                                     Toast.LENGTH_SHORT).show();
                         }
-
-                        // ...
                     }
                 });
     }
