@@ -37,6 +37,8 @@ import java.util.UUID;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import com.facebook.login.LoginManager;
+import com.google.firebase.auth.FirebaseAuth;
 
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
@@ -61,7 +63,7 @@ public class MainActivity extends AppCompatActivity {
     private static String address = "98:D3:36:81:05:F3";
 
     @SuppressLint("HandlerLeak")
-
+    private FirebaseAuth mAuth;
 
     public final ExerciseFragment ExerciseFragment = new ExerciseFragment();
 
@@ -184,10 +186,13 @@ public class MainActivity extends AppCompatActivity {
                                 e.printStackTrace();
                             }
 
+        mAuth = FirebaseAuth.getInstance();
+
                         }
                         recDataString.delete(0, recDataString.length());                   //clear all string data
 
                         dataInPrint = " ";
+
                     }
                 }
             }

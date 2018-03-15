@@ -6,4 +6,5 @@
     <color name="colorBottomNav">#3F51B5</color>
     <color name="LightGrey">#c6c6c6</color>
     <color name="White">#FFFFFF</color>
+    <color name="Black">#000000</color>
 </resources>
