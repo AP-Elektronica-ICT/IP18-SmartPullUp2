@@ -172,7 +172,7 @@ public class LoginActivity extends AppCompatActivity {
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
                             Log.d(TAG, "signInWithCredential:success");
-                            currentUser = mAuth.getCurrentUser();
+                            //FirebaseUser user = mAuth.getCurrentUser();
                             goToMainActivity();
                         } else {
                             // If sign in fails, display a message to the user.
@@ -185,10 +185,11 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void goToMainActivity(){
-        overlay.setVisibility(View.GONE);
+        currentUser = mAuth.getCurrentUser();
         checkIfFirstLogin();
         Intent login = new Intent(LoginActivity.this,MainActivity.class);
         startActivity(login);
+        overlay.setVisibility(View.GONE);
     }
 
     private void checkIfFirstLogin() {
@@ -196,15 +197,18 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 if(!dataSnapshot.exists()){
-                    Log.d(TAG + " fbLogin", Profile.getCurrentProfile().getFirstName());
+                  /*  Log.d(TAG + " fbLogin", Profile.getCurrentProfile().getFirstName());
                     Log.d(TAG + " fbLogin", Profile.getCurrentProfile().getLastName());
                     Log.d(TAG + " fbLogin", currentUser.getUid());
                     Log.d(TAG + " fbLogin", currentUser.getEmail());
+                  */
 
                     Profile p = Profile.getCurrentProfile();
+                    if(p != null){
+                        User newuser = new User(currentUser.getUid(), p.getFirstName(), p.getLastName(), currentUser.getEmail());
+                        userDatabase.child(currentUser.getUid()).setValue(newuser);
+                    }
 
-                    User newuser = new User(currentUser.getUid(), p.getFirstName(), p.getLastName(), currentUser.getEmail());
-                    userDatabase.child(currentUser.getUid()).setValue(newuser);
                 }
             }
 
