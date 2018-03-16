@@ -329,6 +329,7 @@ public class MainActivity extends AppCompatActivity {
                 mmOutStream.write(msgBuffer);                //write bytes over BT connection via outstream
             } catch (IOException e) {
                 //if you cannot write, close the application
+                //TODO: this gets called everytime on login, if device is not connected with HC-05... needs to be fixed
                 Toast.makeText(getBaseContext(), "Connection Failure", Toast.LENGTH_LONG).show();
                 finish();
 
