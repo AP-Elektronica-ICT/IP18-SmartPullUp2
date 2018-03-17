@@ -88,7 +88,7 @@ public class MainActivity extends AppCompatActivity {
         tabLayout.getTabAt(0).setIcon(R.drawable.ic_home);
         tabLayout.getTabAt(1).setIcon(R.drawable.ic_podium);
         tabLayout.getTabAt(2).setIcon(R.drawable.ic_person);
-
+/*
         // get Bluetooth adapter
         btAdapter = BluetoothAdapter.getDefaultAdapter();
         checkBTState();
@@ -100,7 +100,7 @@ public class MainActivity extends AppCompatActivity {
         IntentFilter intentFilter = new IntentFilter(BTReceiverService.ACTION_MyIntentService);
         intentFilter.addCategory(Intent.CATEGORY_DEFAULT);
         registerReceiver(JSONBroadcastReceiver, intentFilter);
-    }
+ */   }
 
     private void setupViewPager(ViewPager viewPager){
         SectionsPagerAdapter adapter = new SectionsPagerAdapter(getSupportFragmentManager());
@@ -114,7 +114,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        unregisterReceiver(JSONBroadcastReceiver);
+        //unregisterReceiver(JSONBroadcastReceiver);
     }
 
     private void ConnectToBar(View view) {
@@ -127,7 +127,7 @@ public class MainActivity extends AppCompatActivity {
         return  device.createRfcommSocketToServiceRecord(BTMODULEUUID);
         //creates secure outgoing connecetion with BT device using UUID
     }
-
+/*
     @Override
     public void onResume() {
         super.onResume();
@@ -181,7 +181,7 @@ public class MainActivity extends AppCompatActivity {
         Intent MyIntentService = new Intent(this, BTReceiverService.class);
         stopService(MyIntentService );
     }
-
+*/
     //Checks that the Android device Bluetooth is available and prompts to be turned on if off
     private void checkBTState() {
 
