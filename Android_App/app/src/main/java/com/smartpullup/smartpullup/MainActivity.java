@@ -43,8 +43,6 @@ import com.google.firebase.auth.FirebaseAuth;
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
 
-    Handler bluetoothIn;
-
     final int handlerState = 0;                        //used to identify handler message
     private BluetoothAdapter btAdapter = null;
     private BluetoothSocket btSocket = null;
@@ -65,6 +63,7 @@ public class MainActivity extends AppCompatActivity {
     TextView pullUp_TextView = null;
 
     private JSONBroadcastReceiver JSONBroadcastReceiver;
+    Handler bluetoothIn;
 
     private SectionsPagerAdapter mSectionsStatePagerAdapter;
     private ViewPager mViewPager;
@@ -74,8 +73,10 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        //firebase Authentication
         mAuth = FirebaseAuth.getInstance();
 
+        //navigation
         mSectionsStatePagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
 
         mViewPager =(ViewPager) findViewById(R.id.container);
@@ -93,7 +94,7 @@ public class MainActivity extends AppCompatActivity {
         checkBTState();
 
         //Start BroadcastReceiver
-        JSONBroadcastReceiver = new JSONBroadcastReceiver();
+        JSONBroadcastReceiver = new JSONBroadcastReceiver(bluetoothIn);
 
         //register BroadcastReceiver
         IntentFilter intentFilter = new IntentFilter(BTReceiverService.ACTION_MyIntentService);
@@ -158,7 +159,7 @@ public class MainActivity extends AppCompatActivity {
                 //insert code to deal with this
             }
         }
-        mConnectedThread = new ConnectedThread(btSocket);
+        mConnectedThread = new ConnectedThread(btSocket, bluetoothIn, MainActivity.this);
         mConnectedThread.start();
 
         //I send a character when resuming.beginning transmission to check device is connected
@@ -191,57 +192,6 @@ public class MainActivity extends AppCompatActivity {
             } else {
                 Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
                 startActivityForResult(enableBtIntent, 1);
-            }
-        }
-    }
-
-    //create new class for connect thread
-    class ConnectedThread extends Thread {
-        private final InputStream mmInStream;
-        private final OutputStream mmOutStream;
-
-        //creation of the connect thread
-        public ConnectedThread(BluetoothSocket socket) {
-            InputStream tmpIn = null;
-            OutputStream tmpOut = null;
-
-            try {
-                //Create I/O streams for connection
-                tmpIn = socket.getInputStream();
-                tmpOut = socket.getOutputStream();
-            } catch (IOException e) { }
-
-            mmInStream = tmpIn;
-            mmOutStream = tmpOut;
-        }
-
-        public void run() {
-            byte[] buffer = new byte[256];
-            int bytes;
-
-            // Keep looping to listen for received messages
-            while (true) {
-                try {
-                    bytes = mmInStream.read(buffer);            //read bytes from input buffer
-                    String readMessage = new String(buffer, 0, bytes);
-                    // Send the obtained bytes to the UI Activity via handler
-                    bluetoothIn.obtainMessage(handlerState, bytes, -1, readMessage).sendToTarget();
-                } catch (IOException e) {
-                    break;
-                }
-            }
-        }
-        //write method
-        public void write(String input) {
-            byte[] msgBuffer = input.getBytes();           //converts entered String into bytes
-            try {
-                mmOutStream.write(msgBuffer);                //write bytes over BT connection via outstream
-            } catch (IOException e) {
-                //if you cannot write, close the application
-                //TODO: this gets called everytime on login, if device is not connected with HC-05... needs to be fixed
-                Toast.makeText(getBaseContext(), "Connection Failure", Toast.LENGTH_LONG).show();
-                finish();
-
             }
         }
     }

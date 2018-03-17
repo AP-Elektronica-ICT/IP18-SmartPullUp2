@@ -24,16 +24,26 @@ public class JSONBroadcastReceiver extends BroadcastReceiver {
     String jsonData = null;
 
     private String typeJsonData = null;
-    private int machine_ID_JsonData = 0;
-    private int upJsonData = 0;
-    private int downJsonData = 0;
-    private int weightJsonData = 0;
+    private int machine_ID_JsonData;
+    private int upJsonData;
+    private int downJsonData;
+    private int weightJsonData;
 
     Handler bluetoothIn;
     final int handlerState = 0;//used to identify handler message
     private StringBuilder recDataString = new StringBuilder();
 
     //TextView txtStringLength, sensorView0, upView, downView;
+
+
+    public JSONBroadcastReceiver(Handler bluetoothIn) {
+        this.bluetoothIn = bluetoothIn;
+        String typeJsonData = null;
+        int machine_ID_JsonData = 0;
+        int upJsonData = 0;
+        int downJsonData = 0;
+        int weightJsonData = 0;
+    }
 
     @Override
     public void onReceive(Context context, Intent intent) {
