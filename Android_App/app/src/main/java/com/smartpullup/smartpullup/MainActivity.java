@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -24,7 +25,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 public class MainActivity extends AppCompatActivity {
-    private static final String TAG = "DataTransmissionService";
+    private static final String TAG = "MainActivityJSON";
 
     //final int handlerState = 0;                        //used to identify handler message
     //private BluetoothAdapter btAdapter = null;
@@ -43,24 +44,11 @@ public class MainActivity extends AppCompatActivity {
 
     public final ExerciseFragment ExerciseFragment = new ExerciseFragment();
 
-    //TextView pullUp_TextView = null;
-
-    //private JSONBroadcastReceiver JSONBroadcastReceiver;
-    //Handler bluetoothIn;
-
-    private JSONBroadcastReceiver JSONBroadcastReceiver;
-    private String JSONStructureInput = "";
-    JSONObject JSONInputData = null;
-
-    private String typeJsonData = "";
-    private int machine_ID_JsonData = 0;
-    public int upJsonData = 0;
-    private int downJsonData = 0;
-    private int weightJsonData = 0;
-
+    JSONBroadcastReceiver JSONBroadcastReceiver;
 
     private SectionsPagerAdapter mSectionsStatePagerAdapter;
     private ViewPager mViewPager;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -95,23 +83,15 @@ public class MainActivity extends AppCompatActivity {
         intentFilter.addCategory(Intent.CATEGORY_DEFAULT);
         registerReceiver(JSONBroadcastReceiver, intentFilter);
 
-//        //Toast.makeText(this, upJsonData,Toast.LENGTH_SHORT).show();
-//        LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-//        View view = inflater.inflate(R.layout.activity_main, this, false);
-        //TextView textView = (TextView) findViewById(R.id.pullUpCounter_textView);
-        //textView.setText("test");
+        Log.i(TAG, String.valueOf(JSONBroadcastReceiver.upJsonData));
+
+//        String tagName = "tpTag";
+//        Fragment fr =  ExerciseFragment.newInstance();
+//        getSupportFragmentManager().beginTransaction().replace(R.id.ExerciseLayout, fr, tagName).commit();
+//        ExerciseFragment tp = (ExerciseFragment) getSupportFragmentManager().findFragmentByTag(tagName);
+//
 
 
-        //typeJsonData = JSONInputData.getString("type");
-        Log.i(TAG, "type= " + typeJsonData);
-        //machine_ID_JsonData = JSONInputData.getInt("machine_ID");
-        Log.i(TAG, "machine ID= " + machine_ID_JsonData);
-        //upJsonData = JSONInputData.getInt("up");
-        Log.i(TAG, "up= " + upJsonData);
-        //downJsonData = JSONInputData.getInt("down");
-        Log.i(TAG, "down= " + downJsonData);
-        //weightJsonData = JSONInputData.getInt("weight");
-        Log.i(TAG, "weight= " + weightJsonData);
     }
 
     private void setupViewPager(ViewPager viewPager){
@@ -134,32 +114,37 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intentConnect);
     }
 
-    public class JSONBroadcastReceiver extends BroadcastReceiver {
+    @Override
+    protected void onResume() {
+        super.onResume();
 
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            JSONStructureInput = intent.getStringExtra(BTReceiverService.EXTRA_KEY_OUT);
-//            Log.i(TAG, JSONStructureInput);
-            //Making JSON obj from input string
-            try {
-                JSONInputData = new JSONObject(JSONStructureInput);
-
-                typeJsonData = JSONInputData.getString("type");
-                Log.i(TAG, "type= " + typeJsonData);
-                machine_ID_JsonData = JSONInputData.getInt("machine_ID");
-                Log.i(TAG, "machine ID= " + machine_ID_JsonData);
-                upJsonData = JSONInputData.getInt("up");
-                Log.i(TAG, "up= " + upJsonData);
-                downJsonData = JSONInputData.getInt("down");
-                Log.i(TAG, "down= " + downJsonData);
-                weightJsonData = JSONInputData.getInt("weight");
-                Log.i(TAG, "weight= " + weightJsonData);
-
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-        }
     }
+    //    public class JSONBroadcastReceiver extends BroadcastReceiver {
+//
+//        @Override
+//        public void onReceive(Context context, Intent intent) {
+//            JSONStructureInput = intent.getStringExtra(BTReceiverService.EXTRA_KEY_OUT);
+////            Log.i(TAG, JSONStructureInput);
+//            //Making JSON obj from input string
+//            try {
+//                JSONInputData = new JSONObject(JSONStructureInput);
+//
+//                typeJsonData = JSONInputData.getString("type");
+//                Log.i(TAG, "type= " + typeJsonData);
+//                machine_ID_JsonData = JSONInputData.getInt("machine_ID");
+//                Log.i(TAG, "machine ID= " + machine_ID_JsonData);
+//                upJsonData = JSONInputData.getInt("up");
+//                Log.i(TAG, "up= " + upJsonData);
+//                downJsonData = JSONInputData.getInt("down");
+//                Log.i(TAG, "down= " + downJsonData);
+//                weightJsonData = JSONInputData.getInt("weight");
+//                Log.i(TAG, "weight= " + weightJsonData);
+//
+//            } catch (JSONException e) {
+//                e.printStackTrace();
+//            }
+//        }
+//    }
 
 //    private BluetoothSocket createBluetoothSocket(BluetoothDevice device) throws IOException {
 //

@@ -152,7 +152,7 @@ public class BTReceiverService extends IntentService {
                     if (endOfLineIndex > 0) {                                           // make sure there data before }
                         String dataInPrint = recDataString.substring(0, endOfLineIndex);    // extract string
                         int dataLength = dataInPrint.length();                          //get length of data received
-                        Log.i(TAG, "String Length = " + String.valueOf(dataLength));
+                        //Log.i(TAG, "String Length = " + String.valueOf(dataLength));
 
                         if (recDataString.charAt(0) == '{')                             //if it starts with { we know it is what we are looking for
                         {
