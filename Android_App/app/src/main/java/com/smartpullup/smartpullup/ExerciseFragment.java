@@ -148,7 +148,6 @@ public class ExerciseFragment extends Fragment {
         txt_PullupSpeed.setText(Double.toString(pullupSpeed));
         txt_PullupAverageSpeed.setText(Double.toString(calculateAverage()));
     }
-    
     private double calculateAverage() {
         int sum = 0;
         for (double i:pullupSpeeds) {
