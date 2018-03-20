@@ -59,10 +59,10 @@ public class ExerciseFragment extends Fragment {
     private int machine_ID_Input;
     private double weightInput;
 
-
     private int counterUp = 0;
     private int counterDown = 0;
-
+    private int previousValueUp;
+    private int previousValueDown;
 
 
     public void onCreate(Bundle savedInstanceState) {
@@ -116,22 +116,25 @@ public class ExerciseFragment extends Fragment {
     }
 
 
-    private void CounterUp(){
-        final int previousValue = upInput;
 
-        if(previousValue != counterUp)
+    private void CounterUp(){
+
+        if(upInput != previousValueUp)
         {
             counterUp++;
+
+            previousValueUp = upInput;
+
         }
     }
 
 
     private void CounterDown(){
-        final int previousValue = downInput;
 
-        if(previousValue != downInput)
+        if(downInput != previousValueDown)
         {
             counterDown++;
+            previousValueDown = downInput;
         }
     }
 
@@ -155,10 +158,12 @@ public class ExerciseFragment extends Fragment {
         return sum / pullupSpeeds.size();
     }
 
+
     private void SetTextUpCounter(String text) {
         counterUpTextView = (TextView) view.findViewById(R.id.pullUpCounter_textView);
         counterUpTextView.setText(text);
     }
+
 
     private void SetTextDownCounter(String text){
         counterDownTextView = (TextView) view.findViewById(R.id.down_Counter_textView);
