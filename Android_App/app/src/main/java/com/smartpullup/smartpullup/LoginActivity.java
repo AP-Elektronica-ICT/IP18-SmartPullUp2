@@ -1,7 +1,12 @@
 package com.smartpullup.smartpullup;
 
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Intent;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.support.annotation.NonNull;
+import android.support.v4.app.NotificationCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -77,6 +82,18 @@ public class LoginActivity extends AppCompatActivity {
                                         Log.d(TAG, "signInWithEmail:complete");
                                         //FirebaseUser user = mAuth.getCurrentUser();
                                         goToMainActivity();
+                                        
+                                        //Notification to watch Demo video on first loging
+                                        final NotificationCompat.Builder mBuilder = (NotificationCompat.Builder) new NotificationCompat.Builder(LoginActivity.this).setLargeIcon(BitmapFactory.decodeResource(getResources(), R.drawable.pull_up)).setSmallIcon(R.drawable.pull_up).setContentTitle("Demo Video").setContentText("Watch how Smart pull-up works");
+                                        Intent resultIntent = new Intent(Intent.ACTION_VIEW);
+                                        resultIntent.setData(Uri.parse("https://www.youtube.com/watch?v=-MFjTcIPPFA"));
+                                        PendingIntent resultPendingIntent = PendingIntent.getActivity(LoginActivity.this, 0, resultIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+                                        mBuilder.setContentIntent(resultPendingIntent);
+                                        mBuilder.setAutoCancel(true);
+                                        final int mNotificationID =001;
+                                        NotificationManager mNotifyMgr= (NotificationManager)getSystemService(NOTIFICATION_SERVICE);
+                                        mNotifyMgr.notify(mNotificationID,mBuilder.build());
+
                                     } else {
                                         Log.w(TAG, "signInWithEmail:failure", task.getException());
                                         Toast.makeText(LoginActivity.this, "Authentication failed. \n Wrong username or password.",
