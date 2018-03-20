@@ -25,8 +25,14 @@ public class ExerciseFragment extends Fragment {
     JSONBroadcastReceiver JSONBroadcastReceiver;
     //SharedPreferences getSharedPreferences;
 
-    public static final String MY_PREFS_NAME = "MyPrefsFile";
+    private static final String MY_PREFS_NAME = "DataFromPullUpBar";
+    private SharedPreferences prefs;
 
+    private TextView counterUpTextView;
+    private TextView counterDownTextView;
+    private TextView weightTextView;
+    private TextView machineID_TextView;
+    private TextView type_TextView;
     private TextView txt_PullupSpeed;
     private TextView txt_PullupAverageSpeed;
     private TextView txt_TotalTime;
@@ -48,17 +54,23 @@ public class ExerciseFragment extends Fragment {
 */
     private TextView textView;
     private View view;
-    private String type;
-    private int up;
 
-    String message = "";
+    private String typeInput;
+    private int upInput;
+    private int downInput;
+    private int machine_ID_Input;
+    private double weightInput;
+
+
+    private int counterUp = 0;
+    private int counterDown = 0;
+
+
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        SharedPreferences prefs = getContext().getSharedPreferences(MY_PREFS_NAME, Context.MODE_MULTI_PROCESS);
-        type = prefs.getString("type", "");
-        up = prefs.getInt("up", 0);
+        prefs = getContext().getSharedPreferences(MY_PREFS_NAME, Context.MODE_MULTI_PROCESS);
 
         pullupSpeeds = new ArrayList<>();
     }
@@ -86,22 +98,61 @@ public class ExerciseFragment extends Fragment {
         return view;
     }
 
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
+        prefs.registerOnSharedPreferenceChangeListener(
+                new SharedPreferences.OnSharedPreferenceChangeListener() {
+                    public void onSharedPreferenceChanged(SharedPreferences prefs, String key) {
 
+                        InputData(prefs);
+
+                        CounterUp();
+                        CounterDown();
+
+                        SetTextUpCounter(String.valueOf(counterUp));
+                        SetTextDownCounter(String.valueOf(counterDown));
+                        SetTextUpMachineID(String.valueOf(machine_ID_Input));
+                        SetTextUpTypeMesurament(typeInput);
+                        SetTextWeight(String.valueOf(weightInput));
+
+                    }
+                });
+
+        return view;
     }
 
-    public void setText(String test){
-        //t = (TextView) view.findViewById(R.id.pullUpCounter_textView);
-        //t.setText(test);
+    private void CounterUp(){
+        int previousValue = upInput;
+        int temp = previousValue;
+
+        if(temp == previousValue)
+        {
+            counterUp++;
+        }
+    }
+    private void CounterDown(){
+        int previousValue = downInput;
+        int temp = previousValue;
+
+        if(temp == previousValue)
+        {
+            counterDown++;
+        }
     }
 
+    private void InputData(SharedPreferences prefs){
+        typeInput = prefs.getString("type", "");
+        upInput = prefs.getInt("up", 0);
+        downInput = prefs.getInt("down", 0);
+        machine_ID_Input = prefs.getInt("machine_ID", 0);
+        weightInput = prefs.getInt("weight", 0);
     private void updateUI() {
         txt_PullupSpeed.setText(Double.toString(pullupSpeed));
         txt_PullupAverageSpeed.setText(Double.toString(calculateAverage()));
     }
 
+
+    private void SetTextUpCounter(String text){
+        counterUpTextView = (TextView) view.findViewById(R.id.pullUpCounter_textView);
+        counterUpTextView.setText(text);
     private double calculateAverage() {
         int sum = 0;
         for (double i:pullupSpeeds) {
@@ -109,4 +160,25 @@ public class ExerciseFragment extends Fragment {
         }
         return sum / pullupSpeeds.size();
     }
+    private void SetTextDownCounter(String text){
+        counterDownTextView = (TextView) view.findViewById(R.id.down_Counter_textView);
+        counterDownTextView.setText(text);
+    }
+    private void SetTextWeight(String text){
+        weightTextView = (TextView) view.findViewById(R.id.weight_textView);
+        weightTextView.setText(text);
+    }
+    private void SetTextUpMachineID(String text){
+        machineID_TextView = (TextView) view.findViewById(R.id.machien_ID_textView);
+        machineID_TextView.setText(text);
+    }
+    private void SetTextUpTypeMesurament(String text){
+        type_TextView = (TextView) view.findViewById(R.id.TypeMesurament_textView);
+        type_TextView.setText(text);
+    }
+
+
+
+
+
 }

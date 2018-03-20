@@ -67,7 +67,7 @@ public class MainActivity extends AppCompatActivity {
         intentFilter.addCategory(Intent.CATEGORY_DEFAULT);
         registerReceiver(JSONBroadcastReceiver, intentFilter);
 
-        Log.i(TAG, String.valueOf(JSONBroadcastReceiver.upJsonData));
+        //Log.i(TAG, String.valueOf(JSONBroadcastReceiver.upJsonData));
 
 
     }

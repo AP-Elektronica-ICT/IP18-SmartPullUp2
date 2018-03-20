@@ -7,7 +7,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:text="Connect to the Pull-Up Bar"
+        android:text="Connect"
         android:id="@+id/btn_Connect_Bar"
         android:onClick="ConnectToBar"/>
 
@@ -53,21 +53,52 @@
             android:layout_width="350dp"
             android:layout_height="350dp"
             android:max="100"
-            android:progress="20"
+            android:progress="0"
             android:progressDrawable="@drawable/main_halfcircularprogressbar_inside"
             android:rotation="180" />
 
+        <TextView
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="81dp"
+            android:text=""
+            android:textAlignment="center"
+            android:textSize="15sp"
+            android:id="@+id/TypeMesurament_textView" />
+
+        <TextView
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@+id/TypeMesurament_textView"
+            android:layout_below="@+id/TypeMesurament_textView"
+            android:textAlignment="center"
+            android:textSize="15sp"
+            android:id="@+id/machien_ID_textView" />
+
+        <TextView
+            android:id="@+id/down_Counter_textView"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignStart="@+id/machien_ID_textView"
+            android:layout_marginBottom="87dp"
+            android:textAlignment="center"
+            android:textSize="30sp" />
+
+        <TextView
+            android:id="@+id/weight_textView"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/down_Counter_textView"
+            android:layout_alignStart="@+id/down_Counter_textView"
+            android:textAlignment="center"
+            android:textSize="15sp" />
+
+
     </RelativeLayout>
 
-    <TextView
-        android:layout_width="200dp"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="-250dp"
-        android:layout_below="@id/layout_progress"
-        android:text="target: 50"
-        android:textAlignment="center"
-        android:textSize="15sp" />
 
     <TextView
         android:id="@+id/pullUpCounter_textView"
@@ -76,8 +107,9 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="-220dp"
         android:layout_below="@id/layout_progress"
-        android:text="27 pullups"
+        android:text="0"
         android:textAlignment="center"
+        android:textSize="50sp" />
         android:textSize="25sp" />
 
     <TextView
