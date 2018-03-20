@@ -23,7 +23,6 @@
         <activity android:name=".MainActivity" android:screenOrientation="portrait" />
         <activity android:name=".RegisterActivity" android:screenOrientation="portrait" />
         <activity android:name=".ConnectBarActivity" android:screenOrientation="portrait" />
-        <activity android:name=".ReceiverActivity" android:screenOrientation="portrait" />
 
         <service
             android:name=".BTReceiverService"

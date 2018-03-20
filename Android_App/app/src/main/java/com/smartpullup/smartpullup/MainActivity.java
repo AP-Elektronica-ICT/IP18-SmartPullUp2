@@ -27,18 +27,6 @@ import org.json.JSONObject;
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = "MainActivityJSON";
 
-    //final int handlerState = 0;                        //used to identify handler message
-    //private BluetoothAdapter btAdapter = null;
-    //private BluetoothSocket btSocket = null;
-
-    //private ConnectedThread mConnectedThread;
-
-    // SPP UUID service - this should work for most devices
-    //private static final UUID BTMODULEUUID = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB");
-
-    // String for MAC address
-    //private static String address = "98:D3:36:81:05:F3";
-
     @SuppressLint("HandlerLeak")
     private FirebaseAuth mAuth;
 
@@ -71,11 +59,6 @@ public class MainActivity extends AppCompatActivity {
         tabLayout.getTabAt(1).setIcon(R.drawable.ic_podium);
         tabLayout.getTabAt(2).setIcon(R.drawable.ic_person);
 
-        // get Bluetooth adapter
-        //btAdapter = BluetoothAdapter.getDefaultAdapter();
-        //checkBTState();
-
-        //Start BroadcastReceiver
         JSONBroadcastReceiver = new JSONBroadcastReceiver();
 
         //register BroadcastReceiver
@@ -84,12 +67,6 @@ public class MainActivity extends AppCompatActivity {
         registerReceiver(JSONBroadcastReceiver, intentFilter);
 
         Log.i(TAG, String.valueOf(JSONBroadcastReceiver.upJsonData));
-
-//        String tagName = "tpTag";
-//        Fragment fr =  ExerciseFragment.newInstance();
-//        getSupportFragmentManager().beginTransaction().replace(R.id.ExerciseLayout, fr, tagName).commit();
-//        ExerciseFragment tp = (ExerciseFragment) getSupportFragmentManager().findFragmentByTag(tagName);
-//
 
 
     }
@@ -119,104 +96,14 @@ public class MainActivity extends AppCompatActivity {
         super.onResume();
 
     }
-    //    public class JSONBroadcastReceiver extends BroadcastReceiver {
-//
-//        @Override
-//        public void onReceive(Context context, Intent intent) {
-//            JSONStructureInput = intent.getStringExtra(BTReceiverService.EXTRA_KEY_OUT);
-////            Log.i(TAG, JSONStructureInput);
-//            //Making JSON obj from input string
-//            try {
-//                JSONInputData = new JSONObject(JSONStructureInput);
-//
-//                typeJsonData = JSONInputData.getString("type");
-//                Log.i(TAG, "type= " + typeJsonData);
-//                machine_ID_JsonData = JSONInputData.getInt("machine_ID");
-//                Log.i(TAG, "machine ID= " + machine_ID_JsonData);
-//                upJsonData = JSONInputData.getInt("up");
-//                Log.i(TAG, "up= " + upJsonData);
-//                downJsonData = JSONInputData.getInt("down");
-//                Log.i(TAG, "down= " + downJsonData);
-//                weightJsonData = JSONInputData.getInt("weight");
-//                Log.i(TAG, "weight= " + weightJsonData);
-//
-//            } catch (JSONException e) {
-//                e.printStackTrace();
-//            }
-//        }
-//    }
-
-//    private BluetoothSocket createBluetoothSocket(BluetoothDevice device) throws IOException {
-//
-//        return  device.createRfcommSocketToServiceRecord(BTMODULEUUID);
-//        //creates secure outgoing connecetion with BT device using UUID
-//    }
-
-//    @Override
-//    public void onResume() {
-//        super.onResume();
-//
-//        //Get MAC address from DeviceListActivity via intent
-//        //Intent intent = getIntent();
-//
-//        //Get the MAC address from the DeviceListActivty via EXTRA
-//        //address = intent.getStringExtra(ConnectBarActivity.EXTRA_DEVICE_ADDRESS);
-//
-//        //create device and set the MAC address
-//        BluetoothDevice device = btAdapter.getRemoteDevice(address);
-//
-//        try {
-//            btSocket = createBluetoothSocket(device);
-//        } catch (IOException e) {
-//            Toast.makeText(getBaseContext(), "Socket creation failed", Toast.LENGTH_LONG).show();
-//        }
-//        // Establish the Bluetooth socket connection.
-//        try
-//        {
-//            btSocket.connect();
-//        } catch (IOException e) {
-//            try
-//            {
-//                btSocket.close();
-//            } catch (IOException e2)
-//            {
-//                //insert code to deal with this
-//            }
-//        }
-//        mConnectedThread = new ConnectedThread(btSocket, bluetoothIn, MainActivity.this);
-//        mConnectedThread.start();
-//
-//        //I send a character when resuming.beginning transmission to check device is connected
-//        //If it is not an exception will be thrown in the write method and finish() will be called
-//        mConnectedThread.write("x");
-//    }
 
     @Override
     public void onPause()
     {
         super.onPause();
-//        try
-//        {
-//            //Don't leave Bluetooth sockets open when leaving activity
-//            btSocket.close();
-//        } catch (IOException e2) {
-//            //insert code to deal with this
-//        }
+
         Intent MyIntentService = new Intent(this, BTReceiverService.class);
         stopService(MyIntentService );
     }
 
-    //Checks that the Android device Bluetooth is available and prompts to be turned on if off
-//    private void checkBTState() {
-//
-//        if(btAdapter==null) {
-//            Toast.makeText(getBaseContext(), "Device does not support bluetooth", Toast.LENGTH_LONG).show();
-//        } else {
-//            if (btAdapter.isEnabled()) {
-//            } else {
-//                Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
-//                startActivityForResult(enableBtIntent, 1);
-//            }
-//        }
-//    }
 }
