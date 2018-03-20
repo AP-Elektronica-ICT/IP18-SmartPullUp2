@@ -143,8 +143,8 @@ public class ExerciseFragment extends Fragment {
     }
 
     private void updateUI() {
-        txt_PullupSpeed.setText(Double.toString(pullupSpeed));
-        txt_PullupAverageSpeed.setText(Double.toString(calculateAverage()));
+        txt_PullupSpeed.setText("Speed: " + Double.toString(pullupSpeed));
+        txt_PullupAverageSpeed.setText("Average Speed: " + Double.toString(calculateAverage()));
         counterUpTextView.setText(counterUp);
         counterDownTextView.setText(counterDown);
         weightTextView.setText(Double.toString(weightInput));
