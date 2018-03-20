@@ -23,6 +23,7 @@
             android:layout_width="350dp"
             android:layout_height="350dp"
             android:max="1"
+            android:min="0"
             android:progress="1"
             android:progressDrawable="@drawable/main_halfcircularprogressbar_outside_bg"
             android:rotation="180" />
@@ -43,9 +44,9 @@
             android:layout_width="350dp"
             android:layout_height="350dp"
             android:max="100"
-            android:progress="27"
+            android:progress="100"
             android:progressDrawable="@drawable/main_halfcircularprogressbar_outside"
-            android:rotation="180" />
+            android:rotation="90" />
 
         <ProgressBar
             android:id="@+id/progress_calories"
@@ -58,15 +59,15 @@
             android:rotation="180" />
 
         <TextView
+            android:id="@+id/TypeMesurament_textView"
             android:layout_width="200dp"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="81dp"
-            android:text=""
+            android:layout_marginTop="72dp"
+            android:text="Mesurament"
             android:textAlignment="center"
-            android:textSize="15sp"
-            android:id="@+id/TypeMesurament_textView" />
+            android:textSize="15sp" />
 
         <TextView
             android:layout_width="200dp"
@@ -74,6 +75,7 @@
             android:layout_alignStart="@+id/TypeMesurament_textView"
             android:layout_below="@+id/TypeMesurament_textView"
             android:textAlignment="center"
+            android:text="Machine ID"
             android:textSize="15sp"
             android:id="@+id/machien_ID_textView" />
 
@@ -81,9 +83,10 @@
             android:id="@+id/down_Counter_textView"
             android:layout_width="200dp"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_alignStart="@+id/machien_ID_textView"
-            android:layout_marginBottom="87dp"
+            android:layout_alignStart="@+id/weight_textView"
+            android:layout_below="@+id/weight_textView"
+            android:layout_marginTop="69dp"
+            android:text=""
             android:textAlignment="center"
             android:textSize="30sp" />
 
@@ -91,8 +94,9 @@
             android:id="@+id/weight_textView"
             android:layout_width="200dp"
             android:layout_height="wrap_content"
-            android:layout_above="@+id/down_Counter_textView"
-            android:layout_alignStart="@+id/down_Counter_textView"
+            android:layout_alignStart="@+id/machien_ID_textView"
+            android:layout_below="@+id/machien_ID_textView"
+            android:text="weight"
             android:textAlignment="center"
             android:textSize="15sp" />
 

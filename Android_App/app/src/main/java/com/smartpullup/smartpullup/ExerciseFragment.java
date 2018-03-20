@@ -1,5 +1,6 @@
 package com.smartpullup.smartpullup;
 
+import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.support.v4.app.Fragment;
@@ -9,7 +10,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.DecelerateInterpolator;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -21,9 +24,6 @@ import java.util.List;
 
 public class ExerciseFragment extends Fragment {
     private static final String TAG = "FragmentExcercise";
-
-    JSONBroadcastReceiver JSONBroadcastReceiver;
-    //SharedPreferences getSharedPreferences;
 
     private static final String MY_PREFS_NAME = "DataFromPullUpBar";
     private SharedPreferences prefs;
@@ -38,15 +38,10 @@ public class ExerciseFragment extends Fragment {
     private TextView txt_PullupAverageSpeed;
     private TextView txt_TotalTime;
 
+    ProgressBar pbCounterUp;
+    ProgressBar pbCounterDown;
+
     private double pullupSpeed;
-    public double getPullupSpeed() {
-        return pullupSpeed;
-    }
-    public void setPullupSpeed(double pullupSpeed) {
-        this.pullupSpeed = pullupSpeed;
-        pullupSpeeds.add(pullupSpeed);
-        updateUI();
-    }
 
     private List<Double> pullupSpeeds;
 
@@ -82,6 +77,16 @@ public class ExerciseFragment extends Fragment {
         txt_PullupSpeed = (TextView)view.findViewById(R.id.txt_PullupSpeed);
         txt_PullupAverageSpeed = (TextView)view.findViewById(R.id.txt_PullupAverageSpeed);
         txt_TotalTime = (TextView)view.findViewById(R.id.txt_TotalTime);
+        counterUpTextView = (TextView) view.findViewById(R.id.pullUpCounter_textView);
+        counterDownTextView = (TextView) view.findViewById(R.id.down_Counter_textView);
+        weightTextView = (TextView) view.findViewById(R.id.weight_textView);
+        type_TextView = (TextView) view.findViewById(R.id.TypeMesurament_textView);
+        machineID_TextView = (TextView) view.findViewById(R.id.machien_ID_textView);
+
+        pbCounterUp = (ProgressBar) view.findViewById(R.id.progress_pullups);
+        pbCounterDown = (ProgressBar) view.findViewById(R.id.progress_calories);
+
+
 /*
         Button pullupButton = (Button)view.findViewById(R.id.test_pullup);
         prevTime = System.currentTimeMillis();
@@ -94,27 +99,47 @@ public class ExerciseFragment extends Fragment {
             }
         });*/
 
+        MeasurementOfExercise();
+
+        return view;
+    }
+
+    private void MeasurementOfExercise(){
         prefs.registerOnSharedPreferenceChangeListener(
                 new SharedPreferences.OnSharedPreferenceChangeListener() {
                     public void onSharedPreferenceChanged(SharedPreferences prefs, String key) {
 
                         InputData(prefs);
 
-                        calculateSpeed();
+
                         CounterUp();
                         CounterDown();
+
+                        calculateSpeed();
 /*
                         SetTextUpCounter(String.valueOf(counterUp));
                         SetTextDownCounter(String.valueOf(counterDown));
                         SetTextUpMachineID(String.valueOf(machine_ID_Input));
                         SetTextUpTypeMesurament(typeInput);
+                        SetTextWeight(String.valueOf(weightInput)+ " kg");
+
+                        ProgressBar pbCounterUp = (ProgressBar) view.findViewById(R.id.progress_pullups);
+                        pbCounterUp.setProgress(counterDown);
+
+                        ProgressBar pbCounterDown = (ProgressBar) view.findViewById(R.id.progress_calories);
+                        pbCounterDown.setProgress(counterDown);
+
                         SetTextWeight(String.valueOf(weightInput));
 */
                         updateUI();
                     }
                 });
+    }
 
-        return view;
+    @Override
+    public void onResume() {
+        super.onResume();
+        MeasurementOfExercise();
     }
 
     private void CounterUp(){
@@ -133,10 +158,21 @@ public class ExerciseFragment extends Fragment {
         }
     }
 
+    public double getPullupSpeed() {
+        return pullupSpeed;
+    }
+
+    public void setPullupSpeed(double pullupSpeed) {
+        this.pullupSpeed = pullupSpeed;
+        pullupSpeeds.add(pullupSpeed);
+        updateUI();
+    }
+
     private void InputData(SharedPreferences prefs) {
         typeInput = prefs.getString("type", "");
         upInput = prefs.getInt("up", 0);
         downInput = prefs.getInt("down", 0);
+        Log.i(TAG, String.valueOf("Up: " + upInput + "Down: " + downInput));
         machine_ID_Input = prefs.getInt("machine_ID", 0);
         weightInput = prefs.getInt("weight", 0);
     }
@@ -149,6 +185,9 @@ public class ExerciseFragment extends Fragment {
         weightTextView.setText(Double.toString(weightInput));
         machineID_TextView.setText(machine_ID_Input);
         type_TextView.setText(typeInput);
+
+        pbCounterUp.setProgress(counterDown);
+        pbCounterDown.setProgress(counterDown);
     }
 
     private double calculateAverage() {

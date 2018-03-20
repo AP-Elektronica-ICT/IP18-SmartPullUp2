@@ -4,5 +4,11 @@
     android:thickness="20dp"
     android:useLevel="true"
     android:innerRadius="140dp">
-    <solid android:color="@color/colorPrimaryDark"></solid>
+
+    <gradient
+        android:startColor="@android:color/holo_green_light"
+        android:centerColor="@android:color/holo_orange_light"
+        android:type="sweep"
+        android:endColor="@android:color/holo_red_dark"
+        />
 </shape>
