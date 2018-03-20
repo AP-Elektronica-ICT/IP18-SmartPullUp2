@@ -100,6 +100,7 @@ public class ExerciseFragment extends Fragment {
 
                         InputData(prefs);
 
+                        calculateSpeed();
                         CounterUp();
                         CounterDown();
 /*
@@ -115,8 +116,6 @@ public class ExerciseFragment extends Fragment {
 
         return view;
     }
-
-
 
     private void CounterUp(){
         if(upInput != previousValueUp)
@@ -158,6 +157,10 @@ public class ExerciseFragment extends Fragment {
             sum += i;
         }
         return sum / pullupSpeeds.size();
+    }
+
+    private void calculateSpeed() {
+        pullupSpeed = upInput - previousValueUp;
     }
 /*
     private void SetTextUpCounter(String text) {
