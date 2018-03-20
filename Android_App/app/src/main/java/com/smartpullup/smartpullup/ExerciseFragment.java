@@ -95,8 +95,6 @@ public class ExerciseFragment extends Fragment {
                 prevTime = System.currentTimeMillis();
             }
         });*/
-        return view;
-    }
 
         prefs.registerOnSharedPreferenceChangeListener(
                 new SharedPreferences.OnSharedPreferenceChangeListener() {
@@ -138,21 +136,19 @@ public class ExerciseFragment extends Fragment {
         }
     }
 
-    private void InputData(SharedPreferences prefs){
+    private void InputData(SharedPreferences prefs) {
         typeInput = prefs.getString("type", "");
         upInput = prefs.getInt("up", 0);
         downInput = prefs.getInt("down", 0);
         machine_ID_Input = prefs.getInt("machine_ID", 0);
         weightInput = prefs.getInt("weight", 0);
+    }
+
     private void updateUI() {
         txt_PullupSpeed.setText(Double.toString(pullupSpeed));
         txt_PullupAverageSpeed.setText(Double.toString(calculateAverage()));
     }
 
-
-    private void SetTextUpCounter(String text){
-        counterUpTextView = (TextView) view.findViewById(R.id.pullUpCounter_textView);
-        counterUpTextView.setText(text);
     private double calculateAverage() {
         int sum = 0;
         for (double i:pullupSpeeds) {
@@ -160,6 +156,12 @@ public class ExerciseFragment extends Fragment {
         }
         return sum / pullupSpeeds.size();
     }
+
+    private void SetTextUpCounter(String text) {
+        counterUpTextView = (TextView) view.findViewById(R.id.pullUpCounter_textView);
+        counterUpTextView.setText(text);
+    }
+
     private void SetTextDownCounter(String text){
         counterDownTextView = (TextView) view.findViewById(R.id.down_Counter_textView);
         counterDownTextView.setText(text);
