@@ -49,10 +49,7 @@ public class ExerciseFragment extends Fragment {
     }
 
     private List<Double> pullupSpeeds;
-/*
-    //for testing pullupTiming
-    private long prevTime;
-*/
+
     private TextView textView;
     private View view;
 
@@ -62,10 +59,10 @@ public class ExerciseFragment extends Fragment {
     private int machine_ID_Input;
     private double weightInput;
 
-
     private int counterUp = 0;
     private int counterDown = 0;
-
+    private int previousValueUp;
+    private int previousValueDown;
 
 
     public void onCreate(Bundle savedInstanceState) {
@@ -118,22 +115,26 @@ public class ExerciseFragment extends Fragment {
         return view;
     }
 
-    private void CounterUp(){
-        int previousValue = upInput;
-        int temp = previousValue;
 
-        if(temp == previousValue)
+
+    private void CounterUp(){
+
+        if(upInput != previousValueUp)
         {
             counterUp++;
+
+            previousValueUp = upInput;
+
         }
     }
-    private void CounterDown(){
-        int previousValue = downInput;
-        int temp = previousValue;
 
-        if(temp == previousValue)
+
+    private void CounterDown(){
+
+        if(downInput != previousValueDown)
         {
             counterDown++;
+            previousValueDown = downInput;
         }
     }
 
@@ -156,23 +157,28 @@ public class ExerciseFragment extends Fragment {
         return sum / pullupSpeeds.size();
     }
 
+
     private void SetTextUpCounter(String text) {
         counterUpTextView = (TextView) view.findViewById(R.id.pullUpCounter_textView);
         counterUpTextView.setText(text);
     }
 
+
     private void SetTextDownCounter(String text){
         counterDownTextView = (TextView) view.findViewById(R.id.down_Counter_textView);
         counterDownTextView.setText(text);
     }
+
     private void SetTextWeight(String text){
         weightTextView = (TextView) view.findViewById(R.id.weight_textView);
         weightTextView.setText(text);
     }
+
     private void SetTextUpMachineID(String text){
         machineID_TextView = (TextView) view.findViewById(R.id.machien_ID_textView);
         machineID_TextView.setText(text);
     }
+
     private void SetTextUpTypeMesurament(String text){
         type_TextView = (TextView) view.findViewById(R.id.TypeMesurament_textView);
         type_TextView.setText(text);

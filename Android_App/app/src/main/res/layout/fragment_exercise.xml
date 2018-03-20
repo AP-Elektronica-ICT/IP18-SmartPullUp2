@@ -22,7 +22,7 @@
             style="?android:progressBarStyleHorizontal"
             android:layout_width="350dp"
             android:layout_height="350dp"
-            android:max="2"
+            android:max="1"
             android:progress="1"
             android:progressDrawable="@drawable/main_halfcircularprogressbar_outside_bg"
             android:rotation="180" />
@@ -31,7 +31,7 @@
             style="?android:progressBarStyleHorizontal"
             android:layout_width="350dp"
             android:layout_height="350dp"
-            android:max="2"
+            android:max="1"
             android:progress="1"
             android:progressBackgroundTint="@color/LightGrey"
             android:progressDrawable="@drawable/main_halfcircularprogressbar_inside_bg"
