@@ -94,7 +94,6 @@ public class ExerciseFragment extends Fragment {
             }
         });*/
 
-
         prefs.registerOnSharedPreferenceChangeListener(
                 new SharedPreferences.OnSharedPreferenceChangeListener() {
                     public void onSharedPreferenceChanged(SharedPreferences prefs, String key) {
@@ -147,18 +146,18 @@ public class ExerciseFragment extends Fragment {
         txt_PullupSpeed.setText(Double.toString(pullupSpeed));
         txt_PullupAverageSpeed.setText(Double.toString(calculateAverage()));
     }
-
-
-    private void SetTextUpCounter(String text) {
-        counterUpTextView = (TextView) view.findViewById(R.id.pullUpCounter_textView);
-        counterUpTextView.setText(text);
-    }
+    
     private double calculateAverage() {
         int sum = 0;
         for (double i:pullupSpeeds) {
             sum += i;
         }
         return sum / pullupSpeeds.size();
+    }
+
+    private void SetTextUpCounter(String text) {
+        counterUpTextView = (TextView) view.findViewById(R.id.pullUpCounter_textView);
+        counterUpTextView.setText(text);
     }
 
     private void SetTextDownCounter(String text){
