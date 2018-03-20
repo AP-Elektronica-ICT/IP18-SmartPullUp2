@@ -30,13 +30,14 @@ public class MainActivity extends AppCompatActivity {
     @SuppressLint("HandlerLeak")
     private FirebaseAuth mAuth;
 
-    public final ExerciseFragment ExerciseFragment = new ExerciseFragment();
-
     JSONBroadcastReceiver JSONBroadcastReceiver;
 
     private SectionsPagerAdapter mSectionsStatePagerAdapter;
     private ViewPager mViewPager;
 
+    public final ExerciseFragment ExerciseFragment = new ExerciseFragment();
+    public final LeaderboardFragment LeaderboardFragment = new LeaderboardFragment();
+    public final ProfileFragment ProfileFragment = new ProfileFragment();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,9 +74,9 @@ public class MainActivity extends AppCompatActivity {
 
     private void setupViewPager(ViewPager viewPager){
         SectionsPagerAdapter adapter = new SectionsPagerAdapter(getSupportFragmentManager());
-        adapter.addFragment(new ExerciseFragment());
-        adapter.addFragment(new LeaderboardFragment());
-        adapter.addFragment(new ProfileFragment());
+        adapter.addFragment(ExerciseFragment);
+        adapter.addFragment(LeaderboardFragment);
+        adapter.addFragment(ProfileFragment);
         viewPager.setAdapter(adapter);
 
     }

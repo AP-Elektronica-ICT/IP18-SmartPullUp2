@@ -34,7 +34,18 @@ public class ExerciseFragment extends Fragment {
 
     public static final String MY_PREFS_NAME = "MyPrefsFile";
 
+    private TextView txt_PullupSpeed;
+    private TextView txt_PullupAverageSpeed;
+    private TextView txt_TotalTime;
 
+    private int pullupSpeed;
+    public int getPullupSpeed() {
+        return pullupSpeed;
+    }
+    public void setPullupSpeed(int pullupSpeed) {
+        this.pullupSpeed = pullupSpeed;
+        updateUI();
+    }
 
     private TextView textView;
     private View view;
@@ -58,6 +69,9 @@ public class ExerciseFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_exercise, container, false);
 
+        txt_PullupSpeed = (TextView)view.findViewById(R.id.txt_PullupSpeed);
+        txt_PullupAverageSpeed = (TextView)view.findViewById(R.id.txt_PullupAverageSpeed);
+        txt_TotalTime = (TextView)view.findViewById(R.id.txt_TotalTime);
 
         return view;
     }
@@ -80,19 +94,7 @@ public class ExerciseFragment extends Fragment {
         //t.setText(test);
     }
 
-    @Override
-    public void onPause() {
-        super.onPause();
-
+    private void updateUI() {
+        txt_PullupSpeed.setText(pullupSpeed);
     }
-
-    @Override
-    public void onStart() {
-
-        super.onStart();
-    }
-
-
-
-
 }
