@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.os.Handler;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -21,6 +22,11 @@ import android.content.BroadcastReceiver;
 import org.json.JSONObject;
 
 import java.io.Console;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.List;
+import java.util.ListIterator;
 
 /**
  * Created by Jorren on 22/02/2018.
@@ -44,8 +50,11 @@ public class ExerciseFragment extends Fragment {
     }
     public void setPullupSpeed(int pullupSpeed) {
         this.pullupSpeed = pullupSpeed;
+        pullupSpeeds.add(pullupSpeed);
         updateUI();
     }
+
+    private List<Integer> pullupSpeeds;
 
     private TextView textView;
     private View view;
@@ -61,6 +70,7 @@ public class ExerciseFragment extends Fragment {
         type = prefs.getString("type", "");
         up = prefs.getInt("up", 0);
 
+        pullupSpeeds = new ArrayList<>();
     }
 
 
@@ -96,5 +106,14 @@ public class ExerciseFragment extends Fragment {
 
     private void updateUI() {
         txt_PullupSpeed.setText(pullupSpeed);
+        txt_PullupAverageSpeed.setText(calculateAverage());
+    }
+
+    private Integer calculateAverage() {
+        int sum = 0;
+        for (int i:pullupSpeeds) {
+            sum += i;
+        }
+        return sum / pullupSpeeds.size();
     }
 }
