@@ -42,10 +42,10 @@ public class ExerciseFragment extends Fragment {
     }
 
     private List<Double> pullupSpeeds;
-
+/*
     //for testing pullupTiming
     private long prevTime;
-
+*/
     private TextView textView;
     private View view;
     private String type;
@@ -72,7 +72,7 @@ public class ExerciseFragment extends Fragment {
         txt_PullupSpeed = (TextView)view.findViewById(R.id.txt_PullupSpeed);
         txt_PullupAverageSpeed = (TextView)view.findViewById(R.id.txt_PullupAverageSpeed);
         txt_TotalTime = (TextView)view.findViewById(R.id.txt_TotalTime);
-
+/*
         Button pullupButton = (Button)view.findViewById(R.id.test_pullup);
         prevTime = System.currentTimeMillis();
         pullupButton.setOnClickListener(new View.OnClickListener() {
@@ -82,7 +82,7 @@ public class ExerciseFragment extends Fragment {
                 setPullupSpeed((double)time);
                 prevTime = System.currentTimeMillis();
             }
-        });
+        });*/
         return view;
     }
 
@@ -90,25 +90,6 @@ public class ExerciseFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-
-        Log.d(TAG, "onResume: ");
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        Log.d(TAG, "onDestroy: ");
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-        Log.d(TAG, "onPause: ");
     }
 
     public void setText(String test){
