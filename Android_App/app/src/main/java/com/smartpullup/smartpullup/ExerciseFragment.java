@@ -102,13 +102,14 @@ public class ExerciseFragment extends Fragment {
 
                         CounterUp();
                         CounterDown();
-
+/*
                         SetTextUpCounter(String.valueOf(counterUp));
                         SetTextDownCounter(String.valueOf(counterDown));
                         SetTextUpMachineID(String.valueOf(machine_ID_Input));
                         SetTextUpTypeMesurament(typeInput);
                         SetTextWeight(String.valueOf(weightInput));
-
+*/
+                        updateUI();
                     }
                 });
 
@@ -118,19 +119,14 @@ public class ExerciseFragment extends Fragment {
 
 
     private void CounterUp(){
-
         if(upInput != previousValueUp)
         {
             counterUp++;
-
             previousValueUp = upInput;
-
         }
     }
 
-
     private void CounterDown(){
-
         if(downInput != previousValueDown)
         {
             counterDown++;
@@ -145,10 +141,17 @@ public class ExerciseFragment extends Fragment {
         machine_ID_Input = prefs.getInt("machine_ID", 0);
         weightInput = prefs.getInt("weight", 0);
     }
+
     private void updateUI() {
         txt_PullupSpeed.setText(Double.toString(pullupSpeed));
         txt_PullupAverageSpeed.setText(Double.toString(calculateAverage()));
+        counterUpTextView.setText(counterUp);
+        counterDownTextView.setText(counterDown);
+        weightTextView.setText(Double.toString(weightInput));
+        machineID_TextView.setText(machine_ID_Input);
+        type_TextView.setText(typeInput);
     }
+
     private double calculateAverage() {
         int sum = 0;
         for (double i:pullupSpeeds) {
@@ -156,8 +159,7 @@ public class ExerciseFragment extends Fragment {
         }
         return sum / pullupSpeeds.size();
     }
-
-
+/*
     private void SetTextUpCounter(String text) {
         counterUpTextView = (TextView) view.findViewById(R.id.pullUpCounter_textView);
         counterUpTextView.setText(text);
@@ -183,9 +185,5 @@ public class ExerciseFragment extends Fragment {
         type_TextView = (TextView) view.findViewById(R.id.TypeMesurament_textView);
         type_TextView.setText(text);
     }
-
-
-
-
-
+*/
 }
