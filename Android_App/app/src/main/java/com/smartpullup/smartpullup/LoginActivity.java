@@ -1,7 +1,6 @@
 package com.smartpullup.smartpullup;
 
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -16,10 +15,7 @@ import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
-import com.facebook.FacebookSdk;
 import com.facebook.Profile;
-import com.facebook.appevents.AppEventsLogger;
-import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -186,13 +182,13 @@ public class LoginActivity extends AppCompatActivity {
 
     public void goToMainActivity(){
         currentUser = mAuth.getCurrentUser();
-        checkIfFirstLogin();
+        checkIfFirstFacebookLogin();
         Intent login = new Intent(LoginActivity.this,MainActivity.class);
         startActivity(login);
         overlay.setVisibility(View.GONE);
     }
 
-    private void checkIfFirstLogin() {
+    private void checkIfFirstFacebookLogin() {
         userDatabase.child(currentUser.getUid()).equalTo(currentUser.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
