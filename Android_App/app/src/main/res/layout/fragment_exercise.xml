@@ -110,6 +110,13 @@
         android:layout_marginTop="-20dp"
         android:text="duration"/>
 
+    <Button
+        android:id="@+id/test_pullup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:text="pullup"/>
+
     <TextView
         android:id="@+id/testView1"
         android:layout_width="wrap_content"

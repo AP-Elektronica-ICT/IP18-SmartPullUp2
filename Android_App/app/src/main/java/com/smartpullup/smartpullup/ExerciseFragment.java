@@ -1,32 +1,19 @@
 package com.smartpullup.smartpullup;
 
 import android.content.Context;
-import android.content.Intent;
-import android.content.IntentFilter;
 import android.content.SharedPreferences;
-import android.os.Handler;
-import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.content.LocalBroadcastManager;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
-import android.content.BroadcastReceiver;
 
-import org.json.JSONObject;
-
-import java.io.Console;
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Iterator;
 import java.util.List;
-import java.util.ListIterator;
 
 /**
  * Created by Jorren on 22/02/2018.
@@ -44,17 +31,20 @@ public class ExerciseFragment extends Fragment {
     private TextView txt_PullupAverageSpeed;
     private TextView txt_TotalTime;
 
-    private int pullupSpeed;
-    public int getPullupSpeed() {
+    private double pullupSpeed;
+    public double getPullupSpeed() {
         return pullupSpeed;
     }
-    public void setPullupSpeed(int pullupSpeed) {
+    public void setPullupSpeed(double pullupSpeed) {
         this.pullupSpeed = pullupSpeed;
         pullupSpeeds.add(pullupSpeed);
         updateUI();
     }
 
-    private List<Integer> pullupSpeeds;
+    private List<Double> pullupSpeeds;
+
+    //for testing pullupTiming
+    private long prevTime;
 
     private TextView textView;
     private View view;
@@ -83,6 +73,16 @@ public class ExerciseFragment extends Fragment {
         txt_PullupAverageSpeed = (TextView)view.findViewById(R.id.txt_PullupAverageSpeed);
         txt_TotalTime = (TextView)view.findViewById(R.id.txt_TotalTime);
 
+        Button pullupButton = (Button)view.findViewById(R.id.test_pullup);
+        prevTime = System.currentTimeMillis();
+        pullupButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                long time = (System.currentTimeMillis() - prevTime) / 1000;
+                setPullupSpeed((double)time);
+                prevTime = System.currentTimeMillis();
+            }
+        });
         return view;
     }
 
@@ -96,7 +96,19 @@ public class ExerciseFragment extends Fragment {
     public void onResume() {
         super.onResume();
 
+        Log.d(TAG, "onResume: ");
+    }
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        Log.d(TAG, "onDestroy: ");
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        Log.d(TAG, "onPause: ");
     }
 
     public void setText(String test){
@@ -105,13 +117,13 @@ public class ExerciseFragment extends Fragment {
     }
 
     private void updateUI() {
-        txt_PullupSpeed.setText(pullupSpeed);
-        txt_PullupAverageSpeed.setText(calculateAverage());
+        txt_PullupSpeed.setText(Double.toString(pullupSpeed));
+        txt_PullupAverageSpeed.setText(Double.toString(calculateAverage()));
     }
 
-    private Integer calculateAverage() {
+    private double calculateAverage() {
         int sum = 0;
-        for (int i:pullupSpeeds) {
+        for (double i:pullupSpeeds) {
             sum += i;
         }
         return sum / pullupSpeeds.size();
