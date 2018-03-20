@@ -82,6 +82,12 @@ public class ExerciseFragment extends Fragment {
         txt_PullupSpeed = (TextView)view.findViewById(R.id.txt_PullupSpeed);
         txt_PullupAverageSpeed = (TextView)view.findViewById(R.id.txt_PullupAverageSpeed);
         txt_TotalTime = (TextView)view.findViewById(R.id.txt_TotalTime);
+
+        counterUpTextView = (TextView) view.findViewById(R.id.pullUpCounter_textView);
+        counterDownTextView = (TextView) view.findViewById(R.id.down_Counter_textView);
+        weightTextView = (TextView) view.findViewById(R.id.weight_textView);
+        machineID_TextView = (TextView) view.findViewById(R.id.machien_ID_textView);
+        type_TextView = (TextView) view.findViewById(R.id.TypeMesurament_textView);
 /*
         Button pullupButton = (Button)view.findViewById(R.id.test_pullup);
         prevTime = System.currentTimeMillis();
