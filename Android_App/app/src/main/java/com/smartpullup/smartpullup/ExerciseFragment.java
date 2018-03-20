@@ -160,7 +160,7 @@ public class ExerciseFragment extends Fragment {
     }
 
     private void calculateSpeed() {
-        pullupSpeed = upInput - previousValueUp;
+        setPullupSpeed(upInput - previousValueUp);
     }
 /*
     private void SetTextUpCounter(String text) {
