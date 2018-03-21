@@ -17,9 +17,9 @@
 
         <ImageView
             android:layout_width="wrap_content"
-            android:layout_height="144dp"
+            android:layout_height="222dp"
             android:layout_gravity="center_horizontal"
-            android:layout_marginBottom="24dp"
+            android:layout_marginBottom="0dp"
             android:src="@drawable/pull_up" />
 
         <!--  Email Label -->
@@ -55,8 +55,8 @@
             android:layout_marginTop="24dp"
             android:layout_marginBottom="24dp"
             android:padding="12dp"
-            android:text="Login"
-            android:backgroundTint="@color/OrangeTheme"/>
+            android:text="Log in"
+            android:backgroundTint="@color/colorAccent"/>
 
         <TextView android:id="@+id/btn_Register"
             android:layout_width="fill_parent"
