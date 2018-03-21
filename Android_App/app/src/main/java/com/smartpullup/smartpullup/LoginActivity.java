@@ -203,6 +203,7 @@ public class LoginActivity extends AppCompatActivity {
         Intent login = new Intent(LoginActivity.this,MainActivity.class);
         startActivity(login);
         overlay.setVisibility(View.GONE);
+        finish();
     }
 
     private void checkIfFirstFacebookLogin() {
