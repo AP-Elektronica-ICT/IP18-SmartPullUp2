@@ -85,10 +85,8 @@
         android:layout_height="match_parent"
         android:visibility="gone"
         android:alpha="0.4"
-        android:background="@color/Black"
         android:animateLayoutChanges="true"
-        android:clickable="true"
-        >
+        android:clickable="true">
 
         <ProgressBar
             android:id="@+id/LoginProgress"

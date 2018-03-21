@@ -10,12 +10,60 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/relLayout">
+        android:id="@+id/relLayout"
+        >
+
+
+            <android.support.v7.widget.Toolbar
+
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:minHeight="?attr/actionBarSize"
+                android:background="@color/ColorTheme"
+                android:elevation="5dp"
+                android:id="@+id/toolbar">
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Smart pull up bar"
+                    android:textSize="20dp"
+                    android:textColor="@color/White"
+                    android:textStyle="bold"
+                    android:layout_alignParentLeft="true"
+                    android:layout_centerVertical="true"/>
+
+                <android.support.v7.widget.AppCompatButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Connect"
+                    android:backgroundTint="@color/White"
+                    android:onClick="ConnectToBar"
+                    android:id="@+id/btn_Connect_Bar"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="10dp"
+                    />
+
+                </RelativeLayout>
+
+            </android.support.v7.widget.Toolbar>
+
+
+
+
+
+
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:id="@+id/relLayoutMain"
-            android:layout_above="@id/relLayoutBot">
+            android:layout_above="@id/relLayoutBot"
+            android:layout_below="@id/toolbar">
 
             <android.support.v4.view.ViewPager
                 android:layout_width="match_parent"
@@ -29,12 +77,17 @@
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:id="@+id/relLayoutBot"
-            android:layout_alignParentBottom="true">
+            android:layout_alignParentBottom="true"
+            android:elevation="4dp"
+            android:outlineProvider="bounds"
+            android:paddingTop="2dp"
+            android:layout_marginTop="-2dp">
 
             <android.support.design.widget.AppBarLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="bottom">
+                android:layout_gravity="bottom"
+                >
 
                 <android.support.design.widget.TabLayout
                     android:id="@+id/bottomNav"
@@ -46,7 +99,7 @@
                     app:tabIndicatorHeight="0dp"
                     app:tabPaddingEnd="0dp"
                     app:tabPaddingStart="0dp"
-                    >
+                    app:tabBackground="@color/ColorTheme">
 
                 </android.support.design.widget.TabLayout>
 

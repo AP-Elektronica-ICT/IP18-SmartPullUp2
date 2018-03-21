@@ -66,7 +66,7 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onTabSelected(TabLayout.Tab tab) {
                         super.onTabSelected(tab);
-                        int tabIconColor = ContextCompat.getColor(MainActivity.this, R.color.ColorTheme);
+                        int tabIconColor = ContextCompat.getColor(MainActivity.this, R.color.White);
                         tab.getIcon().setColorFilter(tabIconColor, PorterDuff.Mode.SRC_IN);
                     }
 
@@ -83,7 +83,6 @@ public class MainActivity extends AppCompatActivity {
                     }
                 }
         );
-
     }
 
     private void setupViewPager(ViewPager viewPager){
