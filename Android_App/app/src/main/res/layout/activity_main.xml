@@ -37,12 +37,15 @@
                 android:layout_gravity="bottom">
 
                 <android.support.design.widget.TabLayout
+                    android:id="@+id/bottomNav"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:background="@drawable/bottomnav_border"
                     app:tabGravity="fill"
                     app:tabIndicatorColor="@color/colorPrimaryDark"
-                    android:id="@+id/bottomNav"
-                    android:background="@drawable/bottomnav_border">
+                    app:tabIndicatorHeight="0dp"
+                    app:tabPaddingEnd="0dp"
+                    app:tabPaddingStart="0dp">
 
                 </android.support.design.widget.TabLayout>
 
