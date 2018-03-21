@@ -30,8 +30,6 @@ public class MainActivity extends AppCompatActivity {
     @SuppressLint("HandlerLeak")
     private FirebaseAuth mAuth;
 
-    JSONBroadcastReceiver JSONBroadcastReceiver;
-
     private SectionsPagerAdapter mSectionsStatePagerAdapter;
     private ViewPager mViewPager;
 
@@ -60,16 +58,6 @@ public class MainActivity extends AppCompatActivity {
         tabLayout.getTabAt(1).setIcon(R.drawable.ic_podium);
         tabLayout.getTabAt(2).setIcon(R.drawable.ic_person);
 
-        JSONBroadcastReceiver = new JSONBroadcastReceiver();
-
-        //register BroadcastReceiver
-        IntentFilter intentFilter = new IntentFilter(BTReceiverService.ACTION_MyIntentService);
-        intentFilter.addCategory(Intent.CATEGORY_DEFAULT);
-        registerReceiver(JSONBroadcastReceiver, intentFilter);
-
-        //Log.i(TAG, String.valueOf(JSONBroadcastReceiver.upJsonData));
-
-
     }
 
     private void setupViewPager(ViewPager viewPager){
@@ -81,21 +69,9 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        unregisterReceiver(JSONBroadcastReceiver);
-    }
-
     public void ConnectToBar(View view) {
         Intent intentConnect = new Intent(MainActivity.this, ConnectBarActivity.class);
         startActivity(intentConnect);
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-
     }
 
     @Override
