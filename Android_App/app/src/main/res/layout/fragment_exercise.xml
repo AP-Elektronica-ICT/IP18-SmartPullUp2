@@ -76,7 +76,7 @@
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="70dp"
-                android:text="Mesurament"
+                android:text="Measurement"
                 android:textAlignment="center"
                 android:textSize="15sp" />
 
@@ -96,7 +96,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/machien_ID_textView"
                 android:layout_centerHorizontal="true"
-                android:text="weight"
+                android:text="Weight"
                 android:textAlignment="center"
                 android:textSize="15sp" />
 
