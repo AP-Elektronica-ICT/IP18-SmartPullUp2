@@ -51,5 +51,6 @@ public class ProfileFragment extends Fragment {
         LoginManager.getInstance().logOut();
         Intent i = new Intent(getActivity(), LoginActivity.class);
         startActivity(i);
+        getActivity().finish();
     }
 }
