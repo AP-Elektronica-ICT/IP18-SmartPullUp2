@@ -96,7 +96,6 @@
                     app:tabGravity="fill"
                     app:tabIndicatorHeight="0dp"
                     app:tabBackground="@drawable/tab_color_selector"
-                    android:id="@+id/bottomNav"
                     android:background="@drawable/bottomnav_border">
 
                 </android.support.design.widget.TabLayout>
