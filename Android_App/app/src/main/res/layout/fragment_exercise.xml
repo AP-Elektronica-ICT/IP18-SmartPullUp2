@@ -20,7 +20,7 @@
         android:id="@+id/card_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
+        android:layout_margin="5dp"
         android:layout_below="@id/btn_Connect_Bar">
 
         <RelativeLayout
@@ -130,8 +130,8 @@
         android:id="@+id/card_view2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:layout_below="@id/card_view">
+        android:layout_below="@id/card_view"
+        android:layout_margin="5dp">
 
     <RelativeLayout
         android:id="@+id/layout_progress2"
@@ -175,7 +175,7 @@
             xmlns:android="http://schemas.android.com/apk/res/android"
             android:layout_width="match_parent"
             android:layout_height="300dp"
-            android:layout_marginTop="10dp"
+            android:layout_margin="5dp"
             android:layout_below="@id/card_view">
 
 
@@ -188,7 +188,7 @@
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="300dp"
-        android:layout_marginTop="10dp"
+        android:layout_margin="5dp"
         android:layout_below="@id/card_view">
 
 
@@ -200,7 +200,7 @@
             xmlns:android="http://schemas.android.com/apk/res/android"
             android:layout_width="match_parent"
             android:layout_height="300dp"
-            android:layout_marginTop="10dp"
+            android:layout_margin="5dp"
             android:layout_below="@id/card_view">
 
 
@@ -212,7 +212,7 @@
             xmlns:android="http://schemas.android.com/apk/res/android"
             android:layout_width="match_parent"
             android:layout_height="300dp"
-            android:layout_marginTop="10dp"
+            android:layout_margin="5dp"
             android:layout_below="@id/card_view">
 
 
