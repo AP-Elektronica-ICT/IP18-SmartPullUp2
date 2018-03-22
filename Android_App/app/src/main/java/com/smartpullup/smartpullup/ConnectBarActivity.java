@@ -90,13 +90,6 @@ public class ConnectBarActivity extends AppCompatActivity {
 
             // Make an intent to start next activity while taking an extra which is the MAC address.
 
-          /*  Intent i = new Intent(ConnectBarActivity.this, MainActivity.class);
-            i.putExtra(EXTRA_DEVICE_ADDRESS, address);
-            startActivity(i);*/
-
-//            Intent i = new Intent(ConnectBarActivity.this, ReceiverActivity.class);
-//            i.putExtra(EXTRA_DEVICE_ADDRESS, address);
-//            startActivity(i);
             Intent MyIntentService = new Intent(ConnectBarActivity.this, BTReceiverService.class);
             MyIntentService.putExtra("address", address);
             startService(MyIntentService );

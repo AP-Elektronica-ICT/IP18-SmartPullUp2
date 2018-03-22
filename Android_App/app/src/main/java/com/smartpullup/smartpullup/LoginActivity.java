@@ -1,8 +1,12 @@
 package com.smartpullup.smartpullup;
 
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Intent;
-import android.os.AsyncTask;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.support.annotation.NonNull;
+import android.support.v4.app.NotificationCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -10,16 +14,14 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
-import com.facebook.FacebookSdk;
 import com.facebook.Profile;
-import com.facebook.appevents.AppEventsLogger;
-import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -81,6 +83,18 @@ public class LoginActivity extends AppCompatActivity {
                                         Log.d(TAG, "signInWithEmail:complete");
                                         //FirebaseUser user = mAuth.getCurrentUser();
                                         goToMainActivity();
+                                        
+                                        //Notification to watch Demo video on first loging
+                                        final NotificationCompat.Builder mBuilder = (NotificationCompat.Builder) new NotificationCompat.Builder(LoginActivity.this).setLargeIcon(BitmapFactory.decodeResource(getResources(), R.drawable.pull_up)).setSmallIcon(R.drawable.pull_up).setContentTitle("Demo Video").setContentText("Watch how Smart pull-up works");
+                                        Intent resultIntent = new Intent(Intent.ACTION_VIEW);
+                                        resultIntent.setData(Uri.parse("https://www.youtube.com/watch?v=-MFjTcIPPFA"));
+                                        PendingIntent resultPendingIntent = PendingIntent.getActivity(LoginActivity.this, 0, resultIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+                                        mBuilder.setContentIntent(resultPendingIntent);
+                                        mBuilder.setAutoCancel(true);
+                                        final int mNotificationID =001;
+                                        NotificationManager mNotifyMgr= (NotificationManager)getSystemService(NOTIFICATION_SERVICE);
+                                        mNotifyMgr.notify(mNotificationID,mBuilder.build());
+
                                     } else {
                                         Log.w(TAG, "signInWithEmail:failure", task.getException());
                                         Toast.makeText(LoginActivity.this, "Authentication failed. \n Wrong username or password.",
@@ -102,8 +116,8 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-        Button registerButton=(Button)findViewById(R.id.btn_Register);
-        registerButton.setOnClickListener(new View.OnClickListener() {
+        TextView registerTextView=(TextView)findViewById(R.id.btn_Register);
+        registerTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent register = new Intent(LoginActivity.this,RegisterActivity.class);
@@ -172,7 +186,7 @@ public class LoginActivity extends AppCompatActivity {
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
                             Log.d(TAG, "signInWithCredential:success");
-                            currentUser = mAuth.getCurrentUser();
+                            //FirebaseUser user = mAuth.getCurrentUser();
                             goToMainActivity();
                         } else {
                             // If sign in fails, display a message to the user.
@@ -185,32 +199,37 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void goToMainActivity(){
-        overlay.setVisibility(View.GONE);
-        checkIfFirstLogin();
+        currentUser = mAuth.getCurrentUser();
+        checkIfFirstFacebookLogin();
         Intent login = new Intent(LoginActivity.this,MainActivity.class);
         startActivity(login);
+        overlay.setVisibility(View.GONE);
+        finish();
     }
 
-    private void checkIfFirstLogin() {
-        userDatabase.equalTo(currentUser.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
+    private void checkIfFirstFacebookLogin() {
+        userDatabase.child(currentUser.getUid()).equalTo(currentUser.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 if(!dataSnapshot.exists()){
-                    Log.d(TAG + " fbLogin", Profile.getCurrentProfile().getFirstName());
+                  /*  Log.d(TAG + " fbLogin", Profile.getCurrentProfile().getFirstName());
                     Log.d(TAG + " fbLogin", Profile.getCurrentProfile().getLastName());
                     Log.d(TAG + " fbLogin", currentUser.getUid());
                     Log.d(TAG + " fbLogin", currentUser.getEmail());
+                  */
 
                     Profile p = Profile.getCurrentProfile();
+                    if(p != null){
+                        User newuser = new User(currentUser.getUid(), p.getFirstName(), p.getLastName(), currentUser.getEmail());
+                        userDatabase.child(currentUser.getUid()).setValue(newuser);
+                    }
 
-                    User newuser = new User(currentUser.getUid(), p.getFirstName(), p.getLastName(), currentUser.getEmail());
-                    userDatabase.child(currentUser.getUid()).setValue(newuser);
                 }
             }
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
-
+                Log.d(TAG, databaseError.getMessage());
             }
         });
 

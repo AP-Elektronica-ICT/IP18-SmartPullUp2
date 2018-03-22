@@ -1,108 +1,223 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="match_parent">
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:fitsSystemWindows="true">
 
-    <Button
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:text="Connect to the Pull-Up Bar"
-        android:id="@+id/btn_Connect_Bar"
-        android:onClick="ConnectToBar"/>
+        android:orientation="vertical">
+
+
+
+
+
+    <android.support.v7.widget.CardView
+        xmlns:card_view="http://schemas.android.com/apk/res-auto"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/card_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:layout_below="@id/btn_Connect_Bar">
+
+        <RelativeLayout
+            android:id="@+id/layout_progress"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/btn_Connect_Bar"
+            android:gravity="center">
+
+            <ProgressBar
+                style="?android:progressBarStyleHorizontal"
+                android:layout_width="350dp"
+                android:layout_height="350dp"
+                android:max="1"
+                android:min="0"
+                android:progress="1"
+                android:progressDrawable="@drawable/main_halfcircularprogressbar_outside_bg"
+                android:rotation="180" />
+
+            <ProgressBar
+                style="?android:progressBarStyleHorizontal"
+                android:layout_width="350dp"
+                android:layout_height="350dp"
+                android:max="1"
+                android:progress="1"
+                android:progressBackgroundTint="@color/LightGrey"
+                android:progressDrawable="@drawable/main_halfcircularprogressbar_inside_bg"
+                android:rotation="180" />
+
+            <ProgressBar
+                android:id="@+id/progress_pullups"
+                style="?android:progressBarStyleHorizontal"
+                android:layout_width="350dp"
+                android:layout_height="350dp"
+                android:max="100"
+                android:progress="100"
+                android:progressDrawable="@drawable/main_halfcircularprogressbar_outside"
+                android:rotation="90" />
+
+            <ProgressBar
+                android:id="@+id/progress_calories"
+                style="?android:progressBarStyleHorizontal"
+                android:layout_width="350dp"
+                android:layout_height="350dp"
+                android:max="100"
+                android:progress="0"
+                android:progressDrawable="@drawable/main_halfcircularprogressbar_inside"
+                android:rotation="180" />
+
+            <TextView
+                android:id="@+id/TypeMesurament_textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="70dp"
+                android:text="Measurement"
+                android:textAlignment="center"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/down_Counter_textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="220dp"
+                android:text="0"
+                android:textAlignment="center"
+                android:textSize="30sp" />
+
+            <TextView
+                android:id="@+id/weight_textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/machien_ID_textView"
+                android:layout_centerHorizontal="true"
+                android:text="Weight"
+                android:textAlignment="center"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/machien_ID_textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/TypeMesurament_textView"
+                android:layout_centerHorizontal="true"
+                android:text="Machine ID"
+                android:textAlignment="center"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/pullUpCounter_textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:text="0"
+                android:textAlignment="center"
+                android:textSize="50sp" />
+
+        </RelativeLayout>
+
+    </android.support.v7.widget.CardView>
+
+    <android.support.v7.widget.CardView
+        xmlns:card_view="http://schemas.android.com/apk/res-auto"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/card_view2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/card_view"
+        android:layout_margin="5dp">
 
     <RelativeLayout
-        android:id="@+id/layout_progress"
-        android:layout_width="350dp"
-        android:layout_height="350dp"
-        android:layout_below="@+id/btn_Connect_Bar"
-        android:layout_centerHorizontal="true">
+        android:id="@+id/layout_progress2"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:elevation="80dp"
+        >
 
-        <ProgressBar
-            style="?android:progressBarStyleHorizontal"
-            android:layout_width="350dp"
-            android:layout_height="350dp"
-            android:max="1"
-            android:progress="1"
-            android:progressDrawable="@drawable/main_halfcircularprogressbar_outside_bg"
-            android:rotation="180" />
+    <TextView
+        android:id="@+id/txt_PullupSpeed"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        android:textAlignment="center"
+        android:text="speed"/>
 
-        <ProgressBar
-            style="?android:progressBarStyleHorizontal"
-            android:layout_width="350dp"
-            android:layout_height="350dp"
-            android:max="1"
-            android:progress="1"
-            android:progressBackgroundTint="@color/LightGrey"
-            android:progressDrawable="@drawable/main_halfcircularprogressbar_inside_bg"
-            android:rotation="180" />
+    <TextView
+        android:id="@+id/txt_PullupAverageSpeed"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        android:textAlignment="center"
+        android:layout_below="@id/txt_PullupSpeed"
+        android:text="avg speed"/>
 
-        <ProgressBar
-            android:id="@+id/progress_pullups"
-            style="?android:progressBarStyleHorizontal"
-            android:layout_width="350dp"
-            android:layout_height="350dp"
-            android:max="50"
-            android:progress="27"
-            android:progressDrawable="@drawable/main_halfcircularprogressbar_outside"
-            android:rotation="180" />
-
-        <ProgressBar
-            android:id="@+id/progress_calories"
-            style="?android:progressBarStyleHorizontal"
-            android:layout_width="350dp"
-            android:layout_height="350dp"
-            android:max="100"
-            android:progress="20"
-            android:progressDrawable="@drawable/main_halfcircularprogressbar_inside"
-            android:rotation="180" />
+    <TextView
+        android:id="@+id/txt_TotalTime"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        android:textAlignment="center"
+        android:layout_below="@id/txt_PullupAverageSpeed"
+        android:text="duration"/>
 
     </RelativeLayout>
 
-    <TextView
-        android:layout_width="200dp"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="-250dp"
-        android:layout_below="@id/layout_progress"
-        android:text="target: 50"
-        android:textAlignment="center"
-        android:textSize="15sp" />
-
-    <TextView
-        android:id="@+id/pullUpCounter_textView"
-        android:layout_width="200dp"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="-220dp"
-        android:layout_below="@id/layout_progress"
-        android:text="27 pullups"
-        android:textAlignment="center"
-        android:textSize="25sp" />
-    <TextView
-        android:id="@+id/testView1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text=""
-        android:textSize="20dp"/>
-    <TextView
-        android:id="@+id/sensorView0"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        android:textSize="20dp"/>
-    <TextView
-        android:id="@+id/textView_up"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/testView1"
-        android:textSize="20dp"/>
-    <TextView
-        android:id="@+id/textView_down"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/textView_up"
-        android:textSize="20dp"/>
+    </android.support.v7.widget.CardView>
+        <android.support.v7.widget.CardView
+            xmlns:card_view="http://schemas.android.com/apk/res-auto"
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            android:layout_margin="5dp"
+            android:layout_below="@id/card_view">
 
 
-</RelativeLayout>
+
+        </android.support.v7.widget.CardView>
+
+
+    <android.support.v7.widget.CardView
+        xmlns:card_view="http://schemas.android.com/apk/res-auto"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:layout_margin="5dp"
+        android:layout_below="@id/card_view">
+
+
+
+    </android.support.v7.widget.CardView>
+
+        <android.support.v7.widget.CardView
+            xmlns:card_view="http://schemas.android.com/apk/res-auto"
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            android:layout_margin="5dp"
+            android:layout_below="@id/card_view">
+
+
+
+        </android.support.v7.widget.CardView>
+
+        <android.support.v7.widget.CardView
+            xmlns:card_view="http://schemas.android.com/apk/res-auto"
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            android:layout_margin="5dp"
+            android:layout_below="@id/card_view">
+
+
+
+        </android.support.v7.widget.CardView>
+    </LinearLayout>
+
+</ScrollView>

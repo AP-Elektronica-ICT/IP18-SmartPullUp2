@@ -23,11 +23,11 @@
         <activity android:name=".MainActivity" android:screenOrientation="portrait" />
         <activity android:name=".RegisterActivity" android:screenOrientation="portrait" />
         <activity android:name=".ConnectBarActivity" android:screenOrientation="portrait" />
-        <activity android:name=".ReceiverActivity" android:screenOrientation="portrait" />
 
         <service
             android:name=".BTReceiverService"
-            android:exported="false"></service>
+            android:exported="false">
+        </service>
 
         <meta-data android:name="com.facebook.sdk.ApplicationId"
             android:value="@string/facebook_app_id"/>
