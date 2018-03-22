@@ -1,14 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:fitsSystemWindows="true"
-    >
+    android:fitsSystemWindows="true">
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:orientation="vertical"
         android:background="@drawable/background_gradient">
 
@@ -70,12 +69,14 @@
             android:text="No account yet? Create one"
             android:gravity="center"
             android:textSize="16dip"/>
+
         <com.facebook.login.widget.LoginButton
             android:id="@+id/login_button"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_gravity="center_horizontal"
-            android:layout_margin="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginLeft="10dp"
             android:elevation="0.5dp"/>
 
     </LinearLayout>
@@ -84,20 +85,22 @@
         android:id="@+id/LoginProgressOverlay"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:visibility="gone"
-        android:alpha="0.4"
+        android:visibility="invisible"
         android:animateLayoutChanges="true"
-        android:clickable="true">
+        android:clickable="true"
+        android:layout_centerInParent="true"
+
+        >
 
         <ProgressBar
             android:id="@+id/LoginProgress"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerInParent="true"/>
+            android:layout_centerInParent="true" />
 
     </RelativeLayout>
 
-    </LinearLayout>
+    </RelativeLayout>
 
 
-</ScrollView>
+</RelativeLayout>

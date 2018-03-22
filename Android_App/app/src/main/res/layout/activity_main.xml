@@ -10,8 +10,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/relLayout"
-        android:background="@drawable/background_gradient">
+        android:id="@+id/relLayout">
 
 
             <android.support.v7.widget.Toolbar
@@ -47,17 +46,11 @@
                     android:id="@+id/btn_Connect_Bar"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
-                    android:layout_marginRight="10dp"
-                    />
+                    android:layout_marginRight="10dp" />
 
                 </RelativeLayout>
 
             </android.support.v7.widget.Toolbar>
-
-
-
-
-
 
         <RelativeLayout
             android:layout_width="match_parent"
