@@ -89,7 +89,7 @@
                     app:tabGravity="fill"
                     app:tabIndicatorHeight="0dp"
                     app:tabBackground="@drawable/tab_color_selector"
-                    android:background="@color/ColorTheme">
+                    android:background="@color/White">
 
                 </android.support.design.widget.TabLayout>
 

@@ -60,29 +60,29 @@ public class MainActivity extends AppCompatActivity {
         tabLayout.getTabAt(1).setIcon(R.drawable.ic_podium);
         tabLayout.getTabAt(2).setIcon(R.drawable.ic_person);
 
-        tabLayout.setOnTabSelectedListener(
-                new TabLayout.ViewPagerOnTabSelectedListener(mViewPager) {
-
-                    @Override
-                    public void onTabSelected(TabLayout.Tab tab) {
-                        super.onTabSelected(tab);
-                        int tabIconColor = ContextCompat.getColor(MainActivity.this, R.color.Black);
-                        tab.getIcon().setColorFilter(tabIconColor, PorterDuff.Mode.SRC_IN);
-                    }
-
-                    @Override
-                    public void onTabUnselected(TabLayout.Tab tab) {
-                        super.onTabUnselected(tab);
-                        int tabIconColor = ContextCompat.getColor(MainActivity.this, R.color.White);
-                        tab.getIcon().setColorFilter(tabIconColor, PorterDuff.Mode.SRC_IN);
-                    }
-
-                    @Override
-                    public void onTabReselected(TabLayout.Tab tab) {
-                        super.onTabReselected(tab);
-                    }
-                }
-        );
+//        tabLayout.setOnTabSelectedListener(
+//                new TabLayout.ViewPagerOnTabSelectedListener(mViewPager) {
+//
+//                    @Override
+//                    public void onTabSelected(TabLayout.Tab tab) {
+//                        super.onTabSelected(tab);
+//                        int tabIconColor = ContextCompat.getColor(MainActivity.this, R.color.Black);
+//                        tab.getIcon().setColorFilter(tabIconColor, PorterDuff.Mode.SRC_IN);
+//                    }
+//
+//                    @Override
+//                    public void onTabUnselected(TabLayout.Tab tab) {
+//                        super.onTabUnselected(tab);
+//                        int tabIconColor = ContextCompat.getColor(MainActivity.this, R.color.White);
+//                        tab.getIcon().setColorFilter(tabIconColor, PorterDuff.Mode.SRC_IN);
+//                    }
+//
+//                    @Override
+//                    public void onTabReselected(TabLayout.Tab tab) {
+//                        super.onTabReselected(tab);
+//                    }
+//                }
+//        );
     }
 
     private void setupViewPager(ViewPager viewPager){
