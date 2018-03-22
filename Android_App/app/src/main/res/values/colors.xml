@@ -10,5 +10,6 @@
     <color name="tab_background_selected">#303F9F</color>
     <color name="tab_background_unselected">#FFFFFF</color>
     <color name="ColorTheme">#4682B4</color>
+    <color name="ColorThemeSelector">#91b6d4</color>
 
 </resources>

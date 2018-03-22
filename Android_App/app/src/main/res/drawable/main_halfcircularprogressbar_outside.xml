@@ -3,7 +3,8 @@
     android:shape="ring"
     android:thickness="20dp"
     android:useLevel="true"
-    android:innerRadius="140dp">
+    android:innerRadius="140dp"
+    >
 
     <gradient
         android:startColor="@android:color/holo_green_light"
