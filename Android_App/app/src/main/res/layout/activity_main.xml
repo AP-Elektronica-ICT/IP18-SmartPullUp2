@@ -79,21 +79,17 @@
 
             <android.support.design.widget.AppBarLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="bottom"
-                >
+                android:layout_height="match_parent"
+                android:layout_gravity="bottom">
 
                 <android.support.design.widget.TabLayout
                     android:id="@+id/bottomNav"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/bottomnav_border"
+                    android:layout_height="match_parent"
                     app:tabGravity="fill"
-                    app:tabIndicatorColor="@color/colorPrimaryDark"
                     app:tabIndicatorHeight="0dp"
-                    app:tabPaddingEnd="0dp"
-                    app:tabPaddingStart="0dp"
-                    app:tabBackground="@color/ColorTheme">
+                    app:tabBackground="@drawable/tab_color_selector"
+                    android:background="@drawable/bottomnav_border">
 
                 </android.support.design.widget.TabLayout>
 

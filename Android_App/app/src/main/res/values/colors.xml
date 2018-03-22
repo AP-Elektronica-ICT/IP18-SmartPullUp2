@@ -7,6 +7,8 @@
     <color name="LightGrey">#c6c6c6</color>
     <color name="White">#FFFFFF</color>
     <color name="Black">#000000</color>
+    <color name="tab_background_selected">#303F9F</color>
+    <color name="tab_background_unselected">#FFFFFF</color>
     <color name="ColorTheme">#4682B4</color>
 
 </resources>
