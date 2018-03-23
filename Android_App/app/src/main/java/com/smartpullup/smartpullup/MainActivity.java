@@ -7,9 +7,11 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -29,8 +31,6 @@ public class MainActivity extends AppCompatActivity {
 
     @SuppressLint("HandlerLeak")
     private FirebaseAuth mAuth;
-
-    JSONBroadcastReceiver JSONBroadcastReceiver;
 
     private SectionsPagerAdapter mSectionsStatePagerAdapter;
     private ViewPager mViewPager;
@@ -60,16 +60,29 @@ public class MainActivity extends AppCompatActivity {
         tabLayout.getTabAt(1).setIcon(R.drawable.ic_podium);
         tabLayout.getTabAt(2).setIcon(R.drawable.ic_person);
 
-        JSONBroadcastReceiver = new JSONBroadcastReceiver();
-
-        //register BroadcastReceiver
-        IntentFilter intentFilter = new IntentFilter(BTReceiverService.ACTION_MyIntentService);
-        intentFilter.addCategory(Intent.CATEGORY_DEFAULT);
-        registerReceiver(JSONBroadcastReceiver, intentFilter);
-
-        //Log.i(TAG, String.valueOf(JSONBroadcastReceiver.upJsonData));
-
-
+//        tabLayout.setOnTabSelectedListener(
+//                new TabLayout.ViewPagerOnTabSelectedListener(mViewPager) {
+//
+//                    @Override
+//                    public void onTabSelected(TabLayout.Tab tab) {
+//                        super.onTabSelected(tab);
+//                        int tabIconColor = ContextCompat.getColor(MainActivity.this, R.color.Black);
+//                        tab.getIcon().setColorFilter(tabIconColor, PorterDuff.Mode.SRC_IN);
+//                    }
+//
+//                    @Override
+//                    public void onTabUnselected(TabLayout.Tab tab) {
+//                        super.onTabUnselected(tab);
+//                        int tabIconColor = ContextCompat.getColor(MainActivity.this, R.color.White);
+//                        tab.getIcon().setColorFilter(tabIconColor, PorterDuff.Mode.SRC_IN);
+//                    }
+//
+//                    @Override
+//                    public void onTabReselected(TabLayout.Tab tab) {
+//                        super.onTabReselected(tab);
+//                    }
+//                }
+//        );
     }
 
     private void setupViewPager(ViewPager viewPager){
@@ -81,21 +94,9 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        unregisterReceiver(JSONBroadcastReceiver);
-    }
-
     public void ConnectToBar(View view) {
         Intent intentConnect = new Intent(MainActivity.this, ConnectBarActivity.class);
         startActivity(intentConnect);
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-
     }
 
     @Override

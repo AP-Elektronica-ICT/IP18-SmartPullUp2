@@ -1,115 +1,139 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="match_parent"
-    android:id="@+id/ExerciseLayout">
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
 
-    <Button
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:text="Connect"
-        android:id="@+id/btn_Connect_Bar"
-        android:onClick="ConnectToBar"/>
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:id="@+id/layout_progress"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center">
+
+
+            <ProgressBar
+                style="?android:progressBarStyleHorizontal"
+                android:layout_width="350dp"
+                android:layout_height="350dp"
+                android:max="1"
+                android:min="0"
+                android:progress="1"
+                android:progressDrawable="@drawable/main_halfcircularprogressbar_outside_bg"
+                android:rotation="180" />
+
+            <ProgressBar
+                style="?android:progressBarStyleHorizontal"
+                android:layout_width="350dp"
+                android:layout_height="350dp"
+                android:max="1"
+                android:progress="1"
+                android:progressBackgroundTint="@color/LightGrey"
+                android:progressDrawable="@drawable/main_halfcircularprogressbar_inside_bg"
+                android:rotation="180" />
+
+            <ProgressBar
+                android:id="@+id/progress_pullups"
+                style="?android:progressBarStyleHorizontal"
+                android:layout_width="350dp"
+                android:layout_height="350dp"
+                android:max="100"
+                android:progress="90"
+                android:progressDrawable="@drawable/main_halfcircularprogressbar_outside"
+                android:rotation="90"
+                android:background="@drawable/shadow_prog_bar"/>
+
+            <ProgressBar
+                android:id="@+id/progress_calories"
+                style="?android:progressBarStyleHorizontal"
+                android:layout_width="350dp"
+                android:layout_height="350dp"
+                android:max="100"
+                android:progress="0"
+                android:progressDrawable="@drawable/main_halfcircularprogressbar_inside"
+                android:rotation="180" />
+
+            </RelativeLayout>
+
+            <TextView
+                android:id="@+id/TypeMesurament_textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="70dp"
+                android:text="Measurement"
+                android:textAlignment="center"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/down_Counter_textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="220dp"
+                android:text="0"
+                android:textAlignment="center"
+                android:textSize="30sp" />
+
+            <TextView
+                android:id="@+id/weight_textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/machien_ID_textView"
+                android:layout_centerHorizontal="true"
+                android:text="Weight"
+                android:textAlignment="center"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/machien_ID_textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/TypeMesurament_textView"
+                android:layout_centerHorizontal="true"
+                android:text="Machine ID"
+                android:textAlignment="center"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/pullUpCounter_textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:text="0"
+                android:textAlignment="center"
+                android:textSize="50sp" />
+
+        </RelativeLayout>
+
+
+
+    <android.support.v7.widget.CardView
+        xmlns:card_view="http://schemas.android.com/apk/res-auto"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/card_view2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/layout_progress"
+        android:layout_margin="5dp"
+        card_view:cardCornerRadius="5dp">
 
     <RelativeLayout
-        android:id="@+id/layout_progress"
-        android:layout_width="350dp"
-        android:layout_height="350dp"
-        android:layout_below="@+id/btn_Connect_Bar"
-        android:layout_centerHorizontal="true">
-
-        <ProgressBar
-            style="?android:progressBarStyleHorizontal"
-            android:layout_width="350dp"
-            android:layout_height="350dp"
-            android:max="1"
-            android:progress="1"
-            android:progressDrawable="@drawable/main_halfcircularprogressbar_outside_bg"
-            android:rotation="180" />
-
-        <ProgressBar
-            style="?android:progressBarStyleHorizontal"
-            android:layout_width="350dp"
-            android:layout_height="350dp"
-            android:max="1"
-            android:progress="1"
-            android:progressBackgroundTint="@color/LightGrey"
-            android:progressDrawable="@drawable/main_halfcircularprogressbar_inside_bg"
-            android:rotation="180" />
-
-        <ProgressBar
-            android:id="@+id/progress_pullups"
-            style="?android:progressBarStyleHorizontal"
-            android:layout_width="350dp"
-            android:layout_height="350dp"
-            android:max="100"
-            android:progress="27"
-            android:progressDrawable="@drawable/main_halfcircularprogressbar_outside"
-            android:rotation="180" />
-
-        <ProgressBar
-            android:id="@+id/progress_calories"
-            style="?android:progressBarStyleHorizontal"
-            android:layout_width="350dp"
-            android:layout_height="350dp"
-            android:max="100"
-            android:progress="0"
-            android:progressDrawable="@drawable/main_halfcircularprogressbar_inside"
-            android:rotation="180" />
-
-        <TextView
-            android:layout_width="200dp"
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="81dp"
-            android:text=""
-            android:textAlignment="center"
-            android:textSize="15sp"
-            android:id="@+id/TypeMesurament_textView" />
-
-        <TextView
-            android:layout_width="200dp"
-            android:layout_height="wrap_content"
-            android:layout_alignStart="@+id/TypeMesurament_textView"
-            android:layout_below="@+id/TypeMesurament_textView"
-            android:textAlignment="center"
-            android:textSize="15sp"
-            android:id="@+id/machien_ID_textView" />
-
-        <TextView
-            android:id="@+id/down_Counter_textView"
-            android:layout_width="200dp"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_alignStart="@+id/machien_ID_textView"
-            android:layout_marginBottom="87dp"
-            android:textAlignment="center"
-            android:textSize="30sp" />
-
-        <TextView
-            android:id="@+id/weight_textView"
-            android:layout_width="200dp"
-            android:layout_height="wrap_content"
-            android:layout_above="@+id/down_Counter_textView"
-            android:layout_alignStart="@+id/down_Counter_textView"
-            android:textAlignment="center"
-            android:textSize="15sp" />
-
-
-    </RelativeLayout>
-
-
-    <TextView
-        android:id="@+id/pullUpCounter_textView"
-        android:layout_width="200dp"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="-220dp"
-        android:layout_below="@id/layout_progress"
-        android:text="0"
-        android:textAlignment="center"
-        android:textSize="50sp" />
+        android:id="@+id/layout_progress2"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:elevation="80dp"
+        >
 
     <TextView
         android:id="@+id/txt_PullupSpeed"
@@ -117,7 +141,6 @@
         android:layout_height="wrap_content"
         android:textSize="20sp"
         android:textAlignment="center"
-        android:layout_below="@id/layout_progress"
         android:text="speed"/>
 
     <TextView
@@ -137,39 +160,58 @@
         android:textAlignment="center"
         android:layout_below="@id/txt_PullupAverageSpeed"
         android:text="duration"/>
-<!--
-    <Button
-        android:id="@+id/test_pullup"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:text="pullup"/>
--->
-    <TextView
-        android:id="@+id/testView1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text=""
-        android:textSize="20dp"/>
-    <TextView
-        android:id="@+id/sensorView0"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        android:textSize="20dp"/>
-    <TextView
-        android:id="@+id/textView_up"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/testView1"
-        android:textSize="20dp"/>
-    <TextView
-        android:id="@+id/textView_down"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/textView_up"
-        android:textSize="20dp"/>
+
+    </RelativeLayout>
+
+    </android.support.v7.widget.CardView>
+        <android.support.v7.widget.CardView
+            xmlns:card_view="http://schemas.android.com/apk/res-auto"
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            android:layout_margin="5dp"
+            card_view:cardCornerRadius="5dp">
 
 
-</RelativeLayout>
+
+        </android.support.v7.widget.CardView>
+
+
+    <android.support.v7.widget.CardView
+        xmlns:card_view="http://schemas.android.com/apk/res-auto"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:layout_margin="5dp"
+        card_view:cardCornerRadius="5dp">
+
+
+
+    </android.support.v7.widget.CardView>
+
+        <android.support.v7.widget.CardView
+            xmlns:card_view="http://schemas.android.com/apk/res-auto"
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            android:layout_margin="5dp"
+            card_view:cardCornerRadius="5dp">
+
+
+
+        </android.support.v7.widget.CardView>
+
+        <android.support.v7.widget.CardView
+            xmlns:card_view="http://schemas.android.com/apk/res-auto"
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            android:layout_margin="5dp"
+            card_view:cardCornerRadius="5dp">
+
+
+
+        </android.support.v7.widget.CardView>
+    </LinearLayout>
+
+</ScrollView>

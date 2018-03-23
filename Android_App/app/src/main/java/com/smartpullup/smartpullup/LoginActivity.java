@@ -14,6 +14,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.facebook.AccessToken;
@@ -115,8 +116,8 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-        Button registerButton=(Button)findViewById(R.id.btn_Register);
-        registerButton.setOnClickListener(new View.OnClickListener() {
+        TextView registerTextView=(TextView)findViewById(R.id.btn_Register);
+        registerTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent register = new Intent(LoginActivity.this,RegisterActivity.class);
@@ -203,6 +204,7 @@ public class LoginActivity extends AppCompatActivity {
         Intent login = new Intent(LoginActivity.this,MainActivity.class);
         startActivity(login);
         overlay.setVisibility(View.GONE);
+        finish();
     }
 
     private void checkIfFirstFacebookLogin() {

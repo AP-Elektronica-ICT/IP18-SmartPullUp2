@@ -27,6 +27,8 @@ public class JSONBroadcastReceiver extends BroadcastReceiver {
     public void onReceive(Context context, Intent intent) {
         JSONStructureInput = intent.getStringExtra(BTReceiverService.EXTRA_KEY_OUT);
 
+        Log.i(TAG, "JSONStructureInput= " + JSONStructureInput);
+
         //Making JSON obj from input string
         try {
             JSONInputData = new JSONObject(JSONStructureInput);
@@ -36,9 +38,9 @@ public class JSONBroadcastReceiver extends BroadcastReceiver {
             int machine_ID_JsonData = JSONInputData.getInt("machine_ID");
             //Log.i(TAG, "machine ID= " + machine_ID_JsonData);
             int upJsonData = JSONInputData.getInt("up");
-            //Log.i(TAG, "up= " + upJsonData);
+            Log.i(TAG, "up= " + upJsonData);
             int downJsonData = JSONInputData.getInt("down");
-            //Log.i(TAG, "down= " + downJsonData);
+            Log.i(TAG, "down= " + downJsonData);
             double weightJsonData = JSONInputData.getDouble("weight");
             //Log.i(TAG, "weight= " + weightJsonData);
 
@@ -49,6 +51,7 @@ public class JSONBroadcastReceiver extends BroadcastReceiver {
             editor.putInt("down", downJsonData);
             editor.putInt("weight", (int) weightJsonData);
             editor.commit();
+            editor.clear();
 
 
         } catch (JSONException e) {
