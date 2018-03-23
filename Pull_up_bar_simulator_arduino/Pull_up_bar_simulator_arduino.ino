@@ -122,9 +122,10 @@ void loop() {
   //
   /*else {
     root["type"] = "Initial";
+ */
     root["machine_ID"] = 1;
     root["weight"] = 85.5;
-  }*/
+  //}
 
   //Printing JSON structure in a string
   //
