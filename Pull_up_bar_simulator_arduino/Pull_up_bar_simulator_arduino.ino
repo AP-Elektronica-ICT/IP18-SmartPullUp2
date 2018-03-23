@@ -26,7 +26,7 @@ SoftwareSerial BTserial(10, 11); // RX | TX
 
 const int upPin = 2; //Button for the up counting
 const int downPin = 3; //Button for the down counting 
-
+const int resetPin = 4; //Reset button
 
 int downState = 0;
 int upState = 0;
@@ -42,6 +42,7 @@ void setup() {
 
   pinMode(upPin, INPUT);
   pinMode(downPin, INPUT);
+  pinMode(resetPin, INPUT);
 
   //Initialize Serial Bluetooth
   BTserial.begin(9600);
@@ -95,15 +96,19 @@ void loop() {
   //
   downState = digitalRead(downPin);
   upState = digitalRead(upPin);
- 
+  resetState = digitalRead(resetPin);
+
+  if (resetState == HIGH) {
+    pullUp = 0;
+    pullDown = 0;
+    currentMillis = 0;
+  }
 
   if (upState == HIGH) {
     pullUp = currentMillis;
-    delay(1000);
   }
   else if (downState == HIGH) {
     pullDown = currentMillis;
-    delay(1000);
   }
 
   //Adding values to the JSON structure
@@ -128,6 +133,7 @@ void loop() {
 
   //Sending the JSON data in a string via BLuetooth
   BTserial.print(output);
+  Serial.println(output);
 
   delay(20);
 }

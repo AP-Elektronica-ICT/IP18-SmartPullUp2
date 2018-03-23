@@ -115,8 +115,8 @@ public class ExerciseFragment extends Fragment {
                         CounterUp();
                         CounterDown();
 
-                        calculateSpeed();
-/*
+//                        calculateSpeed();
+
                         SetTextUpCounter(String.valueOf(counterUp));
                         SetTextDownCounter(String.valueOf(counterDown));
                         SetTextUpMachineID(String.valueOf(machine_ID_Input));
@@ -130,8 +130,8 @@ public class ExerciseFragment extends Fragment {
                         pbCounterDown.setProgress(counterDown);
 
                         SetTextWeight(String.valueOf(weightInput));
-*/
-                        updateUI();
+
+                        //updateUI();
                     }
                 });
     }
@@ -157,7 +157,7 @@ public class ExerciseFragment extends Fragment {
             previousValueDown = downInput;
         }
     }
-
+/*
     public double getPullupSpeed() {
         return pullupSpeed;
     }
@@ -167,7 +167,7 @@ public class ExerciseFragment extends Fragment {
         pullupSpeeds.add(pullupSpeed);
         updateUI();
     }
-
+*/
     private void InputData(SharedPreferences prefs) {
         typeInput = prefs.getString("type", "");
         upInput = prefs.getInt("up", 0);
@@ -176,7 +176,7 @@ public class ExerciseFragment extends Fragment {
         machine_ID_Input = prefs.getInt("machine_ID", 0);
         weightInput = prefs.getInt("weight", 0);
     }
-
+/*
     private void updateUI() {
         txt_PullupSpeed.setText("Speed: " + Double.toString(pullupSpeed));
         txt_PullupAverageSpeed.setText("Average Speed: " + Double.toString(calculateAverage()));
@@ -201,7 +201,7 @@ public class ExerciseFragment extends Fragment {
     private void calculateSpeed() {
         setPullupSpeed(upInput - previousValueUp);
     }
-/*
+*/
     private void SetTextUpCounter(String text) {
         counterUpTextView = (TextView) view.findViewById(R.id.pullUpCounter_textView);
         counterUpTextView.setText(text);
@@ -227,5 +227,5 @@ public class ExerciseFragment extends Fragment {
         type_TextView = (TextView) view.findViewById(R.id.TypeMesurament_textView);
         type_TextView.setText(text);
     }
-*/
+
 }
