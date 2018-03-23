@@ -115,8 +115,6 @@ public class ExerciseFragment extends Fragment {
                         CounterUp();
                         CounterDown();
 
-                        calculateSpeed();
-/*
                         SetTextUpCounter(String.valueOf(counterUp));
                         SetTextDownCounter(String.valueOf(counterDown));
                         SetTextUpMachineID(String.valueOf(machine_ID_Input));
@@ -124,13 +122,13 @@ public class ExerciseFragment extends Fragment {
                         SetTextWeight(String.valueOf(weightInput)+ " kg");
 
                         ProgressBar pbCounterUp = (ProgressBar) view.findViewById(R.id.progress_pullups);
-                        pbCounterUp.setProgress(counterDown);
+                        pbCounterUp.setProgress(counterUp);
 
                         ProgressBar pbCounterDown = (ProgressBar) view.findViewById(R.id.progress_calories);
                         pbCounterDown.setProgress(counterDown);
 
                         SetTextWeight(String.valueOf(weightInput));
-*/
+
                         updateUI();
                     }
                 });
@@ -146,6 +144,7 @@ public class ExerciseFragment extends Fragment {
         if(upInput != previousValueUp)
         {
             counterUp++;
+            calculateSpeed();
             previousValueUp = upInput;
         }
     }
@@ -180,7 +179,7 @@ public class ExerciseFragment extends Fragment {
     private void updateUI() {
         txt_PullupSpeed.setText("Speed: " + Double.toString(pullupSpeed));
         txt_PullupAverageSpeed.setText("Average Speed: " + Double.toString(calculateAverage()));
-        counterUpTextView.setText(counterUp);
+/*        counterUpTextView.setText(counterUp);
         counterDownTextView.setText(counterDown);
         weightTextView.setText(Double.toString(weightInput));
         machineID_TextView.setText(machine_ID_Input);
@@ -188,7 +187,7 @@ public class ExerciseFragment extends Fragment {
 
         pbCounterUp.setProgress(counterDown);
         pbCounterDown.setProgress(counterDown);
-    }
+*/    }
 
     private double calculateAverage() {
         int sum = 0;
@@ -199,33 +198,33 @@ public class ExerciseFragment extends Fragment {
     }
 
     private void calculateSpeed() {
-        setPullupSpeed(upInput - previousValueUp);
+        setPullupSpeed((upInput - previousValueUp)/1000);
     }
-/*
+
     private void SetTextUpCounter(String text) {
-        counterUpTextView = (TextView) view.findViewById(R.id.pullUpCounter_textView);
+        //counterUpTextView = (TextView) view.findViewById(R.id.pullUpCounter_textView);
         counterUpTextView.setText(text);
     }
 
 
     private void SetTextDownCounter(String text){
-        counterDownTextView = (TextView) view.findViewById(R.id.down_Counter_textView);
+        //counterDownTextView = (TextView) view.findViewById(R.id.down_Counter_textView);
         counterDownTextView.setText(text);
     }
 
     private void SetTextWeight(String text){
-        weightTextView = (TextView) view.findViewById(R.id.weight_textView);
+        //weightTextView = (TextView) view.findViewById(R.id.weight_textView);
         weightTextView.setText(text);
     }
 
     private void SetTextUpMachineID(String text){
-        machineID_TextView = (TextView) view.findViewById(R.id.machien_ID_textView);
+        //machineID_TextView = (TextView) view.findViewById(R.id.machien_ID_textView);
         machineID_TextView.setText(text);
     }
 
     private void SetTextUpTypeMesurament(String text){
-        type_TextView = (TextView) view.findViewById(R.id.TypeMesurament_textView);
+        //type_TextView = (TextView) view.findViewById(R.id.TypeMesurament_textView);
         type_TextView.setText(text);
     }
-*/
+
 }
