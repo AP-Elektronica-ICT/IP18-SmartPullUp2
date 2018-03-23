@@ -30,7 +30,7 @@
                 android:progress="1"
                 android:progressDrawable="@drawable/main_halfcircularprogressbar_outside_bg"
                 android:rotation="180" />
-
+<!--
             <ProgressBar
                 style="?android:progressBarStyleHorizontal"
                 android:layout_width="350dp"
@@ -40,7 +40,7 @@
                 android:progressBackgroundTint="@color/LightGrey"
                 android:progressDrawable="@drawable/main_halfcircularprogressbar_inside_bg"
                 android:rotation="180" />
-
+-->
             <ProgressBar
                 android:id="@+id/progress_pullups"
                 style="?android:progressBarStyleHorizontal"
@@ -51,7 +51,7 @@
                 android:progressDrawable="@drawable/main_halfcircularprogressbar_outside"
                 android:rotation="90"
                 android:background="@drawable/shadow_prog_bar"/>
-
+<!--
             <ProgressBar
                 android:id="@+id/progress_calories"
                 style="?android:progressBarStyleHorizontal"
@@ -61,7 +61,7 @@
                 android:progress="0"
                 android:progressDrawable="@drawable/main_halfcircularprogressbar_inside"
                 android:rotation="180" />
-
+-->
             </RelativeLayout>
 
             <TextView
@@ -73,7 +73,7 @@
                 android:text="Measurement"
                 android:textAlignment="center"
                 android:textSize="15sp" />
-
+<!--
             <TextView
                 android:id="@+id/down_Counter_textView"
                 android:layout_width="wrap_content"
@@ -83,7 +83,7 @@
                 android:text="0"
                 android:textAlignment="center"
                 android:textSize="30sp" />
-
+-->
             <TextView
                 android:id="@+id/weight_textView"
                 android:layout_width="wrap_content"

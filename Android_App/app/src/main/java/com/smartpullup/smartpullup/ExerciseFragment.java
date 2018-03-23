@@ -29,7 +29,7 @@ public class ExerciseFragment extends Fragment {
     private SharedPreferences prefs;
 
     private TextView counterUpTextView;
-    private TextView counterDownTextView;
+    //private TextView counterDownTextView;
     private TextView weightTextView;
     private TextView machineID_TextView;
     private TextView type_TextView;
@@ -39,7 +39,7 @@ public class ExerciseFragment extends Fragment {
     private TextView txt_TotalTime;
 
     ProgressBar pbCounterUp;
-    ProgressBar pbCounterDown;
+    //ProgressBar pbCounterDown;
 
     private double pullupSpeed;
 
@@ -79,13 +79,13 @@ public class ExerciseFragment extends Fragment {
         txt_TotalTime = (TextView)view.findViewById(R.id.txt_TotalTime);
 
         counterUpTextView = (TextView) view.findViewById(R.id.pullUpCounter_textView);
-        counterDownTextView = (TextView) view.findViewById(R.id.down_Counter_textView);
+        //counterDownTextView = (TextView) view.findViewById(R.id.down_Counter_textView);
         weightTextView = (TextView) view.findViewById(R.id.weight_textView);
         machineID_TextView = (TextView) view.findViewById(R.id.machien_ID_textView);
         type_TextView = (TextView) view.findViewById(R.id.TypeMesurament_textView);
 
         pbCounterUp = (ProgressBar) view.findViewById(R.id.progress_pullups);
-        pbCounterDown = (ProgressBar) view.findViewById(R.id.progress_calories);
+        //pbCounterDown = (ProgressBar) view.findViewById(R.id.progress_calories);
 
 /*
         Button pullupButton = (Button)view.findViewById(R.id.test_pullup);
@@ -158,13 +158,13 @@ public class ExerciseFragment extends Fragment {
         txt_PullupSpeed.setText("Speed: " + Double.toString(pullupSpeed));
         txt_PullupAverageSpeed.setText("Average Speed: " + Double.toString(calculateAverage()));
         counterUpTextView.setText(Integer.toString(counterUp));
-        counterDownTextView.setText(Integer.toString(counterDown));
+        //counterDownTextView.setText(Integer.toString(counterDown));
         weightTextView.setText(Double.toString(weightInput));
         machineID_TextView.setText(Integer.toString(machine_ID_Input));
         type_TextView.setText(typeInput);
 
         pbCounterUp.setProgress(counterUp);
-        pbCounterDown.setProgress(counterDown);
+        //pbCounterDown.setProgress(counterDown);
     }
 
     private double calculateAverage() {
