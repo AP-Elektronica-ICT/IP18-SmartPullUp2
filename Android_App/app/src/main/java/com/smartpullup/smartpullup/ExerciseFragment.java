@@ -168,6 +168,8 @@ public class ExerciseFragment extends Fragment {
     }
 
     private double calculateAverage() {
+        if(pullupSpeeds.size() == 0)
+            return 0;
         int sum = 0;
         for (double i:pullupSpeeds) {
             sum += i;
