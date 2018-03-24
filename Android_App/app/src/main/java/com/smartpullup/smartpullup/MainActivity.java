@@ -32,6 +32,8 @@ public class MainActivity extends AppCompatActivity {
     @SuppressLint("HandlerLeak")
     private FirebaseAuth mAuth;
 
+    JSONBroadcastReceiver JSONBroadcastReceiver;
+
     private SectionsPagerAdapter mSectionsStatePagerAdapter;
     private ViewPager mViewPager;
 
@@ -46,6 +48,8 @@ public class MainActivity extends AppCompatActivity {
 
         //firebase Authentication
         mAuth = FirebaseAuth.getInstance();
+
+        registerJSONBroadcastReceiver();
 
         //navigation
         mSectionsStatePagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
@@ -94,6 +98,16 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    private void registerJSONBroadcastReceiver() {
+        JSONBroadcastReceiver = new JSONBroadcastReceiver();
+
+        IntentFilter intentFilter = new IntentFilter(BTReceiverService.ACTION_MyIntentService);
+        intentFilter.addCategory(Intent.CATEGORY_DEFAULT);
+        registerReceiver(JSONBroadcastReceiver, intentFilter);
+
+        Log.i(TAG, "registered JSONBroadcastReceiver");
+    }
+
     public void ConnectToBar(View view) {
         Intent intentConnect = new Intent(MainActivity.this, ConnectBarActivity.class);
         startActivity(intentConnect);
@@ -108,4 +122,9 @@ public class MainActivity extends AppCompatActivity {
         stopService(MyIntentService );
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        unregisterReceiver(JSONBroadcastReceiver);
+    }
 }
