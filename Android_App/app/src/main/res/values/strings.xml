@@ -13,4 +13,19 @@
     <string name="facebook_app_id">196148254305512</string>
     <string name="fb_login_protocol_scheme">fb196148254305512</string>
 
+    <string name="workout_more_explanation">More</string>
+    <string name="card_title_workout_1">Standard chin-up</string>
+    <string name="card_title_workout_2">The climber pull-up</string>
+    <string name="card_title_workout_3">Behind neck pull-up</string>
+    <string name="card_title_workout_4">Gironda sternum chin-up</string>
+    <string name="card_title_workout_5">Negative pull-ups</string>
+    <string name="card_title_workout_6">Band assisted chin-up</string>
+    <string name="card_title_workout_7">Windscreen wipers</string>
+    <string name="card_title_workout_8">Bat wing chin-up</string>
+    <string name="card_title_workout_9">Hanging leg raises</string>
+    <string name="card_title_workout_10">Hanging Reverse Shoulder Shrugs</string>
+
+    <string name="card_content_workout_2">Grab the bar with a shoulder-width grip, palms facing you. Pull yourself up until your chin is level with the bar, then slowly lower until your arms are fully extended. If you can not initially do full chin-ups and pull-ups, work up to them using moves 5 and 6. This classic grip hits both your biceps and forearms, as well as your back.</string>
+
+
 </resources>
