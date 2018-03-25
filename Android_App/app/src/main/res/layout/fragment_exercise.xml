@@ -47,7 +47,7 @@
                 android:layout_width="350dp"
                 android:layout_height="350dp"
                 android:max="100"
-                android:progress="90"
+                android:progress="0"
                 android:progressDrawable="@drawable/main_halfcircularprogressbar_outside"
                 android:rotation="90"
                 android:background="@drawable/shadow_prog_bar"/>
