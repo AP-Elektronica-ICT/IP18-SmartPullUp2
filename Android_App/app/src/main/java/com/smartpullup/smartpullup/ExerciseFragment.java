@@ -3,6 +3,7 @@ package com.smartpullup.smartpullup;
 import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.media.MediaPlayer;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -14,6 +15,7 @@ import android.view.animation.DecelerateInterpolator;
 import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,7 +35,7 @@ public class ExerciseFragment extends Fragment {
     private TextView weightTextView;
     private TextView machineID_TextView;
     private TextView type_TextView;
-
+    //final MediaPlayer beepSound = new MediaPlayer();
     private TextView txt_PullupSpeed;
     private TextView txt_PullupAverageSpeed;
     private TextView txt_TotalTime;
@@ -65,6 +67,7 @@ public class ExerciseFragment extends Fragment {
 
         prefs = getContext().getSharedPreferences(MY_PREFS_NAME, Context.MODE_MULTI_PROCESS);
 
+
         pullupSpeeds = new ArrayList<>();
     }
 
@@ -83,7 +86,7 @@ public class ExerciseFragment extends Fragment {
         weightTextView = (TextView) view.findViewById(R.id.weight_textView);
         machineID_TextView = (TextView) view.findViewById(R.id.machien_ID_textView);
         type_TextView = (TextView) view.findViewById(R.id.TypeMesurament_textView);
-
+        //beepSound.create(getActivity(),R.raw.beep);
         pbCounterUp = (ProgressBar) view.findViewById(R.id.progress_pullups);
         //pbCounterDown = (ProgressBar) view.findViewById(R.id.progress_calories);
 
@@ -127,6 +130,7 @@ public class ExerciseFragment extends Fragment {
         if(upInput != previousValueUp)
         {
             counterUp++;
+            //beepSound.start();
             calculateSpeed();
             previousValueUp = upInput;
         }

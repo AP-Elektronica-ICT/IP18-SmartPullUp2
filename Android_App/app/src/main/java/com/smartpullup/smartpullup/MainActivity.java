@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
+import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
@@ -40,6 +41,7 @@ public class MainActivity extends AppCompatActivity {
     public final ExerciseFragment ExerciseFragment = new ExerciseFragment();
     public final LeaderboardFragment LeaderboardFragment = new LeaderboardFragment();
     public final ProfileFragment ProfileFragment = new ProfileFragment();
+    public final WorkoutFragment WorkoutFragment = new WorkoutFragment();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,9 +62,16 @@ public class MainActivity extends AppCompatActivity {
         TabLayout tabLayout = (TabLayout) findViewById(R.id.bottomNav);
         tabLayout.setupWithViewPager(mViewPager);
 
+        BottomTabLayout(tabLayout);
+
+    }
+
+    private void BottomTabLayout(TabLayout tabLayout){
+
         tabLayout.getTabAt(0).setIcon(R.drawable.ic_home);
         tabLayout.getTabAt(1).setIcon(R.drawable.ic_podium);
-        tabLayout.getTabAt(2).setIcon(R.drawable.ic_person);
+        tabLayout.getTabAt(2).setIcon(R.drawable.ic_workout);
+        tabLayout.getTabAt(3).setIcon(R.drawable.ic_person);
 
         tabLayout.setOnTabSelectedListener(
                 new TabLayout.ViewPagerOnTabSelectedListener(mViewPager) {
@@ -87,12 +96,14 @@ public class MainActivity extends AppCompatActivity {
                     }
                 }
         );
+
     }
 
     private void setupViewPager(ViewPager viewPager){
         SectionsPagerAdapter adapter = new SectionsPagerAdapter(getSupportFragmentManager());
         adapter.addFragment(ExerciseFragment);
         adapter.addFragment(LeaderboardFragment);
+        adapter.addFragment(WorkoutFragment);
         adapter.addFragment(ProfileFragment);
         viewPager.setAdapter(adapter);
 
