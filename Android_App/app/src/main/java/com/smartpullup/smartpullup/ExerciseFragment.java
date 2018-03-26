@@ -155,9 +155,9 @@ public class ExerciseFragment extends Fragment {
     }
 
     private void updateUI() {
-        txt_PullupSpeed.setText("Speed: " + String.format("%.2f", pullupSpeed));
-        txt_PullupAverageSpeed.setText("Average Speed: " + String.format("%.2f", calculateAverage()));
-        txt_TotalTime.setText("duration: " + String.format("%.2f", upInput / 1000.0) );
+        txt_PullupSpeed.setText("Speed: " + String.format("%.2f", pullupSpeed) + " s");
+        txt_PullupAverageSpeed.setText("Average Speed: " + String.format("%.2f", calculateAverage()) + " s");
+        txt_TotalTime.setText("duration: " + Double.toString(upInput / 1000.0) + " s");
         counterUpTextView.setText(Integer.toString(counterUp));
         //counterDownTextView.setText(Integer.toString(counterDown));
         weightTextView.setText(Double.toString(weightInput));
