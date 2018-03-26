@@ -35,7 +35,7 @@ public class ExerciseFragment extends Fragment {
     private TextView weightTextView;
     private TextView machineID_TextView;
     private TextView type_TextView;
-    //final MediaPlayer beepSound = new MediaPlayer();
+
     private TextView txt_PullupSpeed;
     private TextView txt_PullupAverageSpeed;
     private TextView txt_TotalTime;
@@ -61,7 +61,7 @@ public class ExerciseFragment extends Fragment {
     private int previousValueUp;
     private int previousValueDown;
 
-
+     MediaPlayer beepSound;
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
@@ -86,7 +86,7 @@ public class ExerciseFragment extends Fragment {
         weightTextView = (TextView) view.findViewById(R.id.weight_textView);
         machineID_TextView = (TextView) view.findViewById(R.id.machien_ID_textView);
         type_TextView = (TextView) view.findViewById(R.id.TypeMesurament_textView);
-        //beepSound.create(getActivity(),R.raw.beep);
+
         pbCounterUp = (ProgressBar) view.findViewById(R.id.progress_pullups);
         //pbCounterDown = (ProgressBar) view.findViewById(R.id.progress_calories);
 
@@ -130,7 +130,8 @@ public class ExerciseFragment extends Fragment {
         if(upInput != previousValueUp)
         {
             counterUp++;
-            //beepSound.start();
+            beepSound =MediaPlayer.create(getActivity(),R.raw.beep);
+            beepSound.start();
             calculateSpeed();
             previousValueUp = upInput;
         }
