@@ -155,8 +155,9 @@ public class ExerciseFragment extends Fragment {
     }
 
     private void updateUI() {
-        txt_PullupSpeed.setText("Speed: " + Double.toString(pullupSpeed));
-        txt_PullupAverageSpeed.setText("Average Speed: " + Double.toString(calculateAverage()));
+        txt_PullupSpeed.setText("Speed: " + String.format("%.2f", pullupSpeed));
+        txt_PullupAverageSpeed.setText("Average Speed: " + String.format("%.2f", calculateAverage()));
+        txt_TotalTime.setText("duration: " + String.format("%.2f", upInput / 1000.0) );
         counterUpTextView.setText(Integer.toString(counterUp));
         //counterDownTextView.setText(Integer.toString(counterDown));
         weightTextView.setText(Double.toString(weightInput));
@@ -170,7 +171,7 @@ public class ExerciseFragment extends Fragment {
     private double calculateAverage() {
         if(pullupSpeeds.size() == 0)
             return 0;
-        int sum = 0;
+        double sum = 0;
         for (double i:pullupSpeeds) {
             sum += i;
         }
@@ -178,6 +179,6 @@ public class ExerciseFragment extends Fragment {
     }
 
     private void calculateSpeed() {
-        setPullupSpeed((upInput - previousValueUp)/1000);
+        setPullupSpeed((upInput - previousValueUp)/1000.0);
     }
 }
