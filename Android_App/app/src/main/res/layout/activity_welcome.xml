@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:fitsSystemWindows="true"
+    android:id="@+id/welcome_layout"
+    tools:context="com.smartpullup.smartpullup.WelcomeActivity"
+    android:background="@drawable/background_gradient_list">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        >
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingTop="20dp"
+            android:paddingLeft="24dp"
+            android:paddingRight="24dp">
+
+            <android.support.v7.widget.AppCompatButton
+                android:id="@+id/btn_login"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/colorAccent"
+                android:text="Log in"
+                android:textColor="#fff"
+                android:layout_gravity="right"/>
+
+            <ImageView
+                android:layout_width="276dp"
+                android:layout_height="166dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="0dp"
+                android:src="@drawable/pull_up" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Welcome to Smart Pullup Bar"
+                android:textColor="@color/Black"
+                android:textSize="20dp"
+                android:gravity="center"/>
+
+            <android.support.v7.widget.AppCompatButton
+                android:id="@+id/btn_create_account"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:layout_marginBottom="24dp"
+                android:textColor="#fff"
+                android:padding="12dp"
+                android:text="Create account"
+                android:backgroundTint="@color/colorAccent"/>
+
+            <com.facebook.login.widget.LoginButton
+                android:id="@+id/login_fb_button"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginRight="10dp"
+                android:layout_marginLeft="10dp"
+                android:elevation="0.5dp"/>
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+
+</android.support.constraint.ConstraintLayout>
