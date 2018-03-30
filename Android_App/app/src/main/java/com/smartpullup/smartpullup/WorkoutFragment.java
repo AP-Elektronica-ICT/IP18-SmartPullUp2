@@ -1,16 +1,12 @@
 package com.smartpullup.smartpullup;
 
-import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.Toolbar;
 
 
 public class WorkoutFragment extends Fragment {
@@ -21,18 +17,20 @@ public class WorkoutFragment extends Fragment {
     WorkoutListAdapter list_adapter;
 
     String[] workout_titel;
+    String[] workout_content;
+
 
     public static int [] workout_images ={
-            R.drawable.ic_home,
-            R.drawable.ic_home,
-            R.drawable.ic_home,
-            R.drawable.ic_home,
-            R.drawable.ic_home,
-            R.drawable.ic_home,
-            R.drawable.ic_home,
-            R.drawable.ic_home,
-            R.drawable.ic_home,
-            R.drawable.ic_home,
+            R.drawable.workout_img_1,
+            R.drawable.workout_img_2,
+            R.drawable.workout_img_3,
+            R.drawable.workout_img_4,
+            R.drawable.workout_img_5,
+            R.drawable.workout_img_6,
+            R.drawable.workout_img_7,
+            R.drawable.workout_img_8,
+            R.drawable.workout_img_9,
+            R.drawable.workout_img_10,
     };
 
 
@@ -58,6 +56,19 @@ public class WorkoutFragment extends Fragment {
 
         };
 
+        workout_content = new  String[] {
+                getString(R.string.card_content_workout_1),
+                getString(R.string.card_content_workout_2),
+                getString(R.string.card_content_workout_3),
+                getString(R.string.card_content_workout_4),
+                getString(R.string.card_content_workout_5),
+                getString(R.string.card_content_workout_6),
+                getString(R.string.card_content_workout_7),
+                getString(R.string.card_content_workout_8),
+                getString(R.string.card_content_workout_9),
+                getString(R.string.card_content_workout_10),
+        };
+
         init();
         workout_listview.setAdapter(list_adapter);
 
@@ -69,7 +80,7 @@ public class WorkoutFragment extends Fragment {
         //toolbar = (Toolbar) view.findViewById(R.id.toolbar);
         //setSupportActionBar(toolbar);
         //getSupportActionBar().setTitle("List Cards");
-        list_adapter = new WorkoutListAdapter(this,workout_titel, workout_images);
+        list_adapter = new WorkoutListAdapter(this, workout_titel,workout_content, workout_images);
         workout_listview = (ListView) view.findViewById(R.id.workout_listView);
     }
 

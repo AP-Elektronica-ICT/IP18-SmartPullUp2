@@ -14,13 +14,15 @@ import com.squareup.picasso.Picasso;
 public class WorkoutListAdapter extends BaseAdapter {
 
     String [] result;
+    String [] content;
     WorkoutFragment context;
     int [] imageId;
     private static LayoutInflater inflater=null;
 
-    public WorkoutListAdapter(WorkoutFragment workoutFragment, String[] prgmNameList, int[] prgmImages) {
+    public WorkoutListAdapter(WorkoutFragment workoutFragment, String[] prgmNameList,String[] prgmContentList, int[] prgmImages) {
     // TODO Auto-generated constructor stub
         result=prgmNameList;
+        content = prgmContentList;
         context=workoutFragment;
         imageId=prgmImages;
         inflater = ( LayoutInflater )context.getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -48,6 +50,7 @@ public class WorkoutListAdapter extends BaseAdapter {
     {
         TextView titel_workout_textView;
         ImageView image_workout_imageView;
+        TextView content_workout_textView;
     }
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
@@ -56,10 +59,13 @@ public class WorkoutListAdapter extends BaseAdapter {
         View view;
         view = inflater.inflate(R.layout.fragment_workout_list_item, null);
 
-        holder.titel_workout_textView=(TextView) view.findViewById(R.id.titel_cardView);
         holder.image_workout_imageView=(ImageView) view.findViewById(R.id.workout_imageView);
+        holder.image_workout_imageView.setScaleType(ImageView.ScaleType.FIT_CENTER);
+        holder.titel_workout_textView=(TextView) view.findViewById(R.id.titel_cardView);
+        holder.content_workout_textView = (TextView)view.findViewById(R.id.text_content_cardView);
 
         holder.titel_workout_textView.setText(result[position]);
+        holder.content_workout_textView.setText(content[position]);
         Picasso.with(context.getContext()).load(imageId[position]).into(holder.image_workout_imageView);
 
         view.setOnClickListener(new View.OnClickListener() {
