@@ -26,8 +26,9 @@
                 android:id="@+id/btn_login"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:backgroundTint="@color/colorAccent"
+                android:backgroundTint="@color/Black"
                 android:text="Log in"
+                android:onClick="GoToLogin"
                 android:textColor="#fff"
                 android:layout_gravity="right"/>
 
@@ -43,7 +44,7 @@
                 android:layout_height="wrap_content"
                 android:text="Welcome to Smart Pullup Bar"
                 android:textColor="@color/Black"
-                android:textSize="20dp"
+                android:textSize="25dp"
                 android:gravity="center"/>
 
             <android.support.v7.widget.AppCompatButton
@@ -51,22 +52,24 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="24dp"
-                android:layout_marginBottom="24dp"
+                android:layout_marginBottom="15dp"
+                android:onClick="GoToCrateAccount"
                 android:textColor="#fff"
                 android:padding="12dp"
                 android:text="Create account"
-                android:backgroundTint="@color/colorAccent"/>
+                android:backgroundTint="@color/Black"/>
 
             <com.facebook.login.widget.LoginButton
                 android:id="@+id/login_fb_button"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginRight="10dp"
-                android:layout_marginLeft="10dp"
+                android:layout_marginRight="3dp"
+                android:layout_marginLeft="3dp"
                 android:elevation="0.5dp"/>
 
         </LinearLayout>
+
 
     </RelativeLayout>
 
