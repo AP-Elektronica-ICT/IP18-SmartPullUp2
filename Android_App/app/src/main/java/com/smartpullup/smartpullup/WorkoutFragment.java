@@ -20,16 +20,20 @@ public class WorkoutFragment extends Fragment {
     ListView workout_listview;
     WorkoutListAdapter list_adapter;
 
-    String[] languages = new String[] {
+    String[] workout_titel;
 
-            String.valueOf(R.string.card_title_workout_1),
-            String.valueOf(R.string.card_title_workout_2),
-
-    };
-
-    public static int [] language_images={
+    public static int [] workout_images ={
             R.drawable.ic_home,
-            R.drawable.ic_home,};
+            R.drawable.ic_home,
+            R.drawable.ic_home,
+            R.drawable.ic_home,
+            R.drawable.ic_home,
+            R.drawable.ic_home,
+            R.drawable.ic_home,
+            R.drawable.ic_home,
+            R.drawable.ic_home,
+            R.drawable.ic_home,
+    };
 
 
     @Nullable
@@ -38,6 +42,21 @@ public class WorkoutFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         view = inflater.inflate(R.layout.fragment_workout, container, false);
+
+        workout_titel = new String[] {
+
+                getString(R.string.card_title_workout_1),
+                getString(R.string.card_title_workout_2),
+                getString(R.string.card_title_workout_3),
+                getString(R.string.card_title_workout_4),
+                getString(R.string.card_title_workout_5),
+                getString(R.string.card_title_workout_6),
+                getString(R.string.card_title_workout_7),
+                getString(R.string.card_title_workout_8),
+                getString(R.string.card_title_workout_9),
+                getString(R.string.card_title_workout_10),
+
+        };
 
         init();
         workout_listview.setAdapter(list_adapter);
@@ -50,7 +69,7 @@ public class WorkoutFragment extends Fragment {
         //toolbar = (Toolbar) view.findViewById(R.id.toolbar);
         //setSupportActionBar(toolbar);
         //getSupportActionBar().setTitle("List Cards");
-        list_adapter = new WorkoutListAdapter(this,languages, language_images);
+        list_adapter = new WorkoutListAdapter(this,workout_titel, workout_images);
         workout_listview = (ListView) view.findViewById(R.id.workout_listView);
     }
 
