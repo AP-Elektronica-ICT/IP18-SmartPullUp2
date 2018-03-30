@@ -6,6 +6,7 @@ import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 
 public class WelcomeActivity extends LoginActivity {
@@ -18,6 +19,9 @@ public class WelcomeActivity extends LoginActivity {
         setContentView(R.layout.activity_welcome);
 
         BackgroundAnimation();
+
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
+                WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
 
 
 
