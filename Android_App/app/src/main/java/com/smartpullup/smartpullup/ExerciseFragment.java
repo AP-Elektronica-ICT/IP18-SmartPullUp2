@@ -134,6 +134,8 @@ public class ExerciseFragment extends Fragment {
             beepSound.start();
             calculateSpeed();
             previousValueUp = upInput;
+        }else if (upInput == 0){
+            counterUp = 0;
         }
     }
 
@@ -142,6 +144,8 @@ public class ExerciseFragment extends Fragment {
         {
             counterDown++;
             previousValueDown = downInput;
+        }else if (downInput == 0){
+            counterDown = 0;
         }
     }
 
@@ -165,7 +169,7 @@ public class ExerciseFragment extends Fragment {
         txt_TotalTime.setText("duration: " + Double.toString(upInput / 1000.0) + " s");
         counterUpTextView.setText(Integer.toString(counterUp));
         //counterDownTextView.setText(Integer.toString(counterDown));
-        weightTextView.setText(Double.toString(weightInput));
+        weightTextView.setText(Double.toString(weightInput) + " kg");
         //machineID_TextView.setText(Integer.toString(machine_ID_Input));
         type_TextView.setText(typeInput);
 
