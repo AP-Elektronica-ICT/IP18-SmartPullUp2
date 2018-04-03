@@ -170,7 +170,7 @@ public class ExerciseFragment extends Fragment {
         type_TextView.setText(typeInput);
 
         pbCounterUp.setProgress(counterUp);
-        //pbCounterDown.setProgress(counterDown);
+        
     }
 
     private double calculateAverage() {
