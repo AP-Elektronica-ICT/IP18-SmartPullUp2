@@ -40,18 +40,20 @@ public class JSONBroadcastReceiver extends BroadcastReceiver {
         try {
             JSONInputData = new JSONObject(JSONStructureInput);
 
-            typeJsonData = JSONInputData.getString("type");
+            typeJsonData = JSONInputData.getString("Type");
 
-            if (typeJsonData.equals("initial")){
-                weightJsonData = JSONInputData.getDouble("weight");
+            if (typeJsonData.equals("Initial")){
+                weightJsonData = JSONInputData.getDouble("Weight");
                 actualWeight = weightJsonData;
                 upJsonData = 0;
                 downJsonData = 0;
             }else{
                 weightJsonData = weightJsonData;
-                upJsonData = JSONInputData.getInt("up");
-                downJsonData = JSONInputData.getInt("down");
+                upJsonData = JSONInputData.getInt("Up");
+                downJsonData = JSONInputData.getInt("Down");
             }
+
+
             Log.i(TAG, "type= " + typeJsonData);
             Log.i(TAG, "weight= " + weightJsonData);
             Log.i(TAG, "up= " + upJsonData);
