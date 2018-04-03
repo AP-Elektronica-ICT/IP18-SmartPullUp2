@@ -29,12 +29,12 @@ void filter()   //The purpose of this function is to filter the output from the 
 {
 for(i = 0; i < 30; i++) 
   {
-    input = analogRead(A0);       //reads value from Analog pin.
-    median.in(input);             //passes the value to the median filter.
-    input = median.out();         //takes the filtered value from the median filter.
-    average = average + input;    //adds the values from median filter output.
+    input = analogRead(A0);                   //reads value from Analog pin.
+    median.in(input);                         //passes the value to the median filter.
+    input = median.out();                     //takes the filtered value from the median filter.
+    average = average + input;                //adds the values from median filter output.
   }
-average = average / 30.0;         //after adding the values this divides the value with the number of samples.
+average = average / 30.0;                     //after adding the values this divides the value with the number of samples.
 feedback = feedback * 0.8 + 0.2 * average;    //here we are doin feedback filtering for the average.
 output = feedback;                            
 }
@@ -69,7 +69,7 @@ if(output < ref_rest_avg - 50)    //compares if the output from filter(); is les
           }
        }
   }
-else                                                     //if there's no person hanging from the bar the program will reset the values of hanging reference and start time.
+else                                                    //if there's no person hanging from the bar the program will reset the values of hanging reference and start time.
   {
     Start = 0;
     ref_hang_avg = 0;
@@ -88,7 +88,7 @@ Serial.println(Count);
   }
 
   
-int Counter(int value){                                         //This is the Counting function that compares the values and decides if the pull-up is countable or not.
+int Counter(int value){                                        //This is the Counting function that compares the values and decides if the pull-up is countable or not.
   
   if(value > ref_hang_avg - ref_hang_avg * 0.08)               //checks if the person who's doing the pull-up has came down to starting position. if so it gives true to the boolean and exits from the subroutine
   {
