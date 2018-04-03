@@ -4,17 +4,20 @@
 #include <MsTimer2.h>
 SoftwareSerial Bluetooth (7,8); // RX and TX Pins
 const size_t bufferSize = JSON_OBJECT_SIZE(3);
-String Output;
-int Button;   
-const int State = 0;
-int previous,Shutter;
-boolean First = false;
+
+  
+
+
+
 
 MedianFilter median(5, 600);        //here is the parameters for the median filter. It takes the median of 5 different samples and if the starting value is empty (seed) it will give the value of 600.
+String Output;
 
 double sampling = 20; 
 double sampleTime = 0;
 double Start = 0;
+double Downtime = 0;
+double Uptime = 0;
 
 float average = 0.0;
 float feedback = 0.0;
@@ -27,12 +30,15 @@ int i = 0;
 int Count = 0;
 int old_func_value = 0;
 int oldout = 0;
+int Button;
+int previous,Shutter; 
+
 long int ref_rest_avg = 0;
 long int ref_hang_avg = 0;
-
+const int State = 0;
 
 boolean Flag = true;
-
+boolean First = false;
 
 void filter()   //The purpose of this function is to filter the output from the circuit.
 {
@@ -82,14 +88,16 @@ else                                                    //if there's no person h
   {
     Start = 0;
     ref_hang_avg = 0;
+    Uptime = 0;
+    Downtime = 0;
   }
-Serial.print(sampleTime);
-Serial.print("\t");
-/*Serial.print(Start);
-Serial.print("\t");*/
 Serial.print(output);
 Serial.print("\t");
 Serial.print(ref_hang_avg);
+Serial.print("\t");
+Serial.print(Downtime);
+Serial.print("\t");
+Serial.print(Uptime);
 Serial.print("\t");
 Serial.println(Count);
 
@@ -101,6 +109,7 @@ int Counter(int value){                                        //This is the Cou
   
   if(value > ref_hang_avg - ref_hang_avg * 0.08)               //checks if the person who's doing the pull-up has came down to starting position. if so it gives true to the boolean and exits from the subroutine
   {
+    Downtime = sampleTime;
     Flag=true;
     return;
   }
@@ -109,9 +118,10 @@ int Counter(int value){                                        //This is the Cou
   {
     if(Flag==true)
     {
-      if(value < ref_hang_avg - ref_hang_avg * 0.1)           //if the flag is true and the person whos hanging on the bar has put enough force to the bar.
+      if(value < ref_hang_avg - ref_hang_avg * 0.15)           //if the flag is true and the person whos hanging on the bar has put enough force to the bar.
       {
         Count++;                                              //it will up the count by 1.
+        Uptime = sampleTime;
         Flag = false;                                         //it will turn the flag to false so the pull-upper must go down before the next pull-up can be counted.
         return;                                               //exits the subroutine
       }
@@ -164,7 +174,7 @@ void setup() {
   Serial.begin(9600);
   pinMode(11,OUTPUT);
   digitalWrite(11,HIGH);
-  pinMode(4,INPUT_PULLUP); // this enables Arduino's internal pull up resistor so you don't need to get an external resistor to your button circuit
+  pinMode(4,INPUT_PULLUP);                                  // this enables Arduino's internal pull up resistor so you don't need to get an external resistor to your button circuit
 for(int n=0; n<150; n++)                                    //calculates the average reference from the bar when no one is hanging from it.
 {
   filter();
@@ -179,6 +189,7 @@ pinMode(A0,INPUT);
 
 
 void loop() {
+  /*
       previous = Button;
       Debounce();
       Button = digitalRead(4);
@@ -206,6 +217,6 @@ void loop() {
         }
       }
       }
-      
+      */
    
 }
