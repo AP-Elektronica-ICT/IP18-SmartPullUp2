@@ -117,14 +117,14 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-        TextView registerTextView=(TextView)findViewById(R.id.btn_Register);
-        registerTextView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent register = new Intent(LoginActivity.this,RegisterActivity.class);
-                startActivity(register);
-            }
-        });
+//        TextView registerTextView=(TextView)findViewById(R.id.btn_Register);
+//        registerTextView.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Intent register = new Intent(LoginActivity.this,RegisterActivity.class);
+//                startActivity(register);
+//            }
+//        });
 
         // Initialize Facebook Login
         mCallbackManager = CallbackManager.Factory.create();

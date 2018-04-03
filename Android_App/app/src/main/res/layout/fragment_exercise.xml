@@ -69,37 +69,17 @@
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="70dp"
-                android:text="Measurement"
+                android:text="Type"
                 android:textAlignment="center"
                 android:textSize="15sp" />
-<!--
-            <TextView
-                android:id="@+id/down_Counter_textView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="220dp"
-                android:text="0"
-                android:textAlignment="center"
-                android:textSize="30sp" />
 -->
             <TextView
                 android:id="@+id/weight_textView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/machien_ID_textView"
-                android:layout_centerHorizontal="true"
-                android:text="Weight"
-                android:textAlignment="center"
-                android:textSize="15sp" />
-
-            <TextView
-                android:id="@+id/machien_ID_textView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
                 android:layout_below="@id/TypeMesurament_textView"
                 android:layout_centerHorizontal="true"
-                android:text="Machine ID"
+                android:text="Weight"
                 android:textAlignment="center"
                 android:textSize="15sp" />
 
@@ -111,7 +91,7 @@
                 android:layout_centerVertical="true"
                 android:text="0"
                 android:textAlignment="center"
-                android:textSize="50sp" />
+                android:textSize="100sp" />
 
         </RelativeLayout>
 

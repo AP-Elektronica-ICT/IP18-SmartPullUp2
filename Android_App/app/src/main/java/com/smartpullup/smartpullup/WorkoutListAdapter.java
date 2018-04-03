@@ -68,13 +68,6 @@ public class WorkoutListAdapter extends BaseAdapter {
         holder.content_workout_textView.setText(content[position]);
         Picasso.with(context.getContext()).load(imageId[position]).into(holder.image_workout_imageView);
 
-        view.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-        // TODO Auto-generated method stub
-                Toast.makeText(context.getContext(), "You Clicked " + result[position], Toast.LENGTH_LONG).show();
-            }
-        });
         return view;
     }
 

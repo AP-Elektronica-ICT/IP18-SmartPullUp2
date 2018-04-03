@@ -33,7 +33,7 @@ public class ExerciseFragment extends Fragment {
     private TextView counterUpTextView;
     //private TextView counterDownTextView;
     private TextView weightTextView;
-    private TextView machineID_TextView;
+    //private TextView machineID_TextView;
     private TextView type_TextView;
 
     private TextView txt_PullupSpeed;
@@ -84,7 +84,7 @@ public class ExerciseFragment extends Fragment {
         counterUpTextView = (TextView) view.findViewById(R.id.pullUpCounter_textView);
         //counterDownTextView = (TextView) view.findViewById(R.id.down_Counter_textView);
         weightTextView = (TextView) view.findViewById(R.id.weight_textView);
-        machineID_TextView = (TextView) view.findViewById(R.id.machien_ID_textView);
+        //machineID_TextView = (TextView) view.findViewById(R.id.machien_ID_textView);
         type_TextView = (TextView) view.findViewById(R.id.TypeMesurament_textView);
 
         pbCounterUp = (ProgressBar) view.findViewById(R.id.progress_pullups);
@@ -134,6 +134,8 @@ public class ExerciseFragment extends Fragment {
             beepSound.start();
             calculateSpeed();
             previousValueUp = upInput;
+        }else if (upInput == 0){
+            counterUp = 0;
         }
     }
 
@@ -142,6 +144,8 @@ public class ExerciseFragment extends Fragment {
         {
             counterDown++;
             previousValueDown = downInput;
+        }else if (downInput == 0){
+            counterDown = 0;
         }
     }
 
@@ -155,7 +159,7 @@ public class ExerciseFragment extends Fragment {
         upInput = prefs.getInt("up", 0);
         downInput = prefs.getInt("down", 0);
         Log.i(TAG, String.valueOf("Up: " + upInput + "Down: " + downInput));
-        machine_ID_Input = prefs.getInt("machine_ID", 0);
+        //machine_ID_Input = prefs.getInt("machine_ID", 0);
         weightInput = prefs.getInt("weight", 0);
     }
 
@@ -165,8 +169,8 @@ public class ExerciseFragment extends Fragment {
         txt_TotalTime.setText("duration: " + Double.toString(upInput / 1000.0) + " s");
         counterUpTextView.setText(Integer.toString(counterUp));
         //counterDownTextView.setText(Integer.toString(counterDown));
-        weightTextView.setText(Double.toString(weightInput));
-        machineID_TextView.setText(Integer.toString(machine_ID_Input));
+        weightTextView.setText(Double.toString(weightInput) + " kg");
+        //machineID_TextView.setText(Integer.toString(machine_ID_Input));
         type_TextView.setText(typeInput);
 
         pbCounterUp.setProgress(counterUp);
