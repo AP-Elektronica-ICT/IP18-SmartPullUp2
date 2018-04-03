@@ -35,18 +35,18 @@ public class JSONBroadcastReceiver extends BroadcastReceiver {
 
             String typeJsonData = JSONInputData.getString("type");
             //Log.i(TAG, "type= " + typeJsonData);
-            int machine_ID_JsonData = JSONInputData.getInt("machine_ID");
+            //int machine_ID_JsonData = JSONInputData.getInt("machine_ID");
             //Log.i(TAG, "machine ID= " + machine_ID_JsonData);
             int upJsonData = JSONInputData.getInt("up");
             Log.i(TAG, "up= " + upJsonData);
             int downJsonData = JSONInputData.getInt("down");
             Log.i(TAG, "down= " + downJsonData);
-            double weightJsonData = JSONInputData.getDouble("weight");
-            //Log.i(TAG, "weight= " + weightJsonData);
+            double weightJsonData = 85.5;
+            Log.i(TAG, "weight= " + weightJsonData);
 
             SharedPreferences.Editor editor = context.getSharedPreferences(MY_PREFS_NAME, context.MODE_PRIVATE).edit();
             editor.putString("type", typeJsonData);
-            editor.putInt("machine_ID", machine_ID_JsonData);
+            //editor.putInt("machine_ID", machine_ID_JsonData);
             editor.putInt("up", upJsonData);
             editor.putInt("down", downJsonData);
             editor.putInt("weight", (int) weightJsonData);
