@@ -61,6 +61,7 @@
                 android:progressDrawable="@drawable/main_halfcircularprogressbar_inside"
                 android:rotation="180" />
 -->
+
             </RelativeLayout>
 
             <TextView
@@ -95,13 +96,22 @@
 
         </RelativeLayout>
 
+        <com.hookedonplay.decoviewlib.DecoView
+            xmlns:custom="http://schemas.android.com/apk/res-auto"
+            custom:dv_lineWidth="26dp"
+            android:id="@+id/dynamicArcView"
+            android:layout_width="match_parent"
+            android:layout_height="350dp" />
+
+
+
         <android.support.v7.widget.CardView
             xmlns:card_view="http://schemas.android.com/apk/res-auto"
             xmlns:android="http://schemas.android.com/apk/res/android"
             android:id="@+id/card_view2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/layout_progress"
+            android:layout_below="@id/dynamicArcView"
             android:layout_margin="5dp"
             card_view:cardCornerRadius="5dp">
 
@@ -141,6 +151,8 @@
             </RelativeLayout>
 
         </android.support.v7.widget.CardView>
+
+
 
     </LinearLayout>
 

@@ -3,6 +3,7 @@ package com.smartpullup.smartpullup;
 import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.media.MediaPlayer;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
@@ -16,6 +17,10 @@ import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+
+import com.hookedonplay.decoviewlib.DecoView;
+import com.hookedonplay.decoviewlib.charts.SeriesItem;
+import com.hookedonplay.decoviewlib.events.DecoEvent;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -61,6 +66,8 @@ public class ExerciseFragment extends Fragment {
     private int previousValueUp;
     private int previousValueDown;
 
+    final SeriesItem seriesItem = null;
+
      MediaPlayer beepSound;
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -89,6 +96,37 @@ public class ExerciseFragment extends Fragment {
 
         pbCounterUp = (ProgressBar) view.findViewById(R.id.progress_pullups);
         //pbCounterDown = (ProgressBar) view.findViewById(R.id.progress_calories);
+
+        //DecoView
+
+        DecoView arcView = (DecoView)view.findViewById(R.id.dynamicArcView);
+
+        // Create background track
+        arcView.addSeries(new SeriesItem.Builder(Color.argb(255, 218, 218, 218))
+                .setRange(0, 100, 100)
+                .setLineWidth(80f)
+                .build());
+
+        //Create data series track
+        SeriesItem seriesItem1 = new SeriesItem.Builder(Color.argb(255, 64, 196, 0))
+                .setRange(0, 100, 50)
+                .setLineWidth(60f)
+                .build();
+
+        int series1Index = arcView.addSeries(seriesItem1);
+
+        arcView.configureAngles(320, 0);
+
+
+
+        arcView.addEvent(new DecoEvent.Builder(DecoEvent.EventType.EVENT_SHOW, true)
+                .setDelay(1000)
+                .setDuration(2000)
+                .build());
+
+        arcView.addEvent(new DecoEvent.Builder(25).setIndex(series1Index).setDelay(4000).build());
+        arcView.addEvent(new DecoEvent.Builder(100).setIndex(series1Index).setDelay(8000).build());
+        arcView.addEvent(new DecoEvent.Builder(10).setIndex(series1Index).setDelay(12000).build());
 
 /*
         Button pullupButton = (Button)view.findViewById(R.id.test_pullup);
