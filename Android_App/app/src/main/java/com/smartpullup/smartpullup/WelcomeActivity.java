@@ -24,8 +24,6 @@ public class WelcomeActivity extends LoginActivity {
                 WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
 
 
-
-
     }
 
     private void BackgroundAnimation(){

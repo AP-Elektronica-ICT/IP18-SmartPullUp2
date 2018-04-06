@@ -81,7 +81,7 @@ public class ProfileFragment extends Fragment {
                         Toast.LENGTH_SHORT).show();
             }
         });
-        
+
 
         btnLogout.setOnClickListener(new View.OnClickListener() {
             @Override
