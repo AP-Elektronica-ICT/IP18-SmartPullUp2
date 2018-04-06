@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
-    android:layout_height="fill_parent">
+    android:layout_height="fill_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -19,48 +19,27 @@
                 android:layout_height="wrap_content"
                 android:gravity="center">
 
+                <pl.pawelkleczkowski.customgauge.CustomGauge
+                    android:id="@+id/progress_pullups"
+                    android:layout_margin="10dp"
+                    android:layout_width="340dp"
+                    android:layout_height="340dp"
+                    android:layout_centerHorizontal="true"
+                    android:paddingBottom="10dp"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:paddingTop="10dp"
+                    app:gaugePointStartColor="@color/GreenStartProgressBar"
+                    app:gaugePointEndColor="@color/GreenStartProgressBar"
+                    app:gaugeEndValue="30"
+                    app:gaugeStartAngle="120"
+                    app:gaugeStartValue="0"
+                    app:gaugeStrokeCap="ROUND"
+                    app:gaugeStrokeWidth="20dp"
+                    app:gaugeSweepAngle="300"
+                    app:gaugeStrokeColor="@color/LightGrey"/>
 
-            <ProgressBar
-                style="?android:progressBarStyleHorizontal"
-                android:layout_width="350dp"
-                android:layout_height="350dp"
-                android:max="1"
-                android:min="0"
-                android:progress="1"
-                android:progressDrawable="@drawable/main_halfcircularprogressbar_outside_bg"
-                android:rotation="180" />
-<!--
-            <ProgressBar
-                style="?android:progressBarStyleHorizontal"
-                android:layout_width="350dp"
-                android:layout_height="350dp"
-                android:max="1"
-                android:progress="1"
-                android:progressBackgroundTint="@color/LightGrey"
-                android:progressDrawable="@drawable/main_halfcircularprogressbar_inside_bg"
-                android:rotation="180" />
--->
-            <ProgressBar
-                android:id="@+id/progress_pullups"
-                style="?android:progressBarStyleHorizontal"
-                android:layout_width="350dp"
-                android:layout_height="350dp"
-                android:max="100"
-                android:progress="0"
-                android:progressDrawable="@drawable/main_halfcircularprogressbar_outside"
-                android:rotation="90"
-                android:background="@drawable/shadow_prog_bar"/>
-<!--
-            <ProgressBar
-                android:id="@+id/progress_calories"
-                style="?android:progressBarStyleHorizontal"
-                android:layout_width="350dp"
-                android:layout_height="350dp"
-                android:max="100"
-                android:progress="0"
-                android:progressDrawable="@drawable/main_halfcircularprogressbar_inside"
-                android:rotation="180" />
--->
+
             </RelativeLayout>
 
             <TextView

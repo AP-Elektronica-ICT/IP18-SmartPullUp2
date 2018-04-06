@@ -20,6 +20,8 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
+import pl.pawelkleczkowski.customgauge.CustomGauge;
+
 /**
  * Created by Jorren on 22/02/2018.
  */
@@ -40,7 +42,7 @@ public class ExerciseFragment extends Fragment {
     private TextView txt_PullupAverageSpeed;
     private TextView txt_TotalTime;
 
-    ProgressBar pbCounterUp;
+    CustomGauge pbCounterUp;
     //ProgressBar pbCounterDown;
 
     private double pullupSpeed;
@@ -87,7 +89,7 @@ public class ExerciseFragment extends Fragment {
         //machineID_TextView = (TextView) view.findViewById(R.id.machien_ID_textView);
         type_TextView = (TextView) view.findViewById(R.id.TypeMesurament_textView);
 
-        pbCounterUp = (ProgressBar) view.findViewById(R.id.progress_pullups);
+        pbCounterUp = (CustomGauge) view.findViewById(R.id.progress_pullups);
         //pbCounterDown = (ProgressBar) view.findViewById(R.id.progress_calories);
 
 /*
@@ -173,7 +175,7 @@ public class ExerciseFragment extends Fragment {
         //machineID_TextView.setText(Integer.toString(machine_ID_Input));
         type_TextView.setText(typeInput);
 
-        pbCounterUp.setProgress(counterUp);
+        pbCounterUp.setValue(counterUp);
         
     }
 
