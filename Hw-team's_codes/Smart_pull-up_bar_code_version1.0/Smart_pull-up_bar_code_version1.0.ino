@@ -60,7 +60,7 @@ filter();                         // calling the filter commented above.
 
 sampleTime += sampling / 1000;    // takes timestamp for the sample and converts it to seconds.
   
-if(output < ref_rest_avg - 50)    //compares if the output from filter(); is less than the reference from the bar when no one is hanging on it
+if(output > ref_rest_avg + 50)    //compares if the output from filter(); is less than the reference from the bar when no one is hanging on it
   {
     if(Start==0)                  //check if there is no starting time for hanging. if not it copies the current time from MsTimer2
       {
@@ -77,11 +77,7 @@ if(output < ref_rest_avg - 50)    //compares if the output from filter(); is les
             }
           ref_hang_avg /= 100;
         }  
-                  
-        if(output < ref_hang_avg - ref_hang_avg *0.05)  //compares if the output is less than 5% points under hanging reference. if yes it calls the Counter function.
-          {
-            Counter(output);
-          }
+        Counter(output);
        }
   }
 else                                                    //if there's no person hanging from the bar the program will reset the values of hanging reference and start time.
@@ -91,7 +87,11 @@ else                                                    //if there's no person h
     Uptime = 0;
     Downtime = 0;
   }
+Serial.print(sampleTime);
+Serial.print("\t");
 Serial.print(output);
+Serial.print("\t");
+Serial.print(ref_rest_avg);
 Serial.print("\t");
 Serial.print(ref_hang_avg);
 Serial.print("\t");
@@ -106,36 +106,38 @@ Serial.println(Count);
 
   
 int Counter(int value){                                        //This is the Counting function that compares the values and decides if the pull-up is countable or not.
-  
-  if(value > ref_hang_avg - ref_hang_avg * 0.08)               //checks if the person who's doing the pull-up has came down to starting position. if so it gives true to the boolean and exits from the subroutine
-  {
-    Downtime = sampleTime;
-    Flag=true;
-    return;
-  }
-  
-  else                                                         //otherwise it will check if the flag is true.
-  {
-    if(Flag==true)
-    {
-      if(value < ref_hang_avg - ref_hang_avg * 0.15)           //if the flag is true and the person whos hanging on the bar has put enough force to the bar.
+
+    if(value < ref_hang_avg - ref_hang_avg * 0.08)               //checks if the person who's doing the pull-up has came down to starting position. if so it gives true to the boolean and exits from the subroutine
       {
-        Count++;                                              //it will up the count by 1.
-        Uptime = sampleTime;
-        Flag = false;                                         //it will turn the flag to false so the pull-upper must go down before the next pull-up can be counted.
-        return;                                               //exits the subroutine
+        Serial.print("homo");
+        if(Flag == false)
+          {
+            Downtime = sampleTime;
+            Flag=true;
+            return;
+          }  
       }
-      else                                                    
-      {
-        return;
-      }
-    }
-    else                                                    //if non of the above conditions have fulfilled the program will exit back to the filter();
-    {
-      return;
-    }
-  }
-  return;
+    else                                                         //otherwise it will check if the flag is true.
+     {
+      if(Flag == true)
+        {
+          if(value > ref_hang_avg + ref_hang_avg * 0.09)           //if the flag is true and the person whos hanging on the bar has put enough force to the bar.
+            {
+              Count++;                                              //it will up the count by 1.
+              Uptime = sampleTime;
+              Flag = false;                                         //it will turn the flag to false so the pull-upper must go down before the next pull-up can be counted.
+              return;                                               //exits the subroutine
+            }
+          else                                                    
+          {
+            return;
+          }
+        }
+      else                                                    //if non of the above conditions have fulfilled the program will exit back to the filter();
+       {
+         return;
+       }
+     }
 }
 
 void FirstPackage(float Weight){
