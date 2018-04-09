@@ -40,6 +40,32 @@ const int State = 0;
 boolean Flag = true;
 boolean First = false;
 
+void FirstPackage(float Weight){
+
+    DynamicJsonBuffer jsonBuffer(bufferSize);
+    JsonObject& root = jsonBuffer.createObject();
+    root["Type"] = "Initial";
+    root["Weight"] = Weight;
+    root.printTo(Output);
+    Bluetooth.print(Output);
+    Serial.println(Output);
+    Output="";
+}
+
+void Pulls(float Uptimestamp,float Downtimestamp){
+
+    DynamicJsonBuffer jsonBuffer(bufferSize);
+    JsonObject& root = jsonBuffer.createObject();
+    root["Type"] = "Measurement";
+    root["Up"] = Uptimestamp;
+    root["Down"] = Downtimestamp;
+    root.printTo(Output);  
+    Bluetooth.print(Output);
+    Serial.println(Output); 
+    Output="";                    
+}
+
+
 void filter()   //The purpose of this function is to filter the output from the circuit.
 {
 for(i = 0; i < 30; i++) 
@@ -76,6 +102,8 @@ if(output > ref_rest_avg + 50)    //compares if the output from filter(); is les
               ref_hang_avg += feedback;
             }
           ref_hang_avg /= 100;
+          FirstPackage(66.6);
+          delay(100);
         }  
         Counter(output);
        }
@@ -86,6 +114,7 @@ else                                                    //if there's no person h
     ref_hang_avg = 0;
     Uptime = 0;
     Downtime = 0;
+    Count = 0;
   }
 Serial.print(sampleTime);
 Serial.print("\t");
@@ -107,13 +136,13 @@ Serial.println(Count);
   
 int Counter(int value){                                        //This is the Counting function that compares the values and decides if the pull-up is countable or not.
 
-    if(value < ref_hang_avg - ref_hang_avg * 0.08)               //checks if the person who's doing the pull-up has came down to starting position. if so it gives true to the boolean and exits from the subroutine
+    if(value < ref_hang_avg - ref_hang_avg * 0.04)               //checks if the person who's doing the pull-up has came down to starting position. if so it gives true to the boolean and exits from the subroutine
       {
-        Serial.print("homo");
         if(Flag == false)
           {
             Downtime = sampleTime;
             Flag=true;
+            Pulls(Uptime,Downtime);
             return;
           }  
       }
@@ -140,30 +169,6 @@ int Counter(int value){                                        //This is the Cou
      }
 }
 
-void FirstPackage(float Weight){
-
-    DynamicJsonBuffer jsonBuffer(bufferSize);
-    JsonObject& root = jsonBuffer.createObject();
-    root["Type"] = "Initial";
-    root["Weight"] = Weight;
-    root.printTo(Output);
-    Bluetooth.print(Output);
-    Serial.println(Output);
-    Output="";
-}
-
-void Pulls(float Uptime,float Downtime){
-
-    DynamicJsonBuffer jsonBuffer(bufferSize);
-    JsonObject& root = jsonBuffer.createObject();
-    root["Type"] = "Measurement";
-    root["Up"] = Uptime;
-    root["Down"] = Downtime;
-    root.printTo(Output);  
-    Bluetooth.print(Output);
-    Serial.println(Output); 
-    Output="";                    
-}
 
 void Debounce(){
   if (Button == State){  // this function debounces the button so a single button press won't trigger multiple times 
@@ -191,7 +196,7 @@ pinMode(A0,INPUT);
 
 
 void loop() {
-  /*
+  
       previous = Button;
       Debounce();
       Button = digitalRead(4);
@@ -219,6 +224,6 @@ void loop() {
         }
       }
       }
-      */
+      
    
 }
