@@ -4,7 +4,8 @@
 #include <MsTimer2.h>
 SoftwareSerial Bluetooth (7,8); // RX and TX Pins
 const size_t bufferSize = JSON_OBJECT_SIZE(3);
-
+#define trigPin 5
+#define echoPin 6
   
 
 
@@ -21,6 +22,8 @@ double Uptime = 0;
 
 float average = 0.0;
 float feedback = 0.0;
+float Time = 0.0;
+float Distance = 0.0;
 
 int oldInput = 0;
 int input=0;
@@ -115,6 +118,7 @@ else                                                    //if there's no person h
     Uptime = 0;
     Downtime = 0;
     Count = 0;
+    Distance = 0;
   }
 Serial.print(sampleTime);
 Serial.print("\t");
@@ -128,7 +132,7 @@ Serial.print(Downtime);
 Serial.print("\t");
 Serial.print(Uptime);
 Serial.print("\t");
-Serial.println(Count);
+Serial.println(Distance);
 
 
   }
@@ -136,7 +140,7 @@ Serial.println(Count);
   
 int Counter(int value){                                        //This is the Counting function that compares the values and decides if the pull-up is countable or not.
 
-    if(value < ref_hang_avg - ref_hang_avg * 0.04)               //checks if the person who's doing the pull-up has came down to starting position. if so it gives true to the boolean and exits from the subroutine
+    if(value < ref_hang_avg - ref_hang_avg * 0.03)               //checks if the person who's doing the pull-up has came down to starting position. if so it gives true to the boolean and exits from the subroutine
       {
         if(Flag == false)
           {
@@ -150,12 +154,20 @@ int Counter(int value){                                        //This is the Cou
      {
       if(Flag == true)
         {
-          if(value > ref_hang_avg + ref_hang_avg * 0.09)           //if the flag is true and the person whos hanging on the bar has put enough force to the bar.
+          if(value > ref_hang_avg + ref_hang_avg * 0.03)           //if the flag is true and the person whos hanging on the bar has put enough force to the bar.
             {
+              Ultrasonic();
+              if(Distance > 0 && Distance < 10)
+              {
               Count++;                                              //it will up the count by 1.
               Uptime = sampleTime;
               Flag = false;                                         //it will turn the flag to false so the pull-upper must go down before the next pull-up can be counted.
               return;                                               //exits the subroutine
+              }
+              else
+              {
+                return;
+              }
             }
           else                                                    
           {
@@ -176,12 +188,28 @@ void Debounce(){
   }
 }
 
+void Ultrasonic(){
+  digitalWrite(trigPin, LOW);
+  delayMicroseconds(2);
+  digitalWrite(trigPin, HIGH);
+  delayMicroseconds(10);
+  digitalWrite(trigPin, LOW);
+  Time = pulseIn(echoPin, HIGH);
+  Distance = (Time / 2) / 29.1;
+}
+
 void setup() {
   Bluetooth.begin(9600);
   Serial.begin(9600);
   pinMode(11,OUTPUT);
   digitalWrite(11,HIGH);
   pinMode(4,INPUT_PULLUP);                                  // this enables Arduino's internal pull up resistor so you don't need to get an external resistor to your button circuit
+  pinMode(trigPin, OUTPUT);
+  pinMode(echoPin, INPUT);
+  pinMode(2, OUTPUT);
+  pinMode(3, OUTPUT);
+  digitalWrite(2,LOW);
+  digitalWrite(3,HIGH);
 for(int n=0; n<150; n++)                                    //calculates the average reference from the bar when no one is hanging from it.
 {
   filter();
@@ -196,7 +224,7 @@ pinMode(A0,INPUT);
 
 
 void loop() {
-  
+      Ultrasonic();
       previous = Button;
       Debounce();
       Button = digitalRead(4);
