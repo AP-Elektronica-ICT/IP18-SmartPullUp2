@@ -148,6 +148,8 @@ public class ExerciseFragment extends Fragment {
             beepSound.start();
             calculateSpeed();
             previousValueUp = upInput;
+            if(counterUp == 15)
+                PushExercise();
         }else if (upInput == 0){
             counterUp = 0;
         }
@@ -202,19 +204,21 @@ public class ExerciseFragment extends Fragment {
     }
 
     private void calculateSpeed() {
-        setPullupSpeed((upInput - previousValueUp)/1000.0);
+        double speed = (upInput - previousValueUp)/1000.0;
+        if(speed > 0)
+            setPullupSpeed(speed);
     }
 
     private void PushExercise(){
-        double maxSpeed = 0;
+        double maxSpeed = 30;
         for (double speed : pullupSpeeds){
-            if(speed > maxSpeed)
+            if(speed < maxSpeed)
                 maxSpeed = speed;
         }
 
         Exercise e = new Exercise(maxSpeed, calculateAverage(), upInput / 1000, counterUp);
         host.currentUser.getExercises().add(e);
-        databaseReference.child("Users").child(host.currentUser.getId()).child("Exercises").setValue(host.currentUser.getExercises());
+        databaseReference.child("Users").child(host.currentUser.getId()).child("exercises").setValue(host.currentUser.getExercises());
     }
 
     @Override

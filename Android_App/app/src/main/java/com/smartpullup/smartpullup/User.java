@@ -42,7 +42,8 @@ public class User {
                 firstName = u.getFirstName();
                 lastName = u.getLastName();
                 email = u.getEmail();
-                exercises = u.getExercises();
+                if(u.getExercises() != null)
+                    exercises = u.getExercises();
             }
 
             @Override

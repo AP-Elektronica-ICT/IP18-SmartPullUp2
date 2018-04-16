@@ -1,6 +1,6 @@
 package com.smartpullup.smartpullup;
 
-import java.text.DateFormat;
+import java.util.Date;
 
 /**
  * Created by Jorren on 16/04/2018.
@@ -8,40 +8,40 @@ import java.text.DateFormat;
 
 public class Exercise {
 
-    private String Date;
-    private double MaxSpeed;
-    private double AvgSpeed;
-    private double TotalTime;
-    private int TotalPullups;
+    private Date date;
+    private double maxSpeed;
+    private double avgSpeed;
+    private double totalTime;
+    private int totalPullups;
 
     public Exercise() {
     }
 
     public Exercise(double maxSpeed, double avgSpeed, double totalTime, int totalPullups) {
-        Date = DateFormat.getDateTimeInstance(DateFormat.FULL, DateFormat.SHORT).format(System.currentTimeMillis());
-        MaxSpeed = maxSpeed;
-        AvgSpeed = avgSpeed;
-        TotalTime = totalTime;
-        TotalPullups = totalPullups;
+        date = new Date(System.currentTimeMillis());//DateFormat.getDateTimeInstance(DateFormat.FULL, DateFormat.SHORT).format(System.currentTimeMillis());
+        this.maxSpeed = maxSpeed;
+        this.avgSpeed = avgSpeed;
+        this.totalTime = totalTime;
+        this.totalPullups = totalPullups;
     }
 
-    public String getDate() {
-        return Date;
+    public Date getDate() {
+        return date;
     }
 
     public double getMaxSpeed() {
-        return MaxSpeed;
+        return maxSpeed;
     }
 
     public double getAvgSpeed() {
-        return AvgSpeed;
+        return avgSpeed;
     }
 
     public double getTotalTime() {
-        return TotalTime;
+        return totalTime;
     }
 
     public int getTotalPullups() {
-        return TotalPullups;
+        return totalPullups;
     }
 }
