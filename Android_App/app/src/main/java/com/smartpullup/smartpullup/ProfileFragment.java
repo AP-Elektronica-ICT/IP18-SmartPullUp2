@@ -31,9 +31,15 @@ public class ProfileFragment extends Fragment {
     private Button btnLogout;
     private TextView userNameTxtView;
     private TextView userEmailTxtView;
+    private TextView userHeightTxtView;
+    private TextView userWeightTxtView;
+    private TextView userDateBirthTxtView;
 
     private String userName;
     private String userEmail;
+    private String userHeight;
+    private String userWeight;
+    private String userDateBirth;
 
     private String userId;
 
@@ -50,6 +56,10 @@ public class ProfileFragment extends Fragment {
         btnLogout = (Button)view.findViewById(R.id.btn_Logout);
         userNameTxtView = (TextView) view.findViewById(R.id.userName_textView);
         userEmailTxtView = (TextView) view.findViewById(R.id.userEmail_textView);
+        userHeightTxtView = (TextView)view.findViewById(R.id.height_textView);
+        userWeightTxtView = (TextView)view.findViewById(R.id.weight_textView);
+        userDateBirthTxtView = (TextView)view.findViewById(R.id.dateBirth_textView);
+
 
         database = FirebaseDatabase.getInstance();
         userDatabase = database.getReference("Users");
@@ -63,21 +73,37 @@ public class ProfileFragment extends Fragment {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
-               Log.d("User", userId);
-               Log.d("User",dataSnapshot.getValue().toString());
+                Log.d("User", userId);
+                Log.d("User",dataSnapshot.getValue().toString());
 
-               userName = dataSnapshot.child(userId).child("firstName").getValue().toString() + " " + dataSnapshot.child(userId).child("lastName").getValue().toString();
-               userEmail =  dataSnapshot.child(userId).child("email").getValue().toString();
+                if(dataSnapshot.child(userId).child("firstName").exists())
+                    userName = dataSnapshot.child(userId).child("firstName").getValue().toString() + " " + dataSnapshot.child(userId).child("lastName").getValue().toString();
 
-               userNameTxtView.setText(userName);
-               userEmailTxtView.setText(userEmail);
+                if(dataSnapshot.child(userId).child("email").exists())
+                    userEmail =  dataSnapshot.child(userId).child("email").getValue().toString();
+
+                if (dataSnapshot.child(userId).child("weght").exists())
+                    userWeight = dataSnapshot.child(userId).child("weght").getValue().toString();
+
+                if(dataSnapshot.child(userId).child("dateBirth").exists())
+                    userDateBirth = dataSnapshot.child(userId).child("dateBirth").getValue().toString();
+
+                if(dataSnapshot.child(userId).child("height").exists())
+                    userHeight = dataSnapshot.child(userId).child("height").getValue().toString();
+
+                userNameTxtView.setText(userName);
+                userEmailTxtView.setText(userEmail);
+                userHeightTxtView.setText(userHeight + " cm");
+                userWeightTxtView.setText(userWeight + " kg");
+                userDateBirthTxtView.setText(userDateBirth);
+
 
             }
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
 
-                Toast.makeText(getContext(),databaseError.getMessage(),
+                Toast.makeText(getContext(),"Hello",
                         Toast.LENGTH_SHORT).show();
             }
         });
