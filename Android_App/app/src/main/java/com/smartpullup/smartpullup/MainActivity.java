@@ -23,6 +23,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -32,6 +33,7 @@ public class MainActivity extends AppCompatActivity {
 
     @SuppressLint("HandlerLeak")
     private FirebaseAuth mAuth;
+    public User currentUser;
 
     JSONBroadcastReceiver JSONBroadcastReceiver;
 
@@ -122,6 +124,13 @@ public class MainActivity extends AppCompatActivity {
     public void ConnectToBar(View view) {
         Intent intentConnect = new Intent(MainActivity.this, ConnectBarActivity.class);
         startActivity(intentConnect);
+    }
+
+    @Override
+    protected void onStart() {
+        mAuth = FirebaseAuth.getInstance();
+        currentUser = new User(mAuth.getUid());
+        super.onStart();
     }
 
     @Override
