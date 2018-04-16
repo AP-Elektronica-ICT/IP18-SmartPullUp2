@@ -1,5 +1,8 @@
 package com.smartpullup.smartpullup;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by Jorren on 1/03/2018.
  */
@@ -10,6 +13,7 @@ public class User {
     private String firstName;
     private String lastName;
     private String email;
+    private List<Exercise> exercises;
 
     public User() {
     }
@@ -19,6 +23,7 @@ public class User {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
+        exercises = new ArrayList<Exercise>();
     }
 
     public String getId() {
@@ -35,5 +40,9 @@ public class User {
 
     public String getEmail() {
         return email;
+    }
+
+    public List<Exercise> getExercises() {
+        return exercises;
     }
 }

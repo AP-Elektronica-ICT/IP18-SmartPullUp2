@@ -17,6 +17,11 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,6 +33,9 @@ import pl.pawelkleczkowski.customgauge.CustomGauge;
 
 public class ExerciseFragment extends Fragment {
     private static final String TAG = "FragmentExcercise";
+
+    private FirebaseDatabase database;
+    private DatabaseReference databaseReference;
 
     private static final String MY_PREFS_NAME = "DataFromPullUpBar";
     private SharedPreferences prefs;
@@ -67,8 +75,10 @@ public class ExerciseFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        prefs = getContext().getSharedPreferences(MY_PREFS_NAME, Context.MODE_MULTI_PROCESS);
+        database = FirebaseDatabase.getInstance();
+        databaseReference = database.getReference();
 
+        prefs = getContext().getSharedPreferences(MY_PREFS_NAME, Context.MODE_MULTI_PROCESS);
 
         pullupSpeeds = new ArrayList<>();
     }
@@ -191,5 +201,17 @@ public class ExerciseFragment extends Fragment {
 
     private void calculateSpeed() {
         setPullupSpeed((upInput - previousValueUp)/1000.0);
+    }
+
+    private void PushExercise(){
+        double maxSpeed = 0;
+        for (double speed : pullupSpeeds){
+            if(speed > maxSpeed)
+                maxSpeed = speed;
+        }
+
+        Exercise e = new Exercise(maxSpeed, calculateAverage(), upInput / 1000, counterUp);
+
+
     }
 }
