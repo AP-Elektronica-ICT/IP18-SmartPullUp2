@@ -215,7 +215,6 @@ public class ExerciseFragment extends Fragment {
         Exercise e = new Exercise(maxSpeed, calculateAverage(), upInput / 1000, counterUp);
         host.currentUser.getExercises().add(e);
         databaseReference.child("Users").child(host.currentUser.getId()).child("Exercises").setValue(host.currentUser.getExercises());
-
     }
 
     @Override

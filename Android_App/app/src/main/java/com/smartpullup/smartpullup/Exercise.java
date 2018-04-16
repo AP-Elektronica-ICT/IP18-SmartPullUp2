@@ -18,7 +18,7 @@ public class Exercise {
     }
 
     public Exercise(double maxSpeed, double avgSpeed, double totalTime, int totalPullups) {
-        Date = DateFormat.getDateTimeInstance(DateFormat.FULL, DateFormat.FULL).format(System.currentTimeMillis());
+        Date = DateFormat.getDateTimeInstance(DateFormat.FULL, DateFormat.SHORT).format(System.currentTimeMillis());
         MaxSpeed = maxSpeed;
         AvgSpeed = avgSpeed;
         TotalTime = totalTime;
