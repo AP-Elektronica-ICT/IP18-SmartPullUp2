@@ -1,5 +1,6 @@
 package com.smartpullup.smartpullup;
 
+import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -29,6 +30,8 @@ import java.util.Random;
 
 public class LeaderboardFragment extends Fragment {
     private static final String TAG = "FragmentLeaderboard";
+
+    private MainActivity host;
 
     BarChart barChart;
     LineChart lineChart;
@@ -65,5 +68,15 @@ public class LeaderboardFragment extends Fragment {
 
 
         return view;
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        try{
+            host = (MainActivity) context;
+        }catch (ClassCastException e){
+            throw new ClassCastException(context.toString() + "is not MainActivity");
+        }
     }
 }
