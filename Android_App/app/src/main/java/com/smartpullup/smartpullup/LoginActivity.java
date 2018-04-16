@@ -221,7 +221,7 @@ public class LoginActivity extends AppCompatActivity {
 
                     Profile p = Profile.getCurrentProfile();
                     if(p != null){
-                        User newuser = new User(currentUser.getUid(), p.getFirstName(), p.getLastName(), currentUser.getEmail());
+                        User newuser = new User(currentUser.getUid(), p.getFirstName(), p.getLastName(), currentUser.getEmail(), "Not found","Not found","Not found");
                         userDatabase.child(currentUser.getUid()).setValue(newuser);
                     }
 
