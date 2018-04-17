@@ -7,6 +7,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.media.MediaPlayer;
+import android.renderscript.Sampler;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -91,6 +92,7 @@ public class ExerciseFragment extends Fragment {
         txt_PullupSpeed = (TextView)view.findViewById(R.id.txt_PullupSpeed);
         txt_PullupAverageSpeed = (TextView)view.findViewById(R.id.txt_PullupAverageSpeed);
         txt_TotalTime = (TextView)view.findViewById(R.id.txt_TotalTime);
+        startExercise_Button = (Button) view.findViewById(R.id.startExercise_Button);
 
         counterUpTextView = (TextView) view.findViewById(R.id.pullUpCounter_textView);
         //counterDownTextView = (TextView) view.findViewById(R.id.down_Counter_textView);
@@ -115,8 +117,18 @@ public class ExerciseFragment extends Fragment {
 
         MeasurementOfExercise();
 
+        startExercise_Button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                StartExercise(view  );
+            }
+        });
+
         return view;
     }
+
+    //Start button
+
 
     private void MeasurementOfExercise(){
         prefs.registerOnSharedPreferenceChangeListener(
@@ -131,33 +143,10 @@ public class ExerciseFragment extends Fragment {
                 });
     }
 
-    public void StartExercise(View view){
+    private void StartExercise(View view){
 
-
-        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-        builder.setTitle("Title");
-
-        // Set up the input
-        final EditText input = new EditText(getContext());
-        // Specify the type of input expected; this, for example, sets the input as a password, and will mask the text
-        input.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
-        builder.setView(input);
-
-        // Set up the buttons
-        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                m_Text = input.getText().toString();
-            }
-        });
-        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.cancel();
-            }
-        });
-
-        builder.show();
+        DialogGoalActivity dg = new DialogGoalActivity(getActivity());
+        dg.show();
     }
 
     @Override
