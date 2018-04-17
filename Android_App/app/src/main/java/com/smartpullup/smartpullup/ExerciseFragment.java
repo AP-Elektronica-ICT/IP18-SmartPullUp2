@@ -1,18 +1,23 @@
 package com.smartpullup.smartpullup;
 
 import android.animation.ObjectAnimator;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.media.MediaPlayer;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.text.InputType;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.DecelerateInterpolator;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -42,6 +47,8 @@ public class ExerciseFragment extends Fragment {
     private TextView txt_PullupAverageSpeed;
     private TextView txt_TotalTime;
 
+    private Button startExercise_Button;
+
     CustomGauge pbCounterUp;
     //ProgressBar pbCounterDown;
 
@@ -62,6 +69,8 @@ public class ExerciseFragment extends Fragment {
     private int counterDown = 0;
     private int previousValueUp;
     private int previousValueDown;
+
+    private String m_Text = "";
 
      MediaPlayer beepSound;
     public void onCreate(Bundle savedInstanceState) {
@@ -120,6 +129,35 @@ public class ExerciseFragment extends Fragment {
                         updateUI();
                     }
                 });
+    }
+
+    public void StartExercise(View view){
+
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+        builder.setTitle("Title");
+
+        // Set up the input
+        final EditText input = new EditText(getContext());
+        // Specify the type of input expected; this, for example, sets the input as a password, and will mask the text
+        input.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+        builder.setView(input);
+
+        // Set up the buttons
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                m_Text = input.getText().toString();
+            }
+        });
+        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+
+        builder.show();
     }
 
     @Override
