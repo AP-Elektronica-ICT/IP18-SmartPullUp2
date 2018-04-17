@@ -44,6 +44,7 @@ public class User {
                 email = u.getEmail();
                 if(u.getExercises() != null)
                     exercises = u.getExercises();
+                Log.i(TAG, "onDataChange: user filled in");
             }
 
             @Override
