@@ -22,8 +22,12 @@ import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.formatter.IAxisValueFormatter;
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.sql.Date;
 import java.text.ParseException;
@@ -45,7 +49,7 @@ public class LeaderboardFragment extends Fragment {
     private MainActivity host;
     private FirebaseDatabase database;
     private DatabaseReference databaseReference;
-    
+
 
     private List<Exercise> exercises;
     private List<Entry> pullups;
@@ -59,9 +63,47 @@ public class LeaderboardFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_leaderboard, container, false);
 
-        Log.i(TAG, "onCreateView: ");
+        database = FirebaseDatabase.getInstance();
+        databaseReference = database.getReference("Users/"+host.currentUser.getId()+"/exercises");
+        databaseReference.addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                Exercise e = dataSnapshot.getValue(Exercise.class);
+                if(e != null){
+                    //pullups.add(new Entry(e.getDate().getTime(), e.getTotalPullups()));
 
-        exercises = host.currentUser.getExercises();
+                    LineDataSet setline = new LineDataSet(pullups,"line");
+                    setline.addEntry(new Entry(e.getDate().getTime(), e.getTotalPullups()));
+                    LineData data2 = new LineData(setline);
+                    lineChart.getDescription().setText("Total pullups");
+                    lineChart.notifyDataSetChanged();
+                    lineChart.invalidate();
+                    Log.i(TAG, "onChildAdded: new exercise");
+                }
+            }
+
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+        //exercises = host.currentUser.getExercises();
 /*        Collections.sort(exercises, new Comparator<Exercise>() {
             @Override
             public int compare(Exercise e1, Exercise e2) {
@@ -73,7 +115,7 @@ public class LeaderboardFragment extends Fragment {
 */
         final SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM");
         pullups = new ArrayList<>();
-        pullups.add(new Entry(new Date(2018, 6, 2).getTime(), 15));
+/*        pullups.add(new Entry(new Date(2018, 6, 2).getTime(), 15));
         pullups.add(new Entry(new Date(2018, 6, 3).getTime(), 16));
         pullups.add(new Entry(new Date(2018, 6, 4).getTime(), 17));
         pullups.add(new Entry(new Date(2018, 6, 5).getTime(), 20));
@@ -81,7 +123,7 @@ public class LeaderboardFragment extends Fragment {
         pullups.add(new Entry(new Date(2018, 6, 7).getTime(), 22));
         pullups.add(new Entry(new Date(2018, 6, 8).getTime(), 25));
         pullups.add(new Entry(new Date(2018, 6, 9).getTime(), 30));
-        //dates = new ArrayList<>();
+*/        //dates = new ArrayList<>();
         //int index = 0;
         //for(Exercise e : exercises){
             //pullups.add(new Entry(e.getDate().getTime(), e.getTotalPullups()));
@@ -125,8 +167,10 @@ public class LeaderboardFragment extends Fragment {
         lineChart.setData(data2);
         lineChart.getLegend().setEnabled(false);
         lineChart.getAxisRight().setDrawLabels(false);
-        lineChart.getDescription().setText("Total pullups");
-
+        if(pullups.size() > 0)
+            lineChart.getDescription().setText("Total pullups");
+        else
+            lineChart.getDescription().setText("Total pullups (no data yet)");
 
         return view;
     }
