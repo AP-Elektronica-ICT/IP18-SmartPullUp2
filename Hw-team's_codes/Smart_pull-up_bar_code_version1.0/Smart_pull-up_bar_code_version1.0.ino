@@ -4,12 +4,9 @@
 #include <MsTimer2.h>
 SoftwareSerial Bluetooth (7,8); // RX and TX Pins
 const size_t bufferSize = JSON_OBJECT_SIZE(3);
-#define trigPin 5
-#define echoPin 6
+#define trigPin 6
+#define echoPin 9
   
-
-
-
 
 MedianFilter median(5, 600);        //here is the parameters for the median filter. It takes the median of 5 different samples and if the starting value is empty (seed) it will give the value of 600.
 String Output;
@@ -17,7 +14,7 @@ String Output;
 double sampling = 20; 
 double sampleTime = 0;
 double Start = 0;
-double Downtime = 0;
+double Starttime = 0;
 double Uptime = 0;
 
 float average = 0.0;
@@ -40,6 +37,7 @@ long int ref_rest_avg = 0;
 long int ref_hang_avg = 0;
 const int State = 0;
 
+boolean above = false;
 boolean Flag = true;
 boolean First = false;
 
@@ -55,13 +53,13 @@ void FirstPackage(float Weight){
     Output="";
 }
 
-void Pulls(float Uptimestamp,float Downtimestamp){
+void Pulls(float Start_timestamp,float Uptimestamp){
 
     DynamicJsonBuffer jsonBuffer(bufferSize);
     JsonObject& root = jsonBuffer.createObject();
     root["Type"] = "Measurement";
+    root["Start"] = Start_timestamp;
     root["Up"] = Uptimestamp;
-    root["Down"] = Downtimestamp;
     root.printTo(Output);  
     Bluetooth.print(Output);
     Serial.println(Output); 
@@ -116,23 +114,29 @@ else                                                    //if there's no person h
     Start = 0;
     ref_hang_avg = 0;
     Uptime = 0;
-    Downtime = 0;
+    Starttime = 0;
     Count = 0;
     Distance = 0;
   }
-Serial.print(sampleTime);
+Serial.print(output);
+Serial.print("\t");
+Serial.println(ref_hang_avg);
+/*Serial.print(sampleTime);
 Serial.print("\t");
 Serial.print(output);
 Serial.print("\t");
 Serial.print(ref_rest_avg);
 Serial.print("\t");
-Serial.print(ref_hang_avg);
 Serial.print("\t");
-Serial.print(Downtime);
+Serial.print(Starttime);
 Serial.print("\t");
 Serial.print(Uptime);
 Serial.print("\t");
-Serial.println(Distance);
+Serial.print(Distance);
+Serial.print("\t");
+Serial.println(Flag);
+*/
+
 
 
   }
@@ -144,49 +148,43 @@ int Counter(int value){                                        //This is the Cou
       {
         if(Flag == false)
           {
-            Downtime = sampleTime;
             Flag=true;
-            Pulls(Uptime,Downtime);
+            Pulls(Starttime,Uptime);
+            Starttime = 0;
+            Distance = 0;
+           }
             return;
           }  
-      }
     else                                                         //otherwise it will check if the flag is true.
      {
       if(Flag == true)
         {
-          if(value > ref_hang_avg + ref_hang_avg * 0.03)           //if the flag is true and the person whos hanging on the bar has put enough force to the bar.
+          if(value > ref_hang_avg + ref_hang_avg * 0.02 && Starttime == 0)           //if the flag is true and the person whos hanging on the bar has put enough force to the bar.
             {
+              Starttime = sampleTime;                               //takes timestamp when there is 1% variation in the hanging average
+            }
+          if(Starttime != 0)
+            {  
               Ultrasonic();
-              if(Distance > 0 && Distance < 10)
+              if(Distance > 0 && Distance < 20)                    //check if the person who's doing the pull-up is closer than 20 sentimeteres from the ultrasonic sensor.
               {
-              Count++;                                              //it will up the count by 1.
-              Uptime = sampleTime;
               Flag = false;                                         //it will turn the flag to false so the pull-upper must go down before the next pull-up can be counted.
+              Uptime = sampleTime;
               return;                                               //exits the subroutine
               }
-              else
-              {
-                return;
-              }
             }
-          else                                                    
-          {
-            return;
-          }
         }
-      else                                                    //if non of the above conditions have fulfilled the program will exit back to the filter();
-       {
-         return;
-       }
      }
 }
 
 
+/*
 void Debounce(){
   if (Button == State){  // this function debounces the button so a single button press won't trigger multiple times 
       delay(200);
   }
 }
+*/
 
 void Ultrasonic(){
   digitalWrite(trigPin, LOW);
@@ -203,6 +201,7 @@ void setup() {
   Serial.begin(9600);
   pinMode(11,OUTPUT);
   digitalWrite(11,HIGH);
+  pinMode(5,OUTPUT);
   pinMode(4,INPUT_PULLUP);                                  // this enables Arduino's internal pull up resistor so you don't need to get an external resistor to your button circuit
   pinMode(trigPin, OUTPUT);
   pinMode(echoPin, INPUT);
@@ -210,6 +209,7 @@ void setup() {
   pinMode(3, OUTPUT);
   digitalWrite(2,LOW);
   digitalWrite(3,HIGH);
+  digitalWrite(5,LOW);
 for(int n=0; n<150; n++)                                    //calculates the average reference from the bar when no one is hanging from it.
 {
   filter();
@@ -224,7 +224,7 @@ pinMode(A0,INPUT);
 
 
 void loop() {
-      Ultrasonic();
+/*
       previous = Button;
       Debounce();
       Button = digitalRead(4);
@@ -252,6 +252,6 @@ void loop() {
         }
       }
       }
-      
+*/   
    
 }
