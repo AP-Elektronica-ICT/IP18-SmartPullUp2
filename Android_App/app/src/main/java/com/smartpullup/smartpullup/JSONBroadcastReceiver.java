@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.util.Log;
-import android.view.View;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -23,7 +22,7 @@ public class JSONBroadcastReceiver extends BroadcastReceiver {
 
     String typeJsonData;
     int upJsonData;
-    int downJsonData;
+    int startJsonData;
     double weightJsonData;
 
     double actualWeight;
@@ -46,25 +45,25 @@ public class JSONBroadcastReceiver extends BroadcastReceiver {
                 weightJsonData = JSONInputData.getDouble("Weight");
                 actualWeight = weightJsonData;
                 upJsonData = 0;
-                downJsonData = 0;
+                startJsonData = 0;
             }else{
                 weightJsonData = weightJsonData;
                 upJsonData = JSONInputData.getInt("Up");
-                downJsonData = JSONInputData.getInt("Down");
+                startJsonData = JSONInputData.getInt("Start");
             }
 
 
             Log.i(TAG, "type= " + typeJsonData);
             Log.i(TAG, "weight= " + weightJsonData);
             Log.i(TAG, "up= " + upJsonData);
-            Log.i(TAG, "down= " + downJsonData);
+            Log.i(TAG, "down= " + startJsonData);
 
 
             SharedPreferences.Editor editor = context.getSharedPreferences(MY_PREFS_NAME, context.MODE_PRIVATE).edit();
             editor.putString("type", typeJsonData);
             //editor.putInt("machine_ID", machine_ID_JsonData);
             editor.putInt("up", upJsonData);
-            editor.putInt("down", downJsonData);
+            editor.putInt("down", startJsonData);
             editor.putInt("weight", (int) actualWeight);
 
             editor.clear();
