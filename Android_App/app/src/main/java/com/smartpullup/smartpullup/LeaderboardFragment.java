@@ -74,11 +74,18 @@ public class LeaderboardFragment extends Fragment {
                         lineTotalPullups.getDescription().setText("Total pullups");
                     }
 
-                    totalPullups.addEntry(new Entry(e.getDate().getTime(), e.getTotalPullups()));
-                    totalPullups.notifyDataSetChanged();
-                    lineTotalPullups.notifyDataSetChanged();
-                    lineTotalPullups.invalidate();
-                    Log.i(TAG, "onChildAdded: new exercise");
+                    if(exercises.size() > 0){
+                        boolean ok = true;
+                        for(Exercise ex: exercises){
+                            if(dateFormat.format(e.getDate().getTime()).equals(dateFormat.format(ex.getDate().getTime()))){
+                               ok = false;
+                                Log.i(TAG, "onChildAdded: new exercise was from same day");
+                            }
+                        }
+                        if(ok)
+                            addEntryToLineDataSet(e, totalPullups);
+                    }
+                    exercises.add(e);
                 }
             }
 
@@ -130,21 +137,7 @@ public class LeaderboardFragment extends Fragment {
             //dates.add(dateFormat.format(e.getDate()));
         //}
 
-        barChart = (BarChart) view.findViewById(R.id.graphBar);
         lineTotalPullups = (LineChart)view.findViewById(R.id.lnChart);
-
-        ArrayList<BarEntry> barEntries = new ArrayList<>();
-        for (int i=0;i<20;i++) {
-            Random ran = new Random();
-            int ranY = ran.nextInt(10)+1;
-            barEntries.add(new BarEntry(i, ranY));
-        }
-        ArrayList<Entry> lineEnteries = new ArrayList<>();
-        for (int i=0;i<20;i++) {
-            Random ran = new Random();
-            int ranY = ran.nextInt(10)+1;
-            lineEnteries.add(new Entry(i, ranY));
-        }
 
         IAxisValueFormatter axisValueFormatter = new IAxisValueFormatter() {
             @Override
@@ -156,17 +149,17 @@ public class LeaderboardFragment extends Fragment {
         xAxis.setValueFormatter(axisValueFormatter);
         xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
 
-        BarDataSet set = new BarDataSet(barEntries,"bar");
-        //LineDataSet totalPullups = new LineDataSet(pullups,"line");
-        set.setColor(Color.BLUE);
-        set.setDrawValues(true);
-        BarData data = new BarData(set);
-        //LineData data2 = new LineData(totalPullups);
-        barChart.setData(data);
-        //lineTotalPullups.setData(data2);
         lineTotalPullups.getLegend().setEnabled(false);
         lineTotalPullups.getAxisRight().setDrawLabels(false);
         return view;
+    }
+
+    private void addEntryToLineDataSet(Exercise e, LineDataSet totalPullups) {
+        totalPullups.addEntry(new Entry(e.getDate().getTime(), e.getTotalPullups()));
+        totalPullups.notifyDataSetChanged();
+        lineTotalPullups.notifyDataSetChanged();
+        lineTotalPullups.invalidate();
+        Log.i(TAG, "onChildAdded: new exercise");
     }
 
     @Override
