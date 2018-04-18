@@ -6,6 +6,8 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.media.MediaPlayer;
 import android.renderscript.Sampler;
 import android.support.v4.app.Fragment;
@@ -73,7 +75,7 @@ public class ExerciseFragment extends Fragment {
 
     private String m_Text = "";
 
-     MediaPlayer beepSound;
+    MediaPlayer beepSound;
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
@@ -120,7 +122,13 @@ public class ExerciseFragment extends Fragment {
         startExercise_Button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                StartExercise(view  );
+                DialogGoalActivity dg = new DialogGoalActivity(getActivity());
+                dg.show();
+                String strtext;
+                if (getArguments() != null)
+                    strtext = getArguments().getString("edttext");
+
+
             }
         });
 
@@ -145,8 +153,7 @@ public class ExerciseFragment extends Fragment {
 
     private void StartExercise(View view){
 
-        DialogGoalActivity dg = new DialogGoalActivity(getActivity());
-        dg.show();
+
     }
 
     @Override
@@ -203,7 +210,7 @@ public class ExerciseFragment extends Fragment {
         type_TextView.setText(typeInput);
 
         pbCounterUp.setValue(counterUp);
-        
+
     }
 
     private double calculateAverage() {
