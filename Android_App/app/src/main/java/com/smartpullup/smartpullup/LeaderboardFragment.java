@@ -148,9 +148,9 @@ public class LeaderboardFragment extends Fragment {
         XAxis xAxis = lineTotalPullups.getXAxis();
         xAxis.setValueFormatter(axisValueFormatter);
         xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
-
         lineTotalPullups.getLegend().setEnabled(false);
         lineTotalPullups.getAxisRight().setDrawLabels(false);
+
         return view;
     }
 
