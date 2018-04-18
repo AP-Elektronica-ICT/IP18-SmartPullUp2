@@ -9,7 +9,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.charts.LineChart;
@@ -27,14 +26,10 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
 import java.sql.Date;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 import java.util.Random;
 
@@ -50,18 +45,22 @@ public class LeaderboardFragment extends Fragment {
     private FirebaseDatabase database;
     private DatabaseReference databaseReference;
 
-
-    private List<Exercise> exercises;
     private List<Entry> pullups;
-    //private List<String> dates;
+    private List<Exercise> exercises;
 
     BarChart barChart;
-    LineChart lineChart;
+    LineChart lineTotalPullups;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_leaderboard, container, false);
+
+        final SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM");
+        pullups = new ArrayList<>();
+        exercises = new ArrayList<>();
+        final LineDataSet totalPullups = new LineDataSet(pullups,"line");
+
 
         database = FirebaseDatabase.getInstance();
         databaseReference = database.getReference("Users/"+host.currentUser.getId()+"/exercises");
@@ -70,14 +69,15 @@ public class LeaderboardFragment extends Fragment {
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                 Exercise e = dataSnapshot.getValue(Exercise.class);
                 if(e != null){
-                    //pullups.add(new Entry(e.getDate().getTime(), e.getTotalPullups()));
+                    if(lineTotalPullups.getData() == null){
+                        lineTotalPullups.setData(new LineData(totalPullups));
+                        lineTotalPullups.getDescription().setText("Total pullups");
+                    }
 
-                    LineDataSet setline = new LineDataSet(pullups,"line");
-                    setline.addEntry(new Entry(e.getDate().getTime(), e.getTotalPullups()));
-                    LineData data2 = new LineData(setline);
-                    lineChart.getDescription().setText("Total pullups");
-                    lineChart.notifyDataSetChanged();
-                    lineChart.invalidate();
+                    totalPullups.addEntry(new Entry(e.getDate().getTime(), e.getTotalPullups()));
+                    totalPullups.notifyDataSetChanged();
+                    lineTotalPullups.notifyDataSetChanged();
+                    lineTotalPullups.invalidate();
                     Log.i(TAG, "onChildAdded: new exercise");
                 }
             }
@@ -113,8 +113,7 @@ public class LeaderboardFragment extends Fragment {
             }
         });
 */
-        final SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM");
-        pullups = new ArrayList<>();
+
 /*        pullups.add(new Entry(new Date(2018, 6, 2).getTime(), 15));
         pullups.add(new Entry(new Date(2018, 6, 3).getTime(), 16));
         pullups.add(new Entry(new Date(2018, 6, 4).getTime(), 17));
@@ -132,7 +131,7 @@ public class LeaderboardFragment extends Fragment {
         //}
 
         barChart = (BarChart) view.findViewById(R.id.graphBar);
-        lineChart = (LineChart)view.findViewById(R.id.lnChart);
+        lineTotalPullups = (LineChart)view.findViewById(R.id.lnChart);
 
         ArrayList<BarEntry> barEntries = new ArrayList<>();
         for (int i=0;i<20;i++) {
@@ -153,25 +152,20 @@ public class LeaderboardFragment extends Fragment {
                 return dateFormat.format(new Date((long)value));
             }
         };
-        XAxis xAxis = lineChart.getXAxis();
+        XAxis xAxis = lineTotalPullups.getXAxis();
         xAxis.setValueFormatter(axisValueFormatter);
         xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
 
         BarDataSet set = new BarDataSet(barEntries,"bar");
-        LineDataSet setline = new LineDataSet(pullups,"line");
+        //LineDataSet totalPullups = new LineDataSet(pullups,"line");
         set.setColor(Color.BLUE);
         set.setDrawValues(true);
         BarData data = new BarData(set);
-        LineData data2 = new LineData(setline);
+        //LineData data2 = new LineData(totalPullups);
         barChart.setData(data);
-        lineChart.setData(data2);
-        lineChart.getLegend().setEnabled(false);
-        lineChart.getAxisRight().setDrawLabels(false);
-        if(pullups.size() > 0)
-            lineChart.getDescription().setText("Total pullups");
-        else
-            lineChart.getDescription().setText("Total pullups (no data yet)");
-
+        //lineTotalPullups.setData(data2);
+        lineTotalPullups.getLegend().setEnabled(false);
+        lineTotalPullups.getAxisRight().setDrawLabels(false);
         return view;
     }
 

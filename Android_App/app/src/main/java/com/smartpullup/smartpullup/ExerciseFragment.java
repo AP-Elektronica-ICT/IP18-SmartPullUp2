@@ -143,6 +143,7 @@ public class ExerciseFragment extends Fragment {
     private void CounterUp(){
         if(upInput != previousValueUp)
         {
+            Log.i(TAG, "CounterUp: " + counterUp);
             counterUp++;
             beepSound =MediaPlayer.create(getActivity(),R.raw.beep);
             beepSound.start();
