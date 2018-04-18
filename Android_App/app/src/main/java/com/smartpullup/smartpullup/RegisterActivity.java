@@ -26,6 +26,10 @@ public class RegisterActivity extends AppCompatActivity {
     private EditText txtEmail;
     private EditText txtFirstName;
     private EditText txtLastName;
+    private EditText txtHeight;
+    private EditText txtWeight;
+    private EditText txtDateBirth;
+
     private Button btnRegister;
     private FirebaseAuth mAuth;
     private FirebaseDatabase database;
@@ -40,6 +44,9 @@ public class RegisterActivity extends AppCompatActivity {
         txtPassword = (EditText) findViewById(R.id.edit_Password_R);
         txtFirstName = (EditText) findViewById(R.id.edit_FirstName);
         txtLastName = (EditText) findViewById(R.id.edit_LastName);
+        txtDateBirth = (EditText)findViewById(R.id.edit_Date_of_Birth);
+        txtHeight = (EditText)findViewById(R.id.edit_Height);
+        txtWeight = (EditText) findViewById(R.id.edit_Weight);
         btnRegister = (Button) findViewById(R.id.btn_Register);
 
         //getting the link with the database
@@ -60,8 +67,17 @@ public class RegisterActivity extends AppCompatActivity {
         final String password = txtPassword.getText().toString();
         final String firstName = txtFirstName.getText().toString();
         final String lastName = txtLastName.getText().toString();
+        final String height = txtHeight.getText().toString();
+        final String weight = txtWeight.getText().toString();
+        final String dateBirth = txtDateBirth.getText().toString();
 
-        if(email != null && !email.equals("") && password != null && !password.equals("") && firstName!= null && !firstName.equals("") && lastName!= null && !lastName.equals("")){
+        if(email != null && !email.equals("")
+                && password != null && !password.equals("")
+                && firstName!= null && !firstName.equals("")
+                && lastName!= null && !lastName.equals("")
+                && height!= null && !height.equals("")
+                && weight!= null && !weight.equals("")
+                && dateBirth!= null && !dateBirth.equals("")){
             mAuth.createUserWithEmailAndPassword(email, password)
                     .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                         @Override
@@ -73,7 +89,7 @@ public class RegisterActivity extends AppCompatActivity {
                                 //create entry in database for user
                                 FirebaseUser user = mAuth.getCurrentUser();
                                 String id = user.getUid();
-                                User newuser = new User(id, firstName, lastName, email);
+                                User newuser = new User(id, firstName, lastName, email, height, weight, dateBirth);
                                 userDatabase.child(id).setValue(newuser);
 
                                 Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);

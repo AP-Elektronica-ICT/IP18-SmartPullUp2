@@ -1,6 +1,5 @@
 package com.smartpullup.smartpullup;
 
-import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.media.MediaPlayer;
@@ -11,9 +10,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.DecelerateInterpolator;
-import android.widget.Button;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 
 
@@ -64,7 +60,7 @@ public class ExerciseFragment extends Fragment {
 
     private String typeInput;
     private int upInput;
-    private int downInput;
+    private int startInput;
     private int machine_ID_Input;
     private double weightInput;
 
@@ -157,11 +153,11 @@ public class ExerciseFragment extends Fragment {
     }
 
     private void CounterDown(){
-        if(downInput != previousValueDown)
+        if(startInput != previousValueDown)
         {
             counterDown++;
-            previousValueDown = downInput;
-        }else if (downInput == 0){
+            previousValueDown = startInput;
+        }else if (startInput == 0){
             counterDown = 0;
         }
     }
@@ -174,8 +170,8 @@ public class ExerciseFragment extends Fragment {
     private void InputData(SharedPreferences prefs) {
         typeInput = prefs.getString("type", "");
         upInput = prefs.getInt("up", 0);
-        downInput = prefs.getInt("down", 0);
-        Log.i(TAG, String.valueOf("Up: " + upInput + "Down: " + downInput));
+        startInput = prefs.getInt("down", 0);
+        Log.i(TAG, String.valueOf("Up: " + upInput + "Down: " + startInput));
         //machine_ID_Input = prefs.getInt("machine_ID", 0);
         weightInput = prefs.getInt("weight", 0);
     }
@@ -205,7 +201,7 @@ public class ExerciseFragment extends Fragment {
     }
 
     private void calculateSpeed() {
-        double speed = (upInput - previousValueUp)/1000.0;
+        double speed = (upInput - startInput)/1000.0;
         if(speed > 0)
             setPullupSpeed(speed);
     }
@@ -230,5 +226,7 @@ public class ExerciseFragment extends Fragment {
         }catch (ClassCastException e){
             throw new ClassCastException(context.toString() + "is not MainActivity");
         }
+        setPullupSpeed((upInput - startInput)/1000.0);
+
     }
 }

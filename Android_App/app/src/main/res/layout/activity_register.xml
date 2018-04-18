@@ -51,8 +51,6 @@
                 android:hint="Last name" />
         </android.support.design.widget.TextInputLayout>
 
-
-
         <!--  Email Label -->
         <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
@@ -67,6 +65,55 @@
                 android:hint="Email" />
         </android.support.design.widget.TextInputLayout>
 
+        <!-- Weight and Height Label -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <!--  Height Label -->
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="165dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
+                android:theme="@style/TextLabel">
+                <EditText android:id="@+id/edit_Height"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="number"
+                    android:hint="Height (cm)" />
+            </android.support.design.widget.TextInputLayout>
+
+            <!--  Weight Label -->
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="165dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
+                android:theme="@style/TextLabel">
+                <EditText android:id="@+id/edit_Weight"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="number"
+                    android:hint="Weight (kg)" />
+            </android.support.design.widget.TextInputLayout>
+
+        </LinearLayout>
+
+        <!-- Date of Birth Label -->
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            android:theme="@style/TextLabel">
+            <EditText android:id="@+id/edit_Date_of_Birth"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="date"
+                android:hint="Date of Birth dd/MM/YYYY" />
+        </android.support.design.widget.TextInputLayout>
 
         <!-- Password Label -->
         <android.support.design.widget.TextInputLayout

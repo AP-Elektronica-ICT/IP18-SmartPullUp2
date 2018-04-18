@@ -1,19 +1,60 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+
+
+    <android.support.v7.widget.Toolbar
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:minHeight="?attr/actionBarSize"
+        android:background="@color/ColorTheme"
+        android:elevation="5dp"
+        android:id="@+id/toolbar">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Connect device"
+                android:textSize="20dp"
+                android:textColor="@color/White"
+                android:textStyle="bold"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"/>
+
+
+        </RelativeLayout>
+
+    </android.support.v7.widget.Toolbar>
+
+
+<LinearLayout
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+
 
     <TextView
         android:id="@+id/texView_title_paired_devices"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Select your Smart Pull Up Bar from paired devices:"
+        android:text="Select your Smart Pull Up Bar from paired devices"
+        android:gravity="center"
         android:visibility="gone"
         android:background="#666"
         android:textColor="#fff"
-        android:paddingLeft="5dp" />
+        android:paddingLeft="5dp"
+        android:padding="5dp"
+        android:textSize="15dp"/>
 
     <ListView
         android:id="@+id/paired_devices"
@@ -35,4 +76,5 @@
     </LinearLayout>
 
 
+</LinearLayout>
 </LinearLayout>
