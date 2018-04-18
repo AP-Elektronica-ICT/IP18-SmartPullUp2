@@ -153,7 +153,8 @@
             android:padding="12dp"
             android:textColor="#fff"
             android:text="Create Account"
-            android:backgroundTint="@color/Black"/>
+            android:backgroundTint="@color/Black"
+            android:background="@drawable/round_button"/>
 
 
     </LinearLayout>

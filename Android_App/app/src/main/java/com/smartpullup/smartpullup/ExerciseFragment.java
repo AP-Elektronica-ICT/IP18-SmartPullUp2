@@ -2,7 +2,10 @@ package com.smartpullup.smartpullup;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.media.MediaPlayer;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -10,6 +13,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 
@@ -28,6 +32,9 @@ public class ExerciseFragment extends Fragment {
     private static final String MY_PREFS_NAME = "DataFromPullUpBar";
     private SharedPreferences prefs;
 
+    public static final String PREFS_GOAL_EXERCISE = "inputGoal";
+    private SharedPreferences prefsGoalExercise;
+
     private TextView counterUpTextView;
     //private TextView counterDownTextView;
     private TextView weightTextView;
@@ -37,6 +44,9 @@ public class ExerciseFragment extends Fragment {
     private TextView txt_PullupSpeed;
     private TextView txt_PullupAverageSpeed;
     private TextView txt_TotalTime;
+
+    private Button startExercise_Button;
+    private Button stopExercise_Button;
 
     CustomGauge pbCounterUp;
     //ProgressBar pbCounterDown;
@@ -59,11 +69,21 @@ public class ExerciseFragment extends Fragment {
     private int previousValueUp;
     private int previousValueDown;
 
-     MediaPlayer beepSound;
+    private String m_Text = "";
+
+    String inputGoalExercises;
+    int goalExercises;
+
+    Boolean isStarting = false;
+
+    private int i=-1, second = 3;
+
+    MediaPlayer beepSound;
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         prefs = getContext().getSharedPreferences(MY_PREFS_NAME, Context.MODE_MULTI_PROCESS);
+        prefsGoalExercise = getContext().getSharedPreferences(PREFS_GOAL_EXERCISE, Context.MODE_PRIVATE);
 
 
         pullupSpeeds = new ArrayList<>();
@@ -78,6 +98,8 @@ public class ExerciseFragment extends Fragment {
         txt_PullupSpeed = (TextView)view.findViewById(R.id.txt_PullupSpeed);
         txt_PullupAverageSpeed = (TextView)view.findViewById(R.id.txt_PullupAverageSpeed);
         txt_TotalTime = (TextView)view.findViewById(R.id.txt_TotalTime);
+        startExercise_Button = (Button) view.findViewById(R.id.startExercise_Button);
+        stopExercise_Button = (Button) view.findViewById(R.id.stopExercise_Button);
 
         counterUpTextView = (TextView) view.findViewById(R.id.pullUpCounter_textView);
         //counterDownTextView = (TextView) view.findViewById(R.id.down_Counter_textView);
@@ -102,8 +124,40 @@ public class ExerciseFragment extends Fragment {
 
         MeasurementOfExercise();
 
+        startExercise_Button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                DialogGoalActivity dg = new DialogGoalActivity(getActivity());
+                dg.show();
+                String strtext;
+                if (getArguments() != null)
+                    strtext = getArguments().getString("edttext");
+
+
+            }
+        });
+
+        stopExercise_Button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                resetValues();
+                counterUpTextView.setText("0");
+                pbCounterUp.setValue(0);
+                isStarting = false;
+                startExercise_Button.setVisibility(view.VISIBLE);
+                stopExercise_Button.setVisibility(view.GONE);
+            }
+        });
+
+        StartExercise();
+
+
+
         return view;
     }
+
+    //Start button
+
 
     private void MeasurementOfExercise(){
         prefs.registerOnSharedPreferenceChangeListener(
@@ -111,12 +165,86 @@ public class ExerciseFragment extends Fragment {
                     public void onSharedPreferenceChanged(SharedPreferences prefs, String key) {
 
                         InputData(prefs);
-                        CounterUp();
-                        CounterDown();
+                        if(isStarting) {
+                            CounterUp();
+                            CounterDown();
+
+                            startExercise_Button.setVisibility(view.GONE);
+                            stopExercise_Button.setVisibility(view.VISIBLE);
+
+                        }else {
+                            startExercise_Button.setVisibility(view.VISIBLE);
+                            stopExercise_Button.setVisibility(view.GONE);
+                        }
+
                         updateUI();
+
+                        if (pbCounterUp.getValue() > goalExercises) {
+                                resetValues();
+                                isStarting = false;
+
+                            }
+
+
                     }
                 });
     }
+
+
+    private void StartExercise(){
+
+
+
+        prefsGoalExercise.registerOnSharedPreferenceChangeListener(
+                new SharedPreferences.OnSharedPreferenceChangeListener() {
+                    public void onSharedPreferenceChanged(SharedPreferences prefs, String key) {
+                        inputGoalExercises = prefsGoalExercise.getString("goal", "");
+
+                        goalExercises = Integer.parseInt(inputGoalExercises);
+
+                        pbCounterUp.setEndValue(goalExercises);
+
+                        CountDown();
+
+                    }
+                });
+
+    }
+
+    private void CountDown(){
+        new Thread( new Runnable() {
+            public void run() {
+                while( i != second ) {
+                    try {
+                        handle.sendMessage( handle.obtainMessage());
+                        Thread.sleep(1000);
+                    } catch( Throwable t) {
+
+                    }
+                }
+            }
+
+            Handler handle = new Handler() {
+                public void handleMessage( Message msg) {
+                    counterUpTextView.setText(String.valueOf(second));
+                    second--;
+
+                    if (second == -1){
+                        isStarting = true;
+                        Log.i(TAG, isStarting.toString());
+
+                        counterUpTextView.setText("START");
+
+                    }
+                }
+            };
+        }).start();
+
+        second = 3;
+
+
+    }
+
 
     @Override
     public void onResume() {
@@ -124,12 +252,19 @@ public class ExerciseFragment extends Fragment {
         MeasurementOfExercise();
     }
 
+    private void resetValues(){
+        counterDown = 0;
+        counterUp = 0;
+        startExercise_Button.setTextColor(Color.WHITE);
+        startExercise_Button.setText("START");
+    }
+
     private void CounterUp(){
         if(upInput != previousValueUp)
         {
             counterUp++;
-            beepSound =MediaPlayer.create(getActivity(),R.raw.beep);
-            beepSound.start();
+//            beepSound =MediaPlayer.create(getActivity(),R.raw.beep);
+//            beepSound.start();
             calculateSpeed();
             previousValueUp = upInput;
         }else if (upInput == 0){
@@ -172,7 +307,7 @@ public class ExerciseFragment extends Fragment {
         type_TextView.setText(typeInput);
 
         pbCounterUp.setValue(counterUp);
-        
+
     }
 
     private double calculateAverage() {
