@@ -10,6 +10,7 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.media.MediaPlayer;
 import android.renderscript.Sampler;
+import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -39,6 +40,9 @@ public class ExerciseFragment extends Fragment {
 
     private static final String MY_PREFS_NAME = "DataFromPullUpBar";
     private SharedPreferences prefs;
+
+    public static final String PREFS_GOAL_EXERCISE = "inputGoal";
+    private SharedPreferences prefsGoalExercise;
 
     private TextView counterUpTextView;
     //private TextView counterDownTextView;
@@ -75,11 +79,14 @@ public class ExerciseFragment extends Fragment {
 
     private String m_Text = "";
 
+    String goalExercises;
+
     MediaPlayer beepSound;
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         prefs = getContext().getSharedPreferences(MY_PREFS_NAME, Context.MODE_MULTI_PROCESS);
+        prefsGoalExercise = getContext().getSharedPreferences(PREFS_GOAL_EXERCISE, Context.MODE_PRIVATE);
 
 
         pullupSpeeds = new ArrayList<>();
@@ -132,6 +139,8 @@ public class ExerciseFragment extends Fragment {
             }
         });
 
+        StartExercise();
+
         return view;
     }
 
@@ -151,10 +160,28 @@ public class ExerciseFragment extends Fragment {
                 });
     }
 
-    private void StartExercise(View view){
+    private void StartExercise(){
+
+
+
+        prefsGoalExercise.registerOnSharedPreferenceChangeListener(
+                new SharedPreferences.OnSharedPreferenceChangeListener() {
+                    public void onSharedPreferenceChanged(SharedPreferences prefs, String key) {
+                        goalExercises = prefsGoalExercise.getString("goal", "");
+
+//        if (restoredText != null) {
+//            String name = prefs.getString("name", "No name defined");//"No name defined" is the default value.
+//            int idName = prefs.getInt("idName", 0); //0 is the default value.
+//        }
+                counterUpTextView.setText(goalExercises);
+                Log.i(TAG, goalExercises);
+            }
+        });
+
 
 
     }
+
 
     @Override
     public void onResume() {
