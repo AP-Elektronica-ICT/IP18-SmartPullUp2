@@ -2,6 +2,7 @@ package com.smartpullup.smartpullup;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.media.MediaPlayer;
 import android.os.Handler;
 import android.os.Message;
@@ -154,12 +155,16 @@ public class ExerciseFragment extends Fragment {
                             CounterUp();
                             CounterDown();
 
-                            updateUI();
-
-                            if (pbCounterUp.getValue() > goalExercises) {
-                                resetValues();
-                            }
+                            startExercise_Button.setTextColor(Color.RED);
+                            startExercise_Button.setText("STOP");
                         }
+                        updateUI();
+
+                        if (pbCounterUp.getValue() > goalExercises) {
+                                resetValues();
+                                isStarting = false;
+                            }
+
 
                     }
                 });
@@ -230,6 +235,8 @@ public class ExerciseFragment extends Fragment {
     private void resetValues(){
         counterDown = 0;
         counterUp = 0;
+        startExercise_Button.setTextColor(Color.WHITE);
+        startExercise_Button.setText("START");
     }
 
     private void CounterUp(){
