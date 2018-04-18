@@ -1,28 +1,18 @@
 package com.smartpullup.smartpullup;
 
-import android.animation.ObjectAnimator;
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
-import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.media.MediaPlayer;
-import android.renderscript.Sampler;
-import android.support.design.widget.TabLayout;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.text.InputType;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.DecelerateInterpolator;
 import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 
 
@@ -79,7 +69,12 @@ public class ExerciseFragment extends Fragment {
 
     private String m_Text = "";
 
-    String goalExercises;
+    String inputGoalExercises;
+    int goalExercises;
+
+    Boolean isStarting = false;
+
+    private int i=-1, second = 3;
 
     MediaPlayer beepSound;
     public void onCreate(Bundle savedInstanceState) {
@@ -141,6 +136,8 @@ public class ExerciseFragment extends Fragment {
 
         StartExercise();
 
+
+
         return view;
     }
 
@@ -153,12 +150,21 @@ public class ExerciseFragment extends Fragment {
                     public void onSharedPreferenceChanged(SharedPreferences prefs, String key) {
 
                         InputData(prefs);
-                        CounterUp();
-                        CounterDown();
-                        updateUI();
+                        if(isStarting) {
+                            CounterUp();
+                            CounterDown();
+
+                            updateUI();
+
+                            if (pbCounterUp.getValue() > goalExercises) {
+                                resetValues();
+                            }
+                        }
+
                     }
                 });
     }
+
 
     private void StartExercise(){
 
@@ -167,17 +173,49 @@ public class ExerciseFragment extends Fragment {
         prefsGoalExercise.registerOnSharedPreferenceChangeListener(
                 new SharedPreferences.OnSharedPreferenceChangeListener() {
                     public void onSharedPreferenceChanged(SharedPreferences prefs, String key) {
-                        goalExercises = prefsGoalExercise.getString("goal", "");
+                        inputGoalExercises = prefsGoalExercise.getString("goal", "");
 
-//        if (restoredText != null) {
-//            String name = prefs.getString("name", "No name defined");//"No name defined" is the default value.
-//            int idName = prefs.getInt("idName", 0); //0 is the default value.
-//        }
-                counterUpTextView.setText(goalExercises);
-                Log.i(TAG, goalExercises);
+                        goalExercises = Integer.parseInt(inputGoalExercises);
+
+                        pbCounterUp.setEndValue(goalExercises);
+
+                        CountDown();
+
+                    }
+                });
+
+    }
+
+    private void CountDown(){
+        new Thread( new Runnable() {
+            public void run() {
+                while( i != second ) {
+                    try {
+                        handle.sendMessage( handle.obtainMessage());
+                        Thread.sleep(1000);
+                    } catch( Throwable t) {
+
+                    }
+                }
             }
-        });
 
+            Handler handle = new Handler() {
+                public void handleMessage( Message msg) {
+                    counterUpTextView.setText(String.valueOf(second));
+                    second--;
+
+                    if (second == -1){
+                        isStarting = true;
+                        Log.i(TAG, isStarting.toString());
+
+                        counterUpTextView.setText("START");
+
+                    }
+                }
+            };
+        }).start();
+
+        second = 3;
 
 
     }
@@ -189,12 +227,17 @@ public class ExerciseFragment extends Fragment {
         MeasurementOfExercise();
     }
 
+    private void resetValues(){
+        counterDown = 0;
+        counterUp = 0;
+    }
+
     private void CounterUp(){
         if(upInput != previousValueUp)
         {
             counterUp++;
-            beepSound =MediaPlayer.create(getActivity(),R.raw.beep);
-            beepSound.start();
+//            beepSound =MediaPlayer.create(getActivity(),R.raw.beep);
+//            beepSound.start();
             calculateSpeed();
             previousValueUp = upInput;
         }else if (upInput == 0){
