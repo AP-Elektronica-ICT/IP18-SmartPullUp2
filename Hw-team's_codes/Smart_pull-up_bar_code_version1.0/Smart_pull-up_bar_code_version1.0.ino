@@ -16,6 +16,7 @@ double sampleTime = 0;
 double Start = 0;
 double Starttime = 0;
 double Uptime = 0;
+double weight = 0;
 
 float average = 0.0;
 float feedback = 0.0;
@@ -93,7 +94,7 @@ if(output > ref_rest_avg + 50)    //compares if the output from filter(); is les
       {
         Start = sampleTime;        
       }    
-    if(sampleTime - Start > 1)    //checks if the person has hung for a second. 
+    if(sampleTime - Start > 0.8)    //checks if the person has hung for a second. 
       {
         if(ref_hang_avg==0)       //if there's no current referense for hanging it will take 100 samples and calculates reference from their average.
         {
@@ -103,7 +104,8 @@ if(output > ref_rest_avg + 50)    //compares if the output from filter(); is les
               ref_hang_avg += feedback;
             }
           ref_hang_avg /= 100;
-          FirstPackage(66.6);
+          weight = -0.0001 * ref_hang_avg * ref_hang_avg + 0.459 * ref_hang_avg - 142.61;
+          FirstPackage(weight);
           delay(100);
         }  
         Counter(output);
@@ -117,25 +119,21 @@ else                                                    //if there's no person h
     Starttime = 0;
     Count = 0;
     Distance = 0;
+    weight = 0;
   }
-Serial.print(output);
-Serial.print("\t");
-Serial.println(ref_hang_avg);
-/*Serial.print(sampleTime);
+Serial.print(sampleTime);
 Serial.print("\t");
 Serial.print(output);
 Serial.print("\t");
-Serial.print(ref_rest_avg);
-Serial.print("\t");
+Serial.print(ref_hang_avg);
 Serial.print("\t");
 Serial.print(Starttime);
 Serial.print("\t");
 Serial.print(Uptime);
 Serial.print("\t");
-Serial.print(Distance);
-Serial.print("\t");
-Serial.println(Flag);
-*/
+Serial.println(Distance);
+
+
 
 
 
@@ -159,7 +157,7 @@ int Counter(int value){                                        //This is the Cou
      {
       if(Flag == true)
         {
-          if(value > ref_hang_avg + ref_hang_avg * 0.02 && Starttime == 0)           //if the flag is true and the person whos hanging on the bar has put enough force to the bar.
+          if(value > ref_hang_avg + ref_hang_avg * 0.007 && Starttime == 0)           //if the flag is true and the person whos hanging on the bar has put enough force to the bar.
             {
               Starttime = sampleTime;                               //takes timestamp when there is 1% variation in the hanging average
             }
@@ -210,6 +208,7 @@ void setup() {
   digitalWrite(2,LOW);
   digitalWrite(3,HIGH);
   digitalWrite(5,LOW);
+  pinMode(A0,INPUT);
 for(int n=0; n<150; n++)                                    //calculates the average reference from the bar when no one is hanging from it.
 {
   filter();
@@ -219,7 +218,6 @@ for(int n=0; n<150; n++)                                    //calculates the ave
 ref_rest_avg = ref_rest_avg / 150;
 MsTimer2::set(sampling,measure);                            //sets the parameters to MsTimer2 and tells where the interupts will occur
 MsTimer2::start();                                          //starts the MsTimer2
-pinMode(A0,INPUT);
 }
 
 
