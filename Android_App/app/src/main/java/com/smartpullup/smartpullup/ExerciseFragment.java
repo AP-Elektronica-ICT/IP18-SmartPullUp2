@@ -189,5 +189,6 @@ public class ExerciseFragment extends Fragment {
         double speed = (upInput - startInput)/1000.0;
         if(speed > 0)
             setPullupSpeed(speed);
+
     }
 }
