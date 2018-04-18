@@ -99,7 +99,7 @@ public class ExerciseFragment extends Fragment {
         txt_PullupAverageSpeed = (TextView)view.findViewById(R.id.txt_PullupAverageSpeed);
         txt_TotalTime = (TextView)view.findViewById(R.id.txt_TotalTime);
         startExercise_Button = (Button) view.findViewById(R.id.startExercise_Button);
-        startExercise_Button = (Button) view.findViewById(R.id.stopExercise_Button);
+        stopExercise_Button = (Button) view.findViewById(R.id.stopExercise_Button);
 
         counterUpTextView = (TextView) view.findViewById(R.id.pullUpCounter_textView);
         //counterDownTextView = (TextView) view.findViewById(R.id.down_Counter_textView);
@@ -137,6 +137,16 @@ public class ExerciseFragment extends Fragment {
             }
         });
 
+        stopExercise_Button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                resetValues();
+                counterUpTextView.setText("0");
+                pbCounterUp.setValue(0);
+                isStarting = false;
+            }
+        });
+
         StartExercise();
 
 
@@ -157,16 +167,20 @@ public class ExerciseFragment extends Fragment {
                             CounterUp();
                             CounterDown();
 
+                            startExercise_Button.setVisibility(view.GONE);
                             stopExercise_Button.setVisibility(view.VISIBLE);
+
+                        }else {
+                            startExercise_Button.setVisibility(view.VISIBLE);
                             stopExercise_Button.setVisibility(view.GONE);
                         }
+
                         updateUI();
 
                         if (pbCounterUp.getValue() > goalExercises) {
                                 resetValues();
                                 isStarting = false;
-                            stopExercise_Button.setVisibility(view.GONE);
-                            stopExercise_Button.setVisibility(view.VISIBLE);
+
                             }
 
 
