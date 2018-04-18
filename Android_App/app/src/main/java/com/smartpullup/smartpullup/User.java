@@ -30,7 +30,9 @@ public class User {
     private String height;
     private String dateBirth;
 
-
+    public User(){
+        exercises = new ArrayList<>();
+    }
 
     public User(String id) {
         this.id = id;
@@ -57,7 +59,6 @@ public class User {
     }
 
     public User(String id, String firstName, String lastName, String email, String height, String weight, String dateBirth) {
-
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;

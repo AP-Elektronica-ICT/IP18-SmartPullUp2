@@ -85,6 +85,8 @@ public class LeaderboardFragment extends Fragment {
                         if(ok)
                             addEntryToLineDataSet(e, totalPullups);
                     }
+                    else
+                        addEntryToLineDataSet(e, totalPullups);
                     exercises.add(e);
                 }
             }

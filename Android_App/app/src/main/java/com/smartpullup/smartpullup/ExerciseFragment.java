@@ -141,7 +141,7 @@ public class ExerciseFragment extends Fragment {
         {
             Log.i(TAG, "CounterUp: " + counterUp);
             counterUp++;
-            beepSound =MediaPlayer.create(getActivity(),R.raw.beep);
+            beepSound = MediaPlayer.create(getActivity(),R.raw.beep);
             beepSound.start();
             calculateSpeed();
             previousValueUp = upInput;
@@ -185,7 +185,6 @@ public class ExerciseFragment extends Fragment {
         weightTextView.setText(Double.toString(weightInput) + " kg");
         //machineID_TextView.setText(Integer.toString(machine_ID_Input));
         type_TextView.setText(typeInput);
-
         pbCounterUp.setValue(counterUp);
         
     }
@@ -226,7 +225,5 @@ public class ExerciseFragment extends Fragment {
         }catch (ClassCastException e){
             throw new ClassCastException(context.toString() + "is not MainActivity");
         }
-        setPullupSpeed((upInput - startInput)/1000.0);
-
     }
 }
