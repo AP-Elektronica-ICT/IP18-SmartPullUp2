@@ -144,6 +144,8 @@ public class ExerciseFragment extends Fragment {
                 counterUpTextView.setText("0");
                 pbCounterUp.setValue(0);
                 isStarting = false;
+                startExercise_Button.setVisibility(view.VISIBLE);
+                stopExercise_Button.setVisibility(view.GONE);
             }
         });
 

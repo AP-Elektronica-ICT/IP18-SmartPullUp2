@@ -1,14 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical">
+    android:layout_height="230dp"
+    android:orientation="vertical"
+    android:layout_margin="5dp">
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="How much pull ups?"
-        android:textSize="25dp"
+        android:text="How much do you want to do?"
+        android:textSize="20dp"
         android:paddingTop="20dp"
         android:layout_margin="5dp"
         android:paddingBottom="20dp"
@@ -23,8 +24,8 @@
 
 
     <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:layout_gravity="center"
         android:orientation="horizontal"
         android:gravity="center">
