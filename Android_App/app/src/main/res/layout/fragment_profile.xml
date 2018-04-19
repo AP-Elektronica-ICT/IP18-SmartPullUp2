@@ -182,7 +182,8 @@
             android:textColor="#fff"
             android:text="Logout"
             android:layout_gravity="center_horizontal"
-            android:backgroundTint="@color/ColorTheme"/>
+            android:backgroundTint="@color/ColorTheme"
+            android:background="@drawable/round_button"/>
 
 
     </LinearLayout>
