@@ -113,19 +113,18 @@ void loop() {
 
   //Adding values to the JSON structure
   //
-  //if (pullUp > 0 | pullDown > 0) {
-    root["type"] = "measurement";
-    root["up"] = pullUp;
-    root["down"] = pullDown;
-  //}
+  if (pullUp > 0 | pullDown > 0) {
+    root["Type"] = "measurement";
+    root["Up"] = pullUp;
+    root["Start"] = pullDown;
+  }
   //Initial state before pressing any button
   //
-  /*else {
-    root["type"] = "Initial";
- */
-    root["machine_ID"] = 1;
-    root["weight"] = 85.5;
-  //}
+  else {
+    root["Type"] = "Initial";
+    root["Machine_ID"] = 1;
+    root["Weight"] = 85.5;
+  }
 
   //Printing JSON structure in a string
   //
