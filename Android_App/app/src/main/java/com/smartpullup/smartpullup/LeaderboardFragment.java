@@ -14,6 +14,7 @@ import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.AxisBase;
 import com.github.mikephil.charting.components.XAxis;
+import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
@@ -21,6 +22,7 @@ import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.formatter.IAxisValueFormatter;
+import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -59,8 +61,10 @@ public class LeaderboardFragment extends Fragment {
         final SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM");
         pullups = new ArrayList<>();
         exercises = new ArrayList<>();
-        final LineDataSet totalPullups = new LineDataSet(pullups,"line");
+        final LineDataSet totalPullups = new LineDataSet(null,"line");
 
+        lineTotalPullups = (LineChart)view.findViewById(R.id.lnChart);
+        lineTotalPullups.setData(new LineData());
 
         database = FirebaseDatabase.getInstance();
         databaseReference = database.getReference("Users/"+host.currentUser.getId()+"/exercises");
@@ -82,11 +86,14 @@ public class LeaderboardFragment extends Fragment {
                                 Log.i(TAG, "onChildAdded: new exercise was from same day");
                             }
                         }
-                        if(ok)
+                        if(ok){
+                            lineTotalPullups.moveViewTo((float)(lineTotalPullups.getData().getEntryCount() - 7), 20f, YAxis.AxisDependency.LEFT);
                             addEntryToLineDataSet(e, totalPullups);
+                        }
+
                     }
-                    else
-                        addEntryToLineDataSet(e, totalPullups);
+                    //else
+                        //addEntryToLineDataSet(e, totalPullups);
                     exercises.add(e);
                 }
             }
@@ -122,24 +129,13 @@ public class LeaderboardFragment extends Fragment {
             }
         });
 */
-
-/*        pullups.add(new Entry(new Date(2018, 6, 2).getTime(), 15));
-        pullups.add(new Entry(new Date(2018, 6, 3).getTime(), 16));
-        pullups.add(new Entry(new Date(2018, 6, 4).getTime(), 17));
-        pullups.add(new Entry(new Date(2018, 6, 5).getTime(), 20));
-        pullups.add(new Entry(new Date(2018, 6, 6).getTime(), 21));
-        pullups.add(new Entry(new Date(2018, 6, 7).getTime(), 22));
-        pullups.add(new Entry(new Date(2018, 6, 8).getTime(), 25));
-        pullups.add(new Entry(new Date(2018, 6, 9).getTime(), 30));
-*/        //dates = new ArrayList<>();
+        //dates = new ArrayList<>();
         //int index = 0;
         //for(Exercise e : exercises){
             //pullups.add(new Entry(e.getDate().getTime(), e.getTotalPullups()));
             //index++;
             //dates.add(dateFormat.format(e.getDate()));
         //}
-
-        lineTotalPullups = (LineChart)view.findViewById(R.id.lnChart);
 
         IAxisValueFormatter axisValueFormatter = new IAxisValueFormatter() {
             @Override
@@ -152,7 +148,19 @@ public class LeaderboardFragment extends Fragment {
         xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
         lineTotalPullups.getLegend().setEnabled(false);
         lineTotalPullups.getAxisRight().setDrawLabels(false);
-
+/*
+        totalPullups.addEntry(new Entry(new Date(System.currentTimeMillis() - 3 * 86400500).getTime(), 15));
+        totalPullups.addEntry(new Entry(new Date(System.currentTimeMillis() - 4 * 86400600).getTime(), 16));
+        totalPullups.addEntry(new Entry(new Date(System.currentTimeMillis() - 5 * 86400700).getTime(), 17));
+        totalPullups.addEntry(new Entry(new Date(System.currentTimeMillis() - 6 * 86400800).getTime(), 20));
+        totalPullups.addEntry(new Entry(new Date(System.currentTimeMillis() - 7 * 86400900).getTime(), 21));
+        totalPullups.addEntry(new Entry(new Date(System.currentTimeMillis() - 8 * 86401000).getTime(), 22));
+        totalPullups.addEntry(new Entry(new Date(System.currentTimeMillis() - 9 * 86401100).getTime(), 25));
+        totalPullups.addEntry(new Entry(new Date(System.currentTimeMillis() - 10 * 86401200).getTime(), 30));
+        totalPullups.notifyDataSetChanged();
+        lineTotalPullups.notifyDataSetChanged();
+        lineTotalPullups.invalidate();
+*/
         return view;
     }
 
@@ -162,6 +170,20 @@ public class LeaderboardFragment extends Fragment {
         lineTotalPullups.notifyDataSetChanged();
         lineTotalPullups.invalidate();
         Log.i(TAG, "onChildAdded: new exercise");
+    }
+
+    private LineDataSet createSet() {
+
+        LineDataSet set = new LineDataSet(null, "Pullups");
+        set.setLineWidth(2.5f);
+        set.setCircleRadius(4.5f);
+        set.setColor(Color.rgb(240, 99, 99));
+        set.setCircleColor(Color.rgb(240, 99, 99));
+        set.setHighLightColor(Color.rgb(190, 190, 190));
+        set.setAxisDependency(YAxis.AxisDependency.LEFT);
+        set.setValueTextSize(10f);
+
+        return set;
     }
 
     @Override
