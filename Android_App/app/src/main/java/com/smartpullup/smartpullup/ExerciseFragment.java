@@ -13,6 +13,9 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,6 +27,11 @@ import pl.pawelkleczkowski.customgauge.CustomGauge;
 
 public class ExerciseFragment extends Fragment {
     private static final String TAG = "FragmentExcercise";
+
+    private FirebaseDatabase database;
+    private DatabaseReference databaseReference;
+
+    private MainActivity host;
 
     private static final String MY_PREFS_NAME = "DataFromPullUpBar";
     private SharedPreferences prefs;
@@ -65,6 +73,8 @@ public class ExerciseFragment extends Fragment {
 
         prefs = getContext().getSharedPreferences(MY_PREFS_NAME, Context.MODE_MULTI_PROCESS);
 
+        database = FirebaseDatabase.getInstance();
+        databaseReference = database.getReference();
 
         pullupSpeeds = new ArrayList<>();
     }
@@ -190,5 +200,27 @@ public class ExerciseFragment extends Fragment {
         if(speed > 0)
             setPullupSpeed(speed);
 
+    }
+
+    private void PushExercise(){
+        double maxSpeed = 30;
+        for (double speed : pullupSpeeds){
+            if(speed < maxSpeed)
+                maxSpeed = speed;
+        }
+
+        Exercise e = new Exercise(maxSpeed, calculateAverage(), upInput / 1000, counterUp);
+        host.currentUser.getExercises().add(e);
+        databaseReference.child("Users").child(host.currentUser.getId()).child("exercises").setValue(host.currentUser.getExercises());
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        try{
+            host = (MainActivity) context;
+        }catch (ClassCastException e){
+            throw new ClassCastException(context.toString() + "is not MainActivity");
+        }
     }
 }
