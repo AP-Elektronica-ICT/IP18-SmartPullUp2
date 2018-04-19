@@ -156,6 +156,7 @@ public class ExerciseFragment extends Fragment {
                 isStarting = false;
                 startExercise_Button.setVisibility(view.VISIBLE);
                 stopExercise_Button.setVisibility(view.GONE);
+                PushExercise();
             }
         });
 
@@ -202,9 +203,6 @@ public class ExerciseFragment extends Fragment {
 
 
     private void StartExercise(){
-
-
-
         prefsGoalExercise.registerOnSharedPreferenceChangeListener(
                 new SharedPreferences.OnSharedPreferenceChangeListener() {
                     public void onSharedPreferenceChanged(SharedPreferences prefs, String key) {

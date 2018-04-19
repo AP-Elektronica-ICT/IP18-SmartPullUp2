@@ -32,6 +32,7 @@ public class MainActivity extends AppCompatActivity {
 
     @SuppressLint("HandlerLeak")
     private FirebaseAuth mAuth;
+    public User currentUser;
 
     JSONBroadcastReceiver JSONBroadcastReceiver;
 
@@ -47,9 +48,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        //firebase Authentication
-        mAuth = FirebaseAuth.getInstance();
 
         registerJSONBroadcastReceiver();
 
@@ -122,6 +120,13 @@ public class MainActivity extends AppCompatActivity {
     public void ConnectToBar(View view) {
         Intent intentConnect = new Intent(MainActivity.this, ConnectBarActivity.class);
         startActivity(intentConnect);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        mAuth = FirebaseAuth.getInstance();
+        currentUser = new User(mAuth.getUid());
     }
 
     @Override

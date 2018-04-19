@@ -28,10 +28,11 @@ public class User {
     private String weight;
     private String height;
     private String dateBirth;
+    private List<Exercise> exercises;
 
 
     public User(){
-        //this.exercises = new ArrayList<>();
+        this.exercises = new ArrayList<>();
     }
 
     public User(String id, String firstName, String lastName, String email, String height, String weight, String dateBirth) {
@@ -42,12 +43,12 @@ public class User {
         this.weight = weight;
         this.height = height;
         this.dateBirth = dateBirth;
-        //this.exercises = new ArrayList<>();
+        this.exercises = new ArrayList<>();
     }
 
     public User(String id) {
         this.id = id;
-        //this.exercises = new ArrayList<>();
+        this.exercises = new ArrayList<>();
         database = FirebaseDatabase.getInstance();
         userRef = database.getReference("Users/"+id);
         userRef.addValueEventListener(new ValueEventListener() {
@@ -57,8 +58,8 @@ public class User {
                 firstName = u.getFirstName();
                 lastName = u.getLastName();
                 email = u.getEmail();
-                //if(u.getExercises() != null)
-                //    exercises = u.getExercises();
+                if(u.getExercises() != null)
+                    exercises = u.getExercises();
                 Log.i(TAG, "onDataChange: user filled in");
             }
 
@@ -93,4 +94,9 @@ public class User {
     public String getDateBirth() {
         return dateBirth;
     }
+
+    public List<Exercise> getExercises() {
+        return exercises;
+    }
+
 }
