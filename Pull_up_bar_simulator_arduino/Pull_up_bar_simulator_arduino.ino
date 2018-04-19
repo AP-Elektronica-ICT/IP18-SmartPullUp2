@@ -1,140 +1,58 @@
-#include <ArduinoJson.h> // Include this library to work with JSON data but you have to install it first. See for more info https://arduinojson.org/
-#include <SoftwareSerial.h> // Include this library to work with the HC-05 Bluetooth module
-
-
-// Memory pool for JSON object tree.
-//
-// Inside the brackets, bufferSize is the size of the pool in bytes.
-// Don't forget to change this value to match your JSON document.
-// Use arduinojson.org/assistant to compute the capacity.
-//*StaticJsonBuffer<200> jsonBuffer;
-
-// StaticJsonBuffer allocates memory on the stack, it can be
-// replaced by DynamicJsonBuffer which allocates in the heap.
-//
+#include <SoftwareSerial.h>
+#include <ArduinoJson.h>
+SoftwareSerial Bluetooth (7,8); // RX and TX Pins
 const size_t bufferSize = JSON_OBJECT_SIZE(3);
-DynamicJsonBuffer jsonBuffer(bufferSize);
+String output;
+int button;
+float Timerino;
+const int state = 0;
+boolean first = false;
 
-// Create the root of the object tree.
-//
-// It's a reference to the JsonObject, the actual bytes are inside the
-// JsonBuffer with all the other nodes of the object tree.
-// Memory is freed when jsonBuffer goes out of scope.
-JsonObject& root = jsonBuffer.createObject();
-
-SoftwareSerial BTserial(10, 11); // RX | TX
-
-const int upPin = 2; //Button for the up counting
-const int downPin = 3; //Button for the down counting 
-const int resetPin = 4; //Reset button
-
-int downState = 0;
-int upState = 0;
-int resetState = 0;
-
-//To store the millis
-//
-long pullUp = 0; 
-long pullDown = 0;
-
-
-void setup() {
-
-  pinMode(upPin, INPUT);
-  pinMode(downPin, INPUT);
-  pinMode(resetPin, INPUT);
-
-  //Initialize Serial Bluetooth
-  BTserial.begin(9600);
-
-  // Initialize Serial port
-  Serial.begin(9600);
-  while (!Serial) continue;
-
-
-  // Add values in the object
-  //
-  // Most of the time, you can rely on the implicit casts.
-  // In other case, you can do root.set<long>("time", 1351824120);
-
-
-  // Add a nested array.
-  //
-  // It's also possible to create the array separately and add it to the
-  // JsonObject but it's less efficient.
-  //JsonArray& data = root.createNestedArray("data");
-  //data.add(48.756080);
-  //data.add(2.302038);
-
-  root.printTo(Serial);
-
-  // This prints for example JSON in 1 line:
-  // {"sensor":"gps","time":1351824120,"data":[48.756080,2.302038]}
-
-  Serial.println();
-
-  root.prettyPrintTo(Serial);
-
-  // This prints for exapmle:
-  // {
-  //   "sensor": "gps",
-  //   "time": 1351824120,
-  //   "data": [
-  //     48.756080,
-  //     2.302038
-  //   ]
-  // }
+void BufferCreator(){
+  if (first == false){          // this is the initial package which is only sent once
+    DynamicJsonBuffer jsonBuffer(bufferSize);
+    JsonObject& root = jsonBuffer.createObject();
+    root["Type"] = "Initial";
+    root["Weight"] = 85.5;
+    root.printTo(output);
+  } 
+  
+  else{                         // after the initial package button press will send pull-up data
+    DynamicJsonBuffer jsonBuffer(bufferSize);
+    JsonObject& root = jsonBuffer.createObject();
+    root["Type"] = "Measurement";
+    root["Up"] = Timerino/1000;
+    root["Start"] = Timerino/1000 + random(1,2); // this just randomises the down time so there is slight variation. don't press the button too fast or otherwize
+    root.printTo(output);                       // the downtime might be later than the beginning of the next pull up 
+    
+  }
+}
+void debounce(){
+  if (button == state){  // this function debounces the button so a single button press won't trigger multiple times 
+      delay(200);
+  }
 }
 
+void setup() {
+  Bluetooth.begin(9600);
+  Serial.begin(9600);
+  pinMode(4,INPUT_PULLUP); // this enables Arduino's internal pull up resistor so you don't need to get an external resistor to your button circuit
+}
+
+
 void loop() {
-
-  //Simulating the data with 2 buttons 
-
-  unsigned long currentMillis = millis(); //Starting time to count the up and down in the pull up bar like in the dummy date
-
-  //Reading buttons 
-  //
-  downState = digitalRead(downPin);
-  upState = digitalRead(upPin);
-  resetState = digitalRead(resetPin);
-
-  if (resetState == HIGH) {
-    pullUp = 0;
-    pullDown = 0;
-    currentMillis = 0;
-  }
-
-  if (upState == HIGH) {
-    pullUp = currentMillis;
-  }
-  else if (downState == HIGH) {
-    pullDown = currentMillis;
-  }
-
-  //Adding values to the JSON structure
-  //
-  //if (pullUp > 0 | pullDown > 0) {
-    root["type"] = "measurement";
-    root["up"] = pullUp;
-    root["down"] = pullDown;
-  //}
-  //Initial state before pressing any button
-  //
-  /*else {
-    root["type"] = "Initial";
- */
-    root["machine_ID"] = 1;
-    root["weight"] = 85.5;
-  //}
-
-  //Printing JSON structure in a string
-  //
-  String output;
-  root.printTo(output);
-
-  //Sending the JSON data in a string via BLuetooth
-  BTserial.print(output);
-  Serial.println(output);
-
-  delay(20);
+   
+      debounce();
+      Timerino = millis();
+      button = digitalRead(4);
+      
+      if(button == 0) {
+       BufferCreator();
+       first = true;
+       Bluetooth.print(output);
+      Serial.println(output);
+      output="";
+      }
+      
+   
 }
