@@ -183,21 +183,18 @@ public class ExerciseFragment extends Fragment {
                             startExercise_Button.setVisibility(view.GONE);
                             stopExercise_Button.setVisibility(view.VISIBLE);
 
+                            if (pbCounterUp.getValue() >= goalExercises) {
+                                //PushExercise();
+                                resetValues();
+                                isStarting = false;
+                            }
+
                         }else {
                             startExercise_Button.setVisibility(view.VISIBLE);
                             stopExercise_Button.setVisibility(view.GONE);
                         }
 
                         updateUI();
-
-                        if (pbCounterUp.getValue() >= goalExercises) {
-                                PushExercise();
-                                resetValues();
-                                isStarting = false;
-
-                            }
-
-
                     }
                 });
     }
