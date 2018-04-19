@@ -190,7 +190,7 @@ public class ExerciseFragment extends Fragment {
 
                         updateUI();
 
-                        if (pbCounterUp.getValue() > goalExercises) {
+                        if (pbCounterUp.getValue() >= goalExercises) {
                                 PushExercise();
                                 resetValues();
                                 isStarting = false;
