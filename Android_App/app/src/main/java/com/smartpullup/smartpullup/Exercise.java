@@ -25,6 +25,14 @@ public class Exercise {
         this.totalPullups = totalPullups;
     }
 
+    public Exercise(Date date, double maxSpeed, double avgSpeed, double totalTime, int totalPullups) {
+        this.date = date;//new Date(System.currentTimeMillis());//DateFormat.getDateTimeInstance(DateFormat.FULL, DateFormat.SHORT).format(System.currentTimeMillis());
+        this.maxSpeed = maxSpeed;
+        this.avgSpeed = avgSpeed;
+        this.totalTime = totalTime;
+        this.totalPullups = totalPullups;
+    }
+
     public Date getDate() {
         return date;
     }
