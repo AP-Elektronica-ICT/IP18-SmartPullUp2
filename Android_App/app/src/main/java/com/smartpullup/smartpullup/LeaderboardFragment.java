@@ -44,10 +44,14 @@ public class LeaderboardFragment extends Fragment {
 
     private List<Entry> pullups;
     private List<Entry> maxSpeeds;
-    private List<Exercise> exercises;
+    private List<Entry> avgSpeeds;
+    private List<Entry> exerciseLengths;
+    //private List<Exercise> exercises; !!LATEN STAAN, IS VOOR DUMMY DATA TOE TE VOEGEN AAN FIREBASE
 
     LineChart lineTotalPullups;
     LineChart lineMaxSpeed;
+    LineChart lineAvgSpeed;
+    LineChart lineExerciseLength;
     List<LineChart> lineCharts;
 
     @Nullable
@@ -58,13 +62,19 @@ public class LeaderboardFragment extends Fragment {
         final SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM");
         pullups = new ArrayList<>();
         maxSpeeds = new ArrayList<>();
-        exercises = new ArrayList<>();
+        avgSpeeds = new ArrayList<>();
+        exerciseLengths = new ArrayList<>();
+        //exercises = new ArrayList<>();
 
         lineCharts = new ArrayList<>();
         lineTotalPullups = (LineChart)view.findViewById(R.id.lineTotalPullups);
         lineMaxSpeed = (LineChart)view.findViewById(R.id.lineMaxSpeed);
+        lineAvgSpeed = (LineChart)view.findViewById(R.id.lineAvgSpeed);
+        lineExerciseLength = (LineChart)view.findViewById(R.id.lineExerciseLength);
         lineCharts.add(lineTotalPullups);
         lineCharts.add(lineMaxSpeed);
+        lineCharts.add(lineAvgSpeed);
+        lineCharts.add(lineExerciseLength);
 
         database = FirebaseDatabase.getInstance();
         databaseReference = database.getReference("Users/"+host.currentUser.getId()+"/exercises");
@@ -74,9 +84,13 @@ public class LeaderboardFragment extends Fragment {
                 for(DataSnapshot d : dataSnapshot.getChildren()){
                     pullups.add(new Entry(d.getValue(Exercise.class).getDate().getTime(), d.getValue(Exercise.class).getTotalPullups()));
                     maxSpeeds.add(new Entry(d.getValue(Exercise.class).getDate().getTime(), ((float) d.getValue(Exercise.class).getMaxSpeed())));
+                    avgSpeeds.add(new Entry(d.getValue(Exercise.class).getDate().getTime(), ((float) d.getValue(Exercise.class).getAvgSpeed())));
+                    exerciseLengths.add(new Entry(d.getValue(Exercise.class).getDate().getTime(), ((float) d.getValue(Exercise.class).getTotalTime())));
                 }
                 setLineChart(pullups, lineTotalPullups);
                 setLineChart(maxSpeeds, lineMaxSpeed);
+                setLineChart(avgSpeeds, lineAvgSpeed);
+                setLineChart(exerciseLengths, lineExerciseLength);
             }
 
             @Override
@@ -85,6 +99,7 @@ public class LeaderboardFragment extends Fragment {
             }
         });
 /*
+!!LATEN STAAN, IS VOOR DUMMY DATA TOE TE VOEGEN AAN FIREBASE
         Calendar c = Calendar.getInstance();
         c.set(2018, Calendar.APRIL, 4, 12, 23);
         exercises.add(new Exercise(c.getTime(), 10.2, 14.2, 102.0, 10));
