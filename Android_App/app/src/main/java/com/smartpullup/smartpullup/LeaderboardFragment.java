@@ -4,12 +4,10 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.AxisBase;
 import com.github.mikephil.charting.components.XAxis;
@@ -60,6 +58,7 @@ public class LeaderboardFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_leaderboard, container, false);
 
         final SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM");
+        final SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm");
         pullups = new ArrayList<>();
         maxSpeeds = new ArrayList<>();
         avgSpeeds = new ArrayList<>();
@@ -130,7 +129,12 @@ public class LeaderboardFragment extends Fragment {
         IAxisValueFormatter axisValueFormatter = new IAxisValueFormatter() {
             @Override
             public String getFormattedValue(float value, AxisBase axis) {
-                return dateFormat.format(new Date((long)value));
+                /*float max = axis.getAxisMaximum();
+                float min = axis.getAxisMinimum();
+                if(max - min < millisecondsInADay())
+                    return timeFormat.format(new java.util.Date((long)value));
+                return dateFormat.format(new Date((long)value));*/
+                return dateFormat.format(new Date((long)value)) + "\n" + timeFormat.format(new java.util.Date((long)value));
             }
         };
         
@@ -138,18 +142,32 @@ public class LeaderboardFragment extends Fragment {
             XAxis xAxis = lc.getXAxis();
             xAxis.setValueFormatter(axisValueFormatter);
             xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
+            xAxis.setGranularity(millisecondsInADay());
+            xAxis.setGranularityEnabled(true);
+            xAxis.setLabelCount(4, true);
             YAxis yAxis = lc.getAxisLeft();
             yAxis.setGranularity(1.0f);
             yAxis.setGranularityEnabled(true);
             yAxis.setAxisMinimum(0f);
             lc.getAxisRight().setDrawGridLines(false);
-            lc.getLegend().setEnabled(false);
+            lc.getAxisRight().setDrawAxisLine(false);
             lc.getAxisRight().setDrawLabels(false);
+            lc.setXAxisRenderer(new MyXAxisRenderer(lc.getViewPortHandler(), xAxis, lc.getTransformer(YAxis.AxisDependency.LEFT)));
+            lc.getLegend().setEnabled(false);
             lc.getDescription().setText("");
-            lc.setExtraOffsets(5f,35f,5f,10f);
+            lc.setExtraOffsets(5f,35f,10f,20f);
         }
         
         return view;
+    }
+
+    private float millisecondsInADay() {
+        Calendar c = Calendar.getInstance();
+        c.set(2018, Calendar.APRIL, 4, 0, 0);
+        long begin = c.getTime().getTime();
+        c.set(2018, Calendar.APRIL, 5, 0, 0);
+        long end = c.getTime().getTime();
+        return end - begin;
     }
 
     private void setLineChart(List<Entry> entries, LineChart chart) {
@@ -157,12 +175,32 @@ public class LeaderboardFragment extends Fragment {
         lineDataSet.setDrawValues(false);
         lineDataSet.setDrawHighlightIndicators(false);
         chart.setData(new LineData(lineDataSet));
-        calculateMinMax(chart, chart.getAxisLeft().getLabelCount());
+        calculateMinMaxYAxis(chart, chart.getAxisLeft().getLabelCount());
+        calculateMinMaxXAxis(chart);
         chart.notifyDataSetChanged();
         chart.invalidate();
     }
 
-    private void calculateMinMax(LineChart chart, int labelCount) {
+    private void calculateMinMaxXAxis(LineChart chart) {
+        Calendar c = Calendar.getInstance();
+        float maxValue = chart.getData().getXMax();
+        c.setTimeInMillis((long)maxValue);
+        c.set(Calendar.DATE, c.get(Calendar.DATE) + 1);
+        c.set(Calendar.HOUR_OF_DAY, 0);
+        c.set(Calendar.MINUTE, 0);
+        c.set(Calendar.SECOND, 0);
+        chart.getXAxis().setAxisMaximum(c.getTimeInMillis());
+
+        float minValue = chart.getData().getXMin();
+        c.setTimeInMillis((long)minValue);
+        c.set(Calendar.HOUR_OF_DAY, 0);
+        c.set(Calendar.MINUTE, 0);
+        c.set(Calendar.SECOND, 0);
+        chart.getXAxis().setAxisMinimum(c.getTimeInMillis());
+    }
+
+    private void calculateMinMaxYAxis(LineChart chart, int labelCount) {
+        //found on https://stackoverflow.com/a/41788628
         float maxValue = chart.getData().getYMax();
         float minValue = chart.getData().getYMin();
 
@@ -171,7 +209,10 @@ public class LeaderboardFragment extends Fragment {
             maxValue += diff;
             minValue -= diff;
             chart.getAxisLeft().setAxisMaximum(maxValue);
-            chart.getAxisLeft().setAxisMinimum(minValue);
+            if(minValue > 0)
+                chart.getAxisLeft().setAxisMinimum(minValue);
+            else
+                chart.getAxisLeft().setAxisMinimum(0f);
         }
     }
 
