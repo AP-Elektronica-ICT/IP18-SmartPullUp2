@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,6 +27,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.sql.Date;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 
@@ -42,7 +44,7 @@ public class LeaderboardFragment extends Fragment {
 
     private List<Entry> pullups;
     private List<Entry> maxSpeeds;
-    //private List<Exercise> exercises;
+    private List<Exercise> exercises;
 
     LineChart lineTotalPullups;
     LineChart lineMaxSpeed;
@@ -56,7 +58,7 @@ public class LeaderboardFragment extends Fragment {
         final SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM");
         pullups = new ArrayList<>();
         maxSpeeds = new ArrayList<>();
-        //exercises = new ArrayList<>();
+        exercises = new ArrayList<>();
 
         lineCharts = new ArrayList<>();
         lineTotalPullups = (LineChart)view.findViewById(R.id.lineTotalPullups);
@@ -82,16 +84,24 @@ public class LeaderboardFragment extends Fragment {
 
             }
         });
-/*        for(int i = 2; i < 7; i++){
-            Calendar c = Calendar.getInstance();
-            c.set(2018, 4, i);
-            exercises.add(new Exercise(c.getTime(), 10.2, 14.2, 102.0, 10));
-        }
+/*
+        Calendar c = Calendar.getInstance();
+        c.set(2018, Calendar.APRIL, 4, 12, 23);
+        exercises.add(new Exercise(c.getTime(), 10.2, 14.2, 102.0, 10));
+        c.set(2018, Calendar.APRIL, 5, 15, 50);
+        exercises.add(new Exercise(c.getTime(), 9.8, 13.5, 110.0, 11));
+        c.set(2018, Calendar.APRIL, 6, 10, 1);
+        exercises.add(new Exercise(c.getTime(), 11, 14.5, 130.0, 12));
+        c.set(2018, Calendar.APRIL, 7, 16, 36);
+        exercises.add(new Exercise(c.getTime(), 9.5, 13.3, 126.0, 12));
+        c.set(2018, Calendar.APRIL, 8, 12, 23);
+        exercises.add(new Exercise(c.getTime(), 9.7, 15.3, 142.0, 13));
+
 
         DatabaseReference databaseReference2 = database.getReference("Users/" + host.currentUser.getId());
         databaseReference2.child("exercises").setValue(exercises);
-*/
-        //exercises = host.currentUser.getExercises();
+        Log.i(TAG, "onCreateView: added demo exercises to db");
+*/        //exercises = host.currentUser.getExercises();
 /*        Collections.sort(exercises, new Comparator<Exercise>() {
             @Override
             public int compare(Exercise e1, Exercise e2) {
@@ -130,6 +140,7 @@ public class LeaderboardFragment extends Fragment {
     private void setLineChart(List<Entry> entries, LineChart chart) {
         LineDataSet lineDataSet = new LineDataSet(entries,"line");
         lineDataSet.setDrawValues(false);
+        lineDataSet.setDrawHighlightIndicators(false);
         chart.setData(new LineData(lineDataSet));
         calculateMinMax(chart, chart.getAxisLeft().getLabelCount());
         chart.notifyDataSetChanged();
