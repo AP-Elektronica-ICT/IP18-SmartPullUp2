@@ -80,16 +80,19 @@ public class LeaderboardFragment extends Fragment {
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                for(DataSnapshot d : dataSnapshot.getChildren()){
-                    pullups.add(new Entry(d.getValue(Exercise.class).getDate().getTime(), d.getValue(Exercise.class).getTotalPullups()));
-                    maxSpeeds.add(new Entry(d.getValue(Exercise.class).getDate().getTime(), ((float) d.getValue(Exercise.class).getMaxSpeed())));
-                    avgSpeeds.add(new Entry(d.getValue(Exercise.class).getDate().getTime(), ((float) d.getValue(Exercise.class).getAvgSpeed())));
-                    exerciseLengths.add(new Entry(d.getValue(Exercise.class).getDate().getTime(), ((float) d.getValue(Exercise.class).getTotalTime())));
+                if(dataSnapshot.getValue() != null){
+                    for(DataSnapshot d : dataSnapshot.getChildren()){
+                        pullups.add(new Entry(d.getValue(Exercise.class).getDate().getTime(), d.getValue(Exercise.class).getTotalPullups()));
+                        maxSpeeds.add(new Entry(d.getValue(Exercise.class).getDate().getTime(), ((float) d.getValue(Exercise.class).getMaxSpeed())));
+                        avgSpeeds.add(new Entry(d.getValue(Exercise.class).getDate().getTime(), ((float) d.getValue(Exercise.class).getAvgSpeed())));
+                        exerciseLengths.add(new Entry(d.getValue(Exercise.class).getDate().getTime(), ((float) d.getValue(Exercise.class).getTotalTime())));
+                    }
+                    setLineChart(pullups, lineTotalPullups);
+                    setLineChart(maxSpeeds, lineMaxSpeed);
+                    setLineChart(avgSpeeds, lineAvgSpeed);
+                    setLineChart(exerciseLengths, lineExerciseLength);
                 }
-                setLineChart(pullups, lineTotalPullups);
-                setLineChart(maxSpeeds, lineMaxSpeed);
-                setLineChart(avgSpeeds, lineAvgSpeed);
-                setLineChart(exerciseLengths, lineExerciseLength);
+
             }
 
             @Override
@@ -155,6 +158,7 @@ public class LeaderboardFragment extends Fragment {
             lc.setXAxisRenderer(new MyXAxisRenderer(lc.getViewPortHandler(), xAxis, lc.getTransformer(YAxis.AxisDependency.LEFT)));
             lc.getLegend().setEnabled(false);
             lc.getDescription().setText("");
+            lc.setNoDataText("No data found");
             lc.setExtraOffsets(5f,35f,10f,20f);
         }
         
