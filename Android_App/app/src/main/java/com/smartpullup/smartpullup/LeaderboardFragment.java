@@ -62,7 +62,7 @@ public class LeaderboardFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_leaderboard, container, false);
 
-        final SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM \n HH:mm");
+        final SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM");
         pullups = new ArrayList<>();
         exercises = new ArrayList<>();
 
