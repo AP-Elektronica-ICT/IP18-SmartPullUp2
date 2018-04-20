@@ -65,15 +65,15 @@ public class ExerciseFragment extends Fragment {
     private View view;
 
     private String typeInput;
-    private int upInput;
-    private int startInput;
+    private double upInput;
+    private double startInput;
     private int machine_ID_Input;
     private double weightInput;
 
     private int counterUp = 0;
     private int counterDown = 0;
-    private int previousValueUp;
-    private int previousValueDown;
+    private double previousValueUp;
+    private double previousValueStart;
 
     private String m_Text = "";
 
@@ -93,7 +93,6 @@ public class ExerciseFragment extends Fragment {
 
         database = FirebaseDatabase.getInstance();
         databaseReference = database.getReference();
-
 
         pullupSpeeds = new ArrayList<>();
     }
@@ -281,10 +280,10 @@ public class ExerciseFragment extends Fragment {
     }
 
     private void CounterDown(){
-        if(startInput != previousValueDown)
+        if(startInput != previousValueStart)
         {
             counterDown++;
-            previousValueDown = startInput;
+            previousValueStart = startInput;
         }else if (startInput == 0){
             counterDown = 0;
         }
