@@ -30,19 +30,7 @@ public class User {
     private String dateBirth;
     private List<Exercise> exercises;
 
-
     public User(){
-        this.exercises = new ArrayList<>();
-    }
-
-    public User(String id, String firstName, String lastName, String email, String height, String weight, String dateBirth) {
-        this.id = id;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.email = email;
-        this.weight = weight;
-        this.height = height;
-        this.dateBirth = dateBirth;
         this.exercises = new ArrayList<>();
     }
 
@@ -69,6 +57,19 @@ public class User {
             }
         });
     }
+
+    public User(String id, String firstName, String lastName, String email, String height, String weight, String dateBirth) {
+        this.id = id;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.weight = weight;
+        this.height = height;
+        this.dateBirth = dateBirth;
+        this.exercises = new ArrayList<>();
+    }
+
+
     public String getId() {
         return id;
     }
@@ -85,7 +86,9 @@ public class User {
         return email;
     }
 
-    public String getHeight() {return height;}
+    public String getHeight() {
+        return height;
+    }
 
     public String getWeght() {
         return weight;

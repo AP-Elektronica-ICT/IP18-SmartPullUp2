@@ -15,8 +15,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
-
-
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -95,6 +93,7 @@ public class ExerciseFragment extends Fragment {
 
         database = FirebaseDatabase.getInstance();
         databaseReference = database.getReference();
+
 
         pullupSpeeds = new ArrayList<>();
     }
@@ -268,11 +267,14 @@ public class ExerciseFragment extends Fragment {
     private void CounterUp(){
         if(upInput != previousValueUp)
         {
+            Log.i(TAG, "CounterUp: " + counterUp);
             counterUp++;
 //            beepSound =MediaPlayer.create(getActivity(),R.raw.beep);
 //            beepSound.start();
             calculateSpeed();
             previousValueUp = upInput;
+            if(counterUp == 15)
+                PushExercise();
         }else if (upInput == 0){
             counterUp = 0;
         }
@@ -311,7 +313,6 @@ public class ExerciseFragment extends Fragment {
         weightTextView.setText(Double.toString(weightInput) + " kg");
         //machineID_TextView.setText(Integer.toString(machine_ID_Input));
         type_TextView.setText(typeInput);
-
         pbCounterUp.setValue(counterUp);
 
     }
@@ -330,7 +331,6 @@ public class ExerciseFragment extends Fragment {
         double speed = (upInput - startInput)/1000.0;
         if(speed > 0)
             setPullupSpeed(speed);
-
     }
 
     private void PushExercise(){
