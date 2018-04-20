@@ -1,11 +1,9 @@
 package com.smartpullup.smartpullup;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,29 +13,20 @@ import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.AxisBase;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;
-import com.github.mikephil.charting.data.BarData;
-import com.github.mikephil.charting.data.BarDataSet;
-import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.formatter.IAxisValueFormatter;
-import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
-import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.lang.reflect.InvocationTargetException;
 import java.sql.Date;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Random;
 
 
 /**
@@ -52,10 +41,12 @@ public class LeaderboardFragment extends Fragment {
     private DatabaseReference databaseReference;
 
     private List<Entry> pullups;
-    private List<Exercise> exercises;
+    private List<Entry> maxSpeeds;
+    //private List<Exercise> exercises;
 
-    BarChart barChart;
     LineChart lineTotalPullups;
+    LineChart lineMaxSpeed;
+    List<LineChart> lineCharts;
 
     @Nullable
     @Override
@@ -64,9 +55,14 @@ public class LeaderboardFragment extends Fragment {
 
         final SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM");
         pullups = new ArrayList<>();
-        exercises = new ArrayList<>();
+        maxSpeeds = new ArrayList<>();
+        //exercises = new ArrayList<>();
 
-        lineTotalPullups = (LineChart)view.findViewById(R.id.lnChart);
+        lineCharts = new ArrayList<>();
+        lineTotalPullups = (LineChart)view.findViewById(R.id.lineTotalPullups);
+        lineMaxSpeed = (LineChart)view.findViewById(R.id.lineMaxSpeed);
+        lineCharts.add(lineTotalPullups);
+        lineCharts.add(lineMaxSpeed);
 
         database = FirebaseDatabase.getInstance();
         databaseReference = database.getReference("Users/"+host.currentUser.getId()+"/exercises");
@@ -75,11 +71,10 @@ public class LeaderboardFragment extends Fragment {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for(DataSnapshot d : dataSnapshot.getChildren()){
                     pullups.add(new Entry(d.getValue(Exercise.class).getDate().getTime(), d.getValue(Exercise.class).getTotalPullups()));
+                    maxSpeeds.add(new Entry(d.getValue(Exercise.class).getDate().getTime(), ((float) d.getValue(Exercise.class).getMaxSpeed())));
                 }
-                LineDataSet totalPullups = new LineDataSet(pullups,"line");
-                lineTotalPullups.setData(new LineData(totalPullups));
-                lineTotalPullups.notifyDataSetChanged();
-                lineTotalPullups.invalidate();
+                setLineChart(pullups, lineTotalPullups);
+                setLineChart(maxSpeeds, lineMaxSpeed);
             }
 
             @Override
@@ -113,14 +108,45 @@ public class LeaderboardFragment extends Fragment {
                 return dateFormat.format(new Date((long)value));
             }
         };
-        XAxis xAxis = lineTotalPullups.getXAxis();
-        xAxis.setValueFormatter(axisValueFormatter);
-        xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
-        lineTotalPullups.getLegend().setEnabled(false);
-        lineTotalPullups.getAxisRight().setDrawLabels(false);
-        lineTotalPullups.getDescription().setText("Total pullups");
-
+        
+        for(LineChart lc : lineCharts){
+            XAxis xAxis = lc.getXAxis();
+            xAxis.setValueFormatter(axisValueFormatter);
+            xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
+            YAxis yAxis = lc.getAxisLeft();
+            yAxis.setGranularity(1.0f);
+            yAxis.setGranularityEnabled(true);
+            yAxis.setAxisMinimum(0f);
+            lc.getAxisRight().setDrawGridLines(false);
+            lc.getLegend().setEnabled(false);
+            lc.getAxisRight().setDrawLabels(false);
+            lc.getDescription().setText("");
+            lc.setExtraOffsets(5f,35f,5f,10f);
+        }
+        
         return view;
+    }
+
+    private void setLineChart(List<Entry> entries, LineChart chart) {
+        LineDataSet lineDataSet = new LineDataSet(entries,"line");
+        lineDataSet.setDrawValues(false);
+        chart.setData(new LineData(lineDataSet));
+        calculateMinMax(chart, chart.getAxisLeft().getLabelCount());
+        chart.notifyDataSetChanged();
+        chart.invalidate();
+    }
+
+    private void calculateMinMax(LineChart chart, int labelCount) {
+        float maxValue = chart.getData().getYMax();
+        float minValue = chart.getData().getYMin();
+
+        if ((maxValue - minValue) < labelCount) {
+            float diff = labelCount - (maxValue - minValue);
+            maxValue += diff;
+            minValue -= diff;
+            chart.getAxisLeft().setAxisMaximum(maxValue);
+            chart.getAxisLeft().setAxisMinimum(minValue);
+        }
     }
 
     @Override
