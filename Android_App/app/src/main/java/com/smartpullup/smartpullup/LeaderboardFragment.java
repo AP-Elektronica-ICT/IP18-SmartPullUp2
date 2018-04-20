@@ -132,11 +132,6 @@ public class LeaderboardFragment extends Fragment {
         IAxisValueFormatter axisValueFormatter = new IAxisValueFormatter() {
             @Override
             public String getFormattedValue(float value, AxisBase axis) {
-                /*float max = axis.getAxisMaximum();
-                float min = axis.getAxisMinimum();
-                if(max - min < millisecondsInADay())
-                    return timeFormat.format(new java.util.Date((long)value));
-                return dateFormat.format(new Date((long)value));*/
                 return dateFormat.format(new Date((long)value)) + "\n" + timeFormat.format(new java.util.Date((long)value));
             }
         };
