@@ -47,20 +47,25 @@
                 android:layout_marginBottom="7dp"
                 android:layout_marginTop="7dp"
                 app:cardCornerRadius="5dp">
+
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="8dp"
                         android:text="Total Pullups"
-                        android:textColor="#000"
+                        android:padding="5dp"
+                        android:textColor="@color/White"
+                        android:background="@color/Orange"
+                        android:textStyle="bold"
                         android:textSize="18sp"
-                        android:textAlignment="center"/>
+                        android:textAlignment="center" />
 
                     <com.github.mikephil.charting.charts.LineChart
                         android:layout_width="match_parent"
                         android:layout_height="300dp"
                         android:id="@+id/lineTotalPullups"
-                        android:padding="5dp"></com.github.mikephil.charting.charts.LineChart>
+                        android:padding="15dp"
+                        android:layout_marginTop="10dp"></com.github.mikephil.charting.charts.LineChart>
+
             </android.support.v7.widget.CardView>
 
             <android.support.v7.widget.CardView
@@ -74,9 +79,11 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="8dp"
                     android:text="Fastest Pullups"
-                    android:textColor="#000"
+                    android:padding="5dp"
+                    android:textColor="@color/White"
+                    android:background="@color/GreenStartProgressBar"
+                    android:textStyle="bold"
                     android:textSize="18sp"
                     android:textAlignment="center"/>
 
@@ -84,7 +91,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="300dp"
                     android:id="@+id/lineMaxSpeed"
-                    android:padding="5dp"></com.github.mikephil.charting.charts.LineChart>
+                    android:padding="15dp"
+                    android:layout_marginTop="10dp"></com.github.mikephil.charting.charts.LineChart>
             </android.support.v7.widget.CardView>
 
             <android.support.v7.widget.CardView
@@ -98,9 +106,11 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="8dp"
                     android:text="Average speed"
-                    android:textColor="#000"
+                    android:padding="5dp"
+                    android:textColor="@color/White"
+                    android:background="@color/colorPrimaryDark"
+                    android:textStyle="bold"
                     android:textSize="18sp"
                     android:textAlignment="center"/>
 
@@ -108,7 +118,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="300dp"
                     android:id="@+id/lineAvgSpeed"
-                    android:padding="5dp"></com.github.mikephil.charting.charts.LineChart>
+                    android:padding="15dp"
+                    android:layout_marginTop="10dp"></com.github.mikephil.charting.charts.LineChart>
             </android.support.v7.widget.CardView>
 
             <android.support.v7.widget.CardView
@@ -122,9 +133,11 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="8dp"
                     android:text="Total Length Exercise"
-                    android:textColor="#000"
+                    android:padding="5dp"
+                    android:textColor="@color/White"
+                    android:background="@color/RedStopProgressBar"
+                    android:textStyle="bold"
                     android:textSize="18sp"
                     android:textAlignment="center"/>
 
@@ -132,7 +145,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="300dp"
                     android:id="@+id/lineExerciseLength"
-                    android:padding="5dp"></com.github.mikephil.charting.charts.LineChart>
+                    android:padding="15dp"
+                    android:layout_marginTop="10dp"></com.github.mikephil.charting.charts.LineChart>
             </android.support.v7.widget.CardView>
         </LinearLayout>
 
