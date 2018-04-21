@@ -65,15 +65,16 @@ public class ExerciseFragment extends Fragment {
     private View view;
 
     private String typeInput;
-    private int upInput;
-    private int startInput;
+    private double upInput;
+    private double startInput;
     private int machine_ID_Input;
     private double weightInput;
 
     private int counterUp = 0;
     private int counterDown = 0;
-    private int previousValueUp;
-    private int previousValueDown;
+    private double previousValueUp;
+    private double previousValueDown;
+    private double startTime;
 
     private String m_Text = "";
 
@@ -191,6 +192,8 @@ public class ExerciseFragment extends Fragment {
                         }else {
                             startExercise_Button.setVisibility(view.VISIBLE);
                             stopExercise_Button.setVisibility(view.GONE);
+                            startTime = System.currentTimeMillis();
+                            resetValues();
                         }
 
                         updateUI();
@@ -224,7 +227,7 @@ public class ExerciseFragment extends Fragment {
                         handle.sendMessage( handle.obtainMessage());
                         Thread.sleep(1000);
                     } catch( Throwable t) {
-
+                        t.printStackTrace();
                     }
                 }
             }
@@ -239,7 +242,7 @@ public class ExerciseFragment extends Fragment {
                         Log.i(TAG, isStarting.toString());
 
                         counterUpTextView.setText("START");
-
+                        startTime = System.currentTimeMillis();
                     }
                 }
             };
@@ -260,6 +263,7 @@ public class ExerciseFragment extends Fragment {
     private void resetValues(){
         counterDown = 0;
         counterUp = 0;
+        pullupSpeeds = new ArrayList<>();
         startExercise_Button.setTextColor(Color.WHITE);
         startExercise_Button.setText("START");
     }
@@ -307,7 +311,7 @@ public class ExerciseFragment extends Fragment {
     private void updateUI() {
         txt_PullupSpeed.setText("Speed: " + String.format("%.2f", pullupSpeed) + " s");
         txt_PullupAverageSpeed.setText("Average Speed: " + String.format("%.2f", calculateAverage()) + " s");
-        txt_TotalTime.setText("duration: " + Double.toString(upInput / 1000.0) + " s");
+        txt_TotalTime.setText("duration: " + Double.toString(System.currentTimeMillis() - startTime) + " s");
         counterUpTextView.setText(Integer.toString(counterUp));
         //counterDownTextView.setText(Integer.toString(counterDown));
         weightTextView.setText(Double.toString(weightInput) + " kg");
@@ -328,7 +332,7 @@ public class ExerciseFragment extends Fragment {
     }
 
     private void calculateSpeed() {
-        double speed = (upInput - startInput)/1000.0;
+        double speed = upInput - startInput;
         if(speed > 0)
             setPullupSpeed(speed);
     }
@@ -340,7 +344,7 @@ public class ExerciseFragment extends Fragment {
                 maxSpeed = speed;
         }
 
-        Exercise e = new Exercise(maxSpeed, calculateAverage(), upInput / 1000, counterUp);
+        Exercise e = new Exercise(maxSpeed, calculateAverage(), System.currentTimeMillis() - startTime, counterUp);
         host.currentUser.getExercises().add(e);
         databaseReference.child("Users").child(host.currentUser.getId()).child("exercises").setValue(host.currentUser.getExercises());
     }
