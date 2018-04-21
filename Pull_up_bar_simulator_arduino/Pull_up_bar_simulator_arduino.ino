@@ -22,7 +22,7 @@ void BufferCreator(){
     JsonObject& root = jsonBuffer.createObject();
     root["Type"] = "Measurement";
     root["Up"] = Timerino/1000;
-    root["Start"] = Timerino/1000 + random(1,2); // this just randomises the down time so there is slight variation. don't press the button too fast or otherwize
+    root["Start"] = Timerino/1000 - random(1,10); // this just randomises the down time so there is slight variation. don't press the button too fast or otherwize
     root.printTo(output);                       // the downtime might be later than the beginning of the next pull up 
     
   }

@@ -15,6 +15,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -40,6 +42,7 @@ public class ExerciseFragment extends Fragment {
 
     public static final String PREFS_GOAL_EXERCISE = "inputGoal";
     private SharedPreferences prefsGoalExercise;
+    private SharedPreferences.OnSharedPreferenceChangeListener goalListener;
 
     private TextView counterUpTextView;
     //private TextView counterDownTextView;
@@ -184,7 +187,7 @@ public class ExerciseFragment extends Fragment {
                             stopExercise_Button.setVisibility(view.VISIBLE);
 
                             if (pbCounterUp.getValue() >= goalExercises) {
-                                //PushExercise();
+                                PushExercise();
                                 resetValues();
                                 isStarting = false;
                             }
@@ -203,19 +206,21 @@ public class ExerciseFragment extends Fragment {
 
 
     private void StartExercise(){
-        prefsGoalExercise.registerOnSharedPreferenceChangeListener(
-                new SharedPreferences.OnSharedPreferenceChangeListener() {
-                    public void onSharedPreferenceChanged(SharedPreferences prefs, String key) {
-                        inputGoalExercises = prefsGoalExercise.getString("goal", "");
+        goalListener = new SharedPreferences.OnSharedPreferenceChangeListener() {
+            public void onSharedPreferenceChanged(SharedPreferences prefs, String key) {
+                inputGoalExercises = prefsGoalExercise.getString("goal", "");
+                if(!inputGoalExercises.equals("")){
+                    goalExercises = Integer.parseInt(inputGoalExercises);
+                    pbCounterUp.setEndValue(goalExercises);
+                    CountDown();
+                }
+                else
+                    Toast.makeText(getContext(), "Please enter a valid number", Toast.LENGTH_LONG).show();
 
-                        goalExercises = Integer.parseInt(inputGoalExercises);
+            }
+        };
+        prefsGoalExercise.registerOnSharedPreferenceChangeListener(goalListener);
 
-                        pbCounterUp.setEndValue(goalExercises);
-
-                        CountDown();
-
-                    }
-                });
 
     }
 
@@ -277,8 +282,6 @@ public class ExerciseFragment extends Fragment {
 //            beepSound.start();
             calculateSpeed();
             previousValueUp = upInput;
-            if(counterUp == 15)
-                PushExercise();
         }else if (upInput == 0){
             counterUp = 0;
         }
@@ -311,7 +314,7 @@ public class ExerciseFragment extends Fragment {
     private void updateUI() {
         txt_PullupSpeed.setText("Speed: " + String.format("%.2f", pullupSpeed) + " s");
         txt_PullupAverageSpeed.setText("Average Speed: " + String.format("%.2f", calculateAverage()) + " s");
-        txt_TotalTime.setText("duration: " + Double.toString(System.currentTimeMillis() - startTime) + " s");
+        txt_TotalTime.setText("duration: " + String.format("%.2f",(System.currentTimeMillis() - startTime)/1000) + " s");
         counterUpTextView.setText(Integer.toString(counterUp));
         //counterDownTextView.setText(Integer.toString(counterDown));
         weightTextView.setText(Double.toString(weightInput) + " kg");
@@ -338,13 +341,13 @@ public class ExerciseFragment extends Fragment {
     }
 
     private void PushExercise(){
-        double maxSpeed = 30;
+        double maxSpeed = 100;
         for (double speed : pullupSpeeds){
             if(speed < maxSpeed)
                 maxSpeed = speed;
         }
 
-        Exercise e = new Exercise(maxSpeed, calculateAverage(), System.currentTimeMillis() - startTime, counterUp);
+        Exercise e = new Exercise(maxSpeed, calculateAverage(), (System.currentTimeMillis() - startTime)/1000, counterUp);
         host.currentUser.getExercises().add(e);
         databaseReference.child("Users").child(host.currentUser.getId()).child("exercises").setValue(host.currentUser.getExercises());
     }
