@@ -195,7 +195,6 @@ public class ExerciseFragment extends Fragment {
                         }else {
                             startExercise_Button.setVisibility(view.VISIBLE);
                             stopExercise_Button.setVisibility(view.GONE);
-                            startTime = System.currentTimeMillis();
                             resetValues();
                         }
 
@@ -212,6 +211,7 @@ public class ExerciseFragment extends Fragment {
                 if(!inputGoalExercises.equals("")){
                     goalExercises = Integer.parseInt(inputGoalExercises);
                     pbCounterUp.setEndValue(goalExercises);
+                    pbCounterUp.invalidate();
                     CountDown();
                 }
                 else
@@ -268,6 +268,9 @@ public class ExerciseFragment extends Fragment {
     private void resetValues(){
         counterDown = 0;
         counterUp = 0;
+        upInput = 0;
+        previousValueUp = 0;
+        startTime = System.currentTimeMillis();
         pullupSpeeds = new ArrayList<>();
         startExercise_Button.setTextColor(Color.WHITE);
         startExercise_Button.setText("START");
@@ -321,7 +324,7 @@ public class ExerciseFragment extends Fragment {
         //machineID_TextView.setText(Integer.toString(machine_ID_Input));
         type_TextView.setText(typeInput);
         pbCounterUp.setValue(counterUp);
-
+        Log.i(TAG, "updateUI: ");
     }
 
     private double calculateAverage() {

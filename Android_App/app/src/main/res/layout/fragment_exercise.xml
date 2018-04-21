@@ -66,7 +66,7 @@
                     android:padding="10dp"
                     app:gaugePointStartColor="@color/GreenStartProgressBar"
                     app:gaugePointEndColor="@color/GreenStartProgressBar"
-                    app:gaugeEndValue="30"
+                    app:gaugeEndValue="20"
                     app:gaugeStartAngle="120"
                     app:gaugeStartValue="0"
                     app:gaugeStrokeCap="ROUND"
