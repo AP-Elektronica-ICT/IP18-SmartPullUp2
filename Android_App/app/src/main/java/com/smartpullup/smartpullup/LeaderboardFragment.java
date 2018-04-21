@@ -155,6 +155,8 @@ public class LeaderboardFragment extends Fragment {
             lc.getDescription().setText("");
             lc.setNoDataText("No data found");
             lc.setExtraOffsets(5f,35f,10f,20f);
+            MyMarkerView mv = new MyMarkerView(getContext(), R.layout.markerview_time);
+            lc.setMarker(mv);
         }
         
         return view;
