@@ -2,6 +2,9 @@ package com.smartpullup.smartpullup;
 
 import android.app.Activity;
 import android.app.Dialog;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -99,6 +102,7 @@ public class DialogEditProfileActivity extends Dialog implements
                     userDatabase.child(userId).child("height").setValue(height);
                     userDatabase.child(userId).child("dateBirth").setValue(dateOfBirth);
                     userDatabase.child(userId).child("email").setValue(email);
+                    dismiss();
                 }
                 else {
                     Toast.makeText(getContext(), "Please fill all fields", Toast.LENGTH_LONG).show();
@@ -109,7 +113,12 @@ public class DialogEditProfileActivity extends Dialog implements
             }
         });
 
-        Cancel.setOnClickListener(this);
+        Cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dismiss();
+            }
+        });
     }
 
 
