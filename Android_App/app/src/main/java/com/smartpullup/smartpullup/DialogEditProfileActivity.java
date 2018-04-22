@@ -30,7 +30,7 @@ public class DialogEditProfileActivity extends Dialog implements
     public DialogEditProfileActivity(@NonNull Context context) {
         super(context);
     }
-    
+
     private EditText Email;
     private EditText Height;
     private EditText Weight;
@@ -65,44 +65,43 @@ public class DialogEditProfileActivity extends Dialog implements
 
         userId = currentUser.getUid();
 
+        userDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
 
+                Log.d("User", userId);
+                Log.d("User", dataSnapshot.getValue().toString());
+
+
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+                Toast.makeText(getContext(), "Hello",
+                        Toast.LENGTH_SHORT).show();
+            }
+        });
 
 
         Save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                    userDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(DataSnapshot dataSnapshot) {
-
-                            Log.d("User", userId);
-                            Log.d("User", dataSnapshot.getValue().toString());
-                            // Weight.setText(dataSnapshot.child(userId).child("weght").getValue().toString());
-                            // Height.setText(dataSnapshot.child(userId).child("height").getValue().toString());
-                            //DateBirth.setText(dataSnapshot.child(userId).child("dateBirth").getValue().toString());
-                            //Email.setText(dataSnapshot.child(userId).child("email").getValue().toString());
-
-                            weight = Weight.getText().toString();
-                            height = Height.getText().toString();
-                            email = Email.getText().toString();
-                            dateOfBirth = DateBirth.getText().toString();
-
-                        }
-
-                        @Override
-                        public void onCancelled(DatabaseError databaseError) {
-
-                            Toast.makeText(getContext(), "Hello",
-                                    Toast.LENGTH_SHORT).show();
-                        }
-                    });
+                weight = Weight.getText().toString();
+                height = Height.getText().toString();
+                email = Email.getText().toString();
+                dateOfBirth = DateBirth.getText().toString();
 
                 if(weight !=null && !weight.equals("") && height!=null && !height.equals("") && dateOfBirth !=null &&!dateOfBirth.equals("") && email !=null &&!email.equals("")) {
                     userDatabase.child(userId).child("weight").setValue(weight);
                     userDatabase.child(userId).child("height").setValue(height);
                     userDatabase.child(userId).child("dateBirth").setValue(dateOfBirth);
                     userDatabase.child(userId).child("email").setValue(email);
+                }
+                else {
+                    Toast.makeText(getContext(), "Please fill all fields", Toast.LENGTH_LONG).show();
                 }
 
 
