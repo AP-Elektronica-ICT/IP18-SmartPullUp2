@@ -6,6 +6,7 @@ import android.graphics.Color;
 import android.media.MediaPlayer;
 import android.os.Handler;
 import android.os.Message;
+import android.os.SystemClock;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -14,6 +15,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Chronometer;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -36,6 +38,8 @@ public class ExerciseFragment extends Fragment {
     private DatabaseReference databaseReference;
 
     private MainActivity host;
+    private Chronometer chrono;
+    private  boolean running;
 
     private static final String MY_PREFS_NAME = "DataFromPullUpBar";
     private SharedPreferences prefs;
@@ -107,13 +111,12 @@ public class ExerciseFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_exercise, container, false);
-
         txt_PullupSpeed = (TextView)view.findViewById(R.id.txt_PullupSpeed);
         txt_PullupAverageSpeed = (TextView)view.findViewById(R.id.txt_PullupAverageSpeed);
         txt_TotalTime = (TextView)view.findViewById(R.id.txt_TotalTime);
         startExercise_Button = (Button) view.findViewById(R.id.startExercise_Button);
         stopExercise_Button = (Button) view.findViewById(R.id.stopExercise_Button);
-
+        chrono= (Chronometer) view.findViewById(R.id.chronoTimer);
         counterUpTextView = (TextView) view.findViewById(R.id.pullUpCounter_textView);
         //counterDownTextView = (TextView) view.findViewById(R.id.down_Counter_textView);
         weightTextView = (TextView) view.findViewById(R.id.weight_textView);
@@ -212,7 +215,11 @@ public class ExerciseFragment extends Fragment {
                     goalExercises = Integer.parseInt(inputGoalExercises);
                     pbCounterUp.setEndValue(goalExercises);
                     pbCounterUp.invalidate();
+
                     CountDown();
+                    //chronometer start
+
+
                 }
                 else
                     Toast.makeText(getContext(), "Please enter a valid number", Toast.LENGTH_LONG).show();
@@ -248,6 +255,11 @@ public class ExerciseFragment extends Fragment {
 
                         counterUpTextView.setText("START");
                         startTime = System.currentTimeMillis();
+                        if(!running) {
+                            chrono.setBase(SystemClock.elapsedRealtime());
+                            chrono.start();
+                            running=true;
+                        }
                     }
                 }
             };
@@ -270,6 +282,7 @@ public class ExerciseFragment extends Fragment {
         counterUp = 0;
         upInput = 0;
         previousValueUp = 0;
+        chrono.stop();
         startTime = System.currentTimeMillis();
         pullupSpeeds = new ArrayList<>();
         startExercise_Button.setTextColor(Color.WHITE);

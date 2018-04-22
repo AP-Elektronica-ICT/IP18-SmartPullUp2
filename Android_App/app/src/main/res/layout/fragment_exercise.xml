@@ -58,6 +58,14 @@
                 android:layout_height="wrap_content"
                 android:gravity="center">
 
+                <Chronometer
+                    android:id="@+id/chronoTimer"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_above="@+id/startExercise_Button"
+                    android:layout_centerHorizontal="true"
+                    android:textSize="30dp" />
+
                 <pl.pawelkleczkowski.customgauge.CustomGauge
                     android:id="@+id/progress_pullups"
                     android:layout_margin="10dp"
@@ -177,14 +185,16 @@
                         android:layout_below="@id/txt_PullupSpeed"
                         android:text="avg speed"/>
 
-                    <TextView
-                        android:id="@+id/txt_TotalTime"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:textSize="20sp"
-                        android:textAlignment="center"
-                        android:layout_below="@id/txt_PullupAverageSpeed"
-                        android:text="duration"/>
+                <TextView
+                    android:id="@+id/txt_TotalTime"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="59dp"
+                    android:text="duration"
+                    android:textAlignment="center"
+                    android:textSize="20sp" />
 
             </RelativeLayout>
 
