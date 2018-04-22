@@ -93,6 +93,7 @@ public class ExerciseFragment extends Fragment {
     private int i=-1, second = 3;
 
     MediaPlayer beepSound;
+    MediaPlayer startSound;
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
@@ -215,8 +216,10 @@ public class ExerciseFragment extends Fragment {
                     goalExercises = Integer.parseInt(inputGoalExercises);
                     pbCounterUp.setEndValue(goalExercises);
                     pbCounterUp.invalidate();
-
+                    startSound =MediaPlayer.create(getActivity(),R.raw.startsound);
+                    startSound.start();
                     CountDown();
+
                     //chronometer start
 
 
@@ -294,8 +297,8 @@ public class ExerciseFragment extends Fragment {
         {
             Log.i(TAG, "CounterUp: " + counterUp);
             counterUp++;
-//            beepSound =MediaPlayer.create(getActivity(),R.raw.beep);
-//            beepSound.start();
+           beepSound =MediaPlayer.create(getActivity(),R.raw.beep);
+           beepSound.start();
             calculateSpeed();
             previousValueUp = upInput;
         }else if (upInput == 0){
