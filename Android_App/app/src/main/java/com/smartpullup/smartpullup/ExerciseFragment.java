@@ -286,6 +286,7 @@ public class ExerciseFragment extends Fragment {
         upInput = 0;
         previousValueUp = 0;
         chrono.stop();
+        running=true;
         startTime = System.currentTimeMillis();
         pullupSpeeds = new ArrayList<>();
         startExercise_Button.setTextColor(Color.WHITE);
