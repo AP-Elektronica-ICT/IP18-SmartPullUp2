@@ -16,7 +16,7 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".LoginActivity"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".MainActivity"
             android:screenOrientation="portrait" />
@@ -60,7 +60,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".DialogGoalActivity"></activity>
+        <activity android:name=".DialogGoalActivity" />
+        <activity android:name=".DialogEditProfileActivity"></activity>
     </application>
 
 </manifest>

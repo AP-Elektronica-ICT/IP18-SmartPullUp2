@@ -41,6 +41,15 @@
         android:background="@drawable/background_gradient_1"
         android:paddingLeft="25dp"
         android:paddingRight="25dp">
+        <android.support.v7.widget.AppCompatButton
+            android:id="@+id/editProfile"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#fff"
+            android:text="Edit Profile"
+            android:layout_gravity="right"
+            android:backgroundTint="@color/com_facebook_blue"
+            android:background="@drawable/round_button"/>
 
         <LinearLayout
             android:layout_width="match_parent"

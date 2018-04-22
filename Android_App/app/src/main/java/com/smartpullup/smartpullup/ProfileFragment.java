@@ -29,6 +29,7 @@ public class ProfileFragment extends Fragment {
     private static final String TAG = "FragmentProfile";
 
     private Button btnLogout;
+    private Button btnEditProfile;
     private TextView userNameTxtView;
     private TextView userEmailTxtView;
     private TextView userHeightTxtView;
@@ -54,6 +55,7 @@ public class ProfileFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_profile, container, false);
 
         btnLogout = (Button)view.findViewById(R.id.btn_Logout);
+        btnEditProfile=(Button)view.findViewById(R.id.editProfile);
         userNameTxtView = (TextView) view.findViewById(R.id.userName_textView);
         userEmailTxtView = (TextView) view.findViewById(R.id.userEmail_textView);
         userHeightTxtView = (TextView)view.findViewById(R.id.height_textView);
@@ -82,7 +84,7 @@ public class ProfileFragment extends Fragment {
                 if(dataSnapshot.child(userId).child("email").exists())
                     userEmail =  dataSnapshot.child(userId).child("email").getValue().toString();
 
-                if (dataSnapshot.child(userId).child("weght").exists())
+                if (dataSnapshot.child(userId).child("weight").exists())
                     userWeight = dataSnapshot.child(userId).child("weght").getValue().toString();
 
                 if(dataSnapshot.child(userId).child("dateBirth").exists())
@@ -90,12 +92,14 @@ public class ProfileFragment extends Fragment {
 
                 if(dataSnapshot.child(userId).child("height").exists())
                     userHeight = dataSnapshot.child(userId).child("height").getValue().toString();
-
                 userNameTxtView.setText(userName);
                 userEmailTxtView.setText(userEmail);
                 userHeightTxtView.setText(userHeight + " cm");
                 userWeightTxtView.setText(userWeight + " kg");
                 userDateBirthTxtView.setText(userDateBirth);
+
+
+
 
 
             }
@@ -113,6 +117,13 @@ public class ProfileFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 Logout(view);
+            }
+        });
+        btnEditProfile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DialogEditProfileActivity dg = new DialogEditProfileActivity(getActivity());
+                dg.show();
             }
         });
 
