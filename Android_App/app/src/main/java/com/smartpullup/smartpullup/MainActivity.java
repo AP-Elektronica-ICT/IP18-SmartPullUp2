@@ -8,6 +8,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -21,6 +22,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -40,6 +43,9 @@ public class MainActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     public User currentUser;
     BTReceiverService BT;
+
+    ImageView connectedBttn;
+    ImageView disconnectedBttn;
 
     //Boolean stopBT;
 
@@ -72,6 +78,16 @@ public class MainActivity extends AppCompatActivity {
         BottomTabLayout(tabLayout);
 
         BT = new BTReceiverService();
+
+        connectedBttn = (ImageView) findViewById(R.id.btn_Connect_Bar);
+        disconnectedBttn = (ImageView) findViewById(R.id.btn_disconnect_Bar);
+
+        if (BTReceiverService.getBTObject().btSocket.isConnected()) {
+            try {
+                connectedBttn.setBackgroundColor(Color.GREEN);
+            } catch (Exception e) {}
+            BTReceiverService.getBTObject().inputStream = null;
+        }
 
 
     }
@@ -137,6 +153,8 @@ public class MainActivity extends AppCompatActivity {
 //        editor.putBoolean("BTconection", stopBT); //InputString: from the EditText
 //        editor.commit();
         startActivity(intentConnect);
+
+
     }
 
     public void StopBT(View view) {

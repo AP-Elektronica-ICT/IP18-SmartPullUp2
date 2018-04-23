@@ -37,18 +37,16 @@
                 android:id="@+id/btn_Connect_Bar"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
-                android:layout_marginRight="10dp"
-                android:background="@color/GreenStartProgressBar"/>
+                android:layout_marginRight="10dp" />
             <ImageView
                 android:src="@drawable/ic_connect"
                 android:layout_width="45dp"
                 android:layout_height="50dp"
                 android:padding="2dp"
-                android:id="@+id/btn_stop_Bar"
+                android:id="@+id/btn_disconnect_Bar"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:layout_marginRight="10dp"
-                android:background="@color/RedStopProgressBar"
                 android:visibility="gone"
                 android:onClick="StopBT"/>
             <!--
