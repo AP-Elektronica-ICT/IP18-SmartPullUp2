@@ -77,17 +77,16 @@ public class MainActivity extends AppCompatActivity {
 
         BottomTabLayout(tabLayout);
 
-        BT = new BTReceiverService();
 
-        connectedBttn = (ImageView) findViewById(R.id.btn_Connect_Bar);
-        disconnectedBttn = (ImageView) findViewById(R.id.btn_disconnect_Bar);
+//        connectedBttn = (ImageView) findViewById(R.id.btn_Connect_Bar);
+//        disconnectedBttn = (ImageView) findViewById(R.id.btn_disconnect_Bar);
 
-        if (BTReceiverService.getBTObject().btSocket.isConnected()) {
-            try {
-                connectedBttn.setBackgroundColor(Color.GREEN);
-            } catch (Exception e) {}
-            BTReceiverService.getBTObject().inputStream = null;
-        }
+//        if (BTReceiverService.getBTObject().btSocket.isConnected()) {
+//            try {
+//                connectedBttn.setBackgroundColor(Color.GREEN);
+//            } catch (Exception e) {}
+//            BTReceiverService.getBTObject().inputStream = null;
+//        }
 
 
     }
@@ -157,19 +156,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    public void StopBT(View view) {
 
-        if (BTReceiverService.getBTObject().inputStream != null) {
-            try {BTReceiverService.getBTObject().inputStream.close();} catch (Exception e) {}
-            BTReceiverService.getBTObject().inputStream = null;
-        }
-
-        if (BTReceiverService.getBTObject().btSocket != null) {
-            try {BTReceiverService.getBTObject().btSocket.close();} catch (Exception e) {}
-            BTReceiverService.getBTObject().btSocket = null;
-        }
-
-    }
 
     @Override
     protected void onStart() {
