@@ -152,7 +152,7 @@ public class ExerciseFragment extends Fragment {
 
                             if (pbCounterUp.getValue() >= goalExercises) {
                                 //PushExercise();
-                                showCongratsToast();
+                                Toast.makeText(getContext(), "congrats you completed " + goalExercises + " pullups", Toast.LENGTH_LONG).show();
                                 resetValues();
                                 isStarting = false;
                             }
@@ -164,11 +164,6 @@ public class ExerciseFragment extends Fragment {
                         updateUI();
                     }
                 });
-    }
-
-    private void showCongratsToast() {
-        Context c = getContext();
-        Toast.makeText(getContext(), "congrats you completed " + goalExercises + " pullups", Toast.LENGTH_LONG);
     }
 
 
