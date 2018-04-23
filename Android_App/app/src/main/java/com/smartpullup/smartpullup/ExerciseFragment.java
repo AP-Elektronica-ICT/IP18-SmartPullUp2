@@ -158,7 +158,7 @@ public class ExerciseFragment extends Fragment {
             public void onClick(View view) {
                 resetValues();
                 counterUpTextView.setText("0");
-                pbCounterUp.setValue(0);
+                pbCounterUp.setProgress(0);
                 isStarting = false;
                 startExercise_Button.setVisibility(view.VISIBLE);
                 stopExercise_Button.setVisibility(view.GONE);
@@ -189,7 +189,7 @@ public class ExerciseFragment extends Fragment {
                             startExercise_Button.setVisibility(view.GONE);
                             stopExercise_Button.setVisibility(view.VISIBLE);
 
-                            if (pbCounterUp.getValue() >= goalExercises) {
+                            if (pbCounterUp.getProgress() >= goalExercises) {
                                 elapsedMillis = SystemClock.elapsedRealtime() - chrono.getBase();
                                 PushExercise();
                                 resetValues();
@@ -214,7 +214,7 @@ public class ExerciseFragment extends Fragment {
                 inputGoalExercises = prefsGoalExercise.getString("goal", "");
                 if(!inputGoalExercises.equals("")){
                     goalExercises = Integer.parseInt(inputGoalExercises);
-                    pbCounterUp.setEndValue(goalExercises);
+                    pbCounterUp.setMax(goalExercises);
                     pbCounterUp.invalidate();
                     startSound =MediaPlayer.create(getActivity(),R.raw.startsound);
                     startSound.start();
@@ -340,7 +340,7 @@ public class ExerciseFragment extends Fragment {
         weightTextView.setText(Double.toString(weightInput) + " kg");
         //machineID_TextView.setText(Integer.toString(machine_ID_Input));
         type_TextView.setText(typeInput);
-        pbCounterUp.setValue(counterUp);
+        pbCounterUp.setProgress(counterUp);
         Log.i(TAG, "updateUI: ");
     }
 
