@@ -36,7 +36,7 @@
 
             <ImageView
                 android:layout_width="276dp"
-                android:layout_height="166dp"
+                android:layout_height="206dp"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginBottom="0dp"
                 android:src="@drawable/pull_up" />
