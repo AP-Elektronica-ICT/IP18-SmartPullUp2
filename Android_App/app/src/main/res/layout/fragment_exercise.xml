@@ -66,7 +66,7 @@
                     android:layout_marginTop="250dp"
                     android:textSize="30dp" />
 
-                <pl.pawelkleczkowski.customgauge.CustomGauge
+             <!--   <pl.pawelkleczkowski.customgauge.CustomGauge
                     android:id="@+id/progress_pullups"
                     android:layout_margin="10dp"
                     android:layout_width="340dp"
@@ -81,6 +81,17 @@
                     app:gaugeStrokeWidth="20dp"
                     app:gaugeSweepAngle="300"
                     app:gaugeStrokeColor="@color/LightGrey"/>
+                    -->
+                <ProgressBar
+                    android:id="@+id/progress_pullups"
+                    style="?android:progressBarStyleHorizontal"
+                    android:layout_width="350dp"
+                    android:layout_height="350dp"
+                    android:max="100"
+                    android:progress="100"
+                    android:progressDrawable="@drawable/main_halfcircularprogressbar_outside"
+                    android:rotation="100"
+                    android:background="@drawable/shadow_prog_bar"/>
 
                 <android.support.v7.widget.AppCompatButton
                 android:id="@+id/startExercise_Button"

@@ -16,6 +16,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Chronometer;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -60,7 +61,7 @@ public class ExerciseFragment extends Fragment {
     private Button startExercise_Button;
     private Button stopExercise_Button;
 
-    CustomGauge pbCounterUp;
+    ProgressBar pbCounterUp;
     //ProgressBar pbCounterDown;
 
     private double pullupSpeed;
@@ -122,7 +123,7 @@ public class ExerciseFragment extends Fragment {
         //machineID_TextView = (TextView) view.findViewById(R.id.machien_ID_textView);
         type_TextView = (TextView) view.findViewById(R.id.TypeMesurament_textView);
 
-        pbCounterUp = (CustomGauge) view.findViewById(R.id.progress_pullups);
+        pbCounterUp = (ProgressBar) view.findViewById(R.id.progress_pullups);
         //pbCounterDown = (ProgressBar) view.findViewById(R.id.progress_calories);
 
 /*
