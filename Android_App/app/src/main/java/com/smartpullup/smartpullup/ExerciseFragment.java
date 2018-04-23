@@ -214,7 +214,7 @@ public class ExerciseFragment extends Fragment {
                 inputGoalExercises = prefsGoalExercise.getString("goal", "");
                 if(!inputGoalExercises.equals("")){
                     goalExercises = Integer.parseInt(inputGoalExercises);
-                    pbCounterUp.setMax(goalExercises);
+                    pbCounterUp.setMax(goalExercises+goalExercises/4);
                     pbCounterUp.invalidate();
                     startSound =MediaPlayer.create(getActivity(),R.raw.startsound);
                     startSound.start();
