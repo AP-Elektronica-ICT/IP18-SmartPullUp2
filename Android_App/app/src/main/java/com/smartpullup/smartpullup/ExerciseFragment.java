@@ -123,18 +123,6 @@ public class ExerciseFragment extends Fragment {
         pbCounterUp = (CustomGauge) view.findViewById(R.id.progress_pullups);
         //pbCounterDown = (ProgressBar) view.findViewById(R.id.progress_calories);
 
-/*
-        Button pullupButton = (Button)view.findViewById(R.id.test_pullup);
-        prevTime = System.currentTimeMillis();
-        pullupButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                long time = (System.currentTimeMillis() - prevTime) / 1000;
-                setPullupSpeed((double)time);
-                prevTime = System.currentTimeMillis();
-            }
-        });*/
-
         MeasurementOfExercise();
 
         startExercise_Button.setOnClickListener(new View.OnClickListener() {
@@ -142,9 +130,6 @@ public class ExerciseFragment extends Fragment {
             public void onClick(View view) {
                 DialogGoalActivity dg = new DialogGoalActivity(getActivity());
                 dg.show();
-                String strtext;
-                if (getArguments() != null)
-                    strtext = getArguments().getString("edttext");
 
 
             }
