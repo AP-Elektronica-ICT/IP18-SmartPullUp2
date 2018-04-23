@@ -140,15 +140,18 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void StopBT(View view) {
-//        //stopBT = true;
-//        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-//        SharedPreferences.Editor editor = prefs.edit();
-//        editor.putBoolean("BTconection", stopBT); //InputString: from the EditText
-//        editor.commit();
-        Intent MyIntentService = new Intent(MainActivity.this, BTReceiverService.class);
-       // startService(MyIntentService );
-        stopService(MyIntentService);
-        Log.i(TAG, "stop");
+
+        if (BTReceiverService.getBTObject().inputStream != null) {
+            try {BTReceiverService.getBTObject().inputStream.close();} catch (Exception e) {}
+            BTReceiverService.getBTObject().inputStream = null;
+        }
+
+        if (BTReceiverService.getBTObject().btSocket != null) {
+            try {BTReceiverService.getBTObject().btSocket.close();} catch (Exception e) {}
+            BTReceiverService.getBTObject().btSocket = null;
+        }
+
+        //BTReceiverService.getBTObject().btSocket.close();
     }
 
     @Override

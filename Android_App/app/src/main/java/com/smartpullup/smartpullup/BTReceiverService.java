@@ -6,6 +6,7 @@ import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
 import android.content.Intent;
 import android.os.Handler;
+import android.support.annotation.Nullable;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -27,12 +28,13 @@ public class BTReceiverService extends IntentService {
     Handler bluetoothIn;
     final int handlerState = 0;         //used to identify handler message
 
-    private BluetoothAdapter btAdapter = null;
-    private BluetoothSocket btSocket = null;
-    private InputStream inputStream = null;
-    private BluetoothDevice device = null;
+    public BluetoothAdapter btAdapter = null;
+    public BluetoothSocket btSocket = null;
+    public InputStream inputStream = null;
+    public BluetoothDevice device = null;
     private StringBuilder recDataString = new StringBuilder();
 
+    static BTReceiverService self;
 
     private static String address;      // String for MAC address
     private String inputBTString = null;
@@ -42,6 +44,7 @@ public class BTReceiverService extends IntentService {
     String jsonData = null;
 
     public BTReceiverService() {
+
         super("com.smartpullup.smartpullup.BTReceiverService");
     }
 
@@ -175,6 +178,17 @@ public class BTReceiverService extends IntentService {
         intentResponse.addCategory(Intent.CATEGORY_DEFAULT);
         intentResponse.putExtra(EXTRA_KEY_OUT, input);
         sendBroadcast(intentResponse);
+    }
+
+    @Override
+    public void onStart(@Nullable Intent intent, int startId) {
+        super.onStart(intent, startId);
+        self = this;
+    }
+
+    static public BTReceiverService getBTObject(){
+
+        return self;
     }
 
 
