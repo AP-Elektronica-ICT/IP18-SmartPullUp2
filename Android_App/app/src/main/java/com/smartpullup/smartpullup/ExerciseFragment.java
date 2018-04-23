@@ -118,8 +118,6 @@ public class ExerciseFragment extends Fragment {
             public void onClick(View view) {
                 DialogGoalActivity dg = new DialogGoalActivity(getActivity());
                 dg.show();
-
-
             }
         });
 
@@ -132,6 +130,7 @@ public class ExerciseFragment extends Fragment {
                 isStarting = false;
                 startExercise_Button.setVisibility(view.VISIBLE);
                 stopExercise_Button.setVisibility(view.GONE);
+                updateUI();
                 //PushExercise();
             }
         });
@@ -243,6 +242,7 @@ public class ExerciseFragment extends Fragment {
         previousValueUp = 0;
         startTime = System.currentTimeMillis();
         pullupSpeeds = new ArrayList<>();
+        pullupSpeed = 0;
         startExercise_Button.setTextColor(Color.WHITE);
         startExercise_Button.setText("START");
     }
