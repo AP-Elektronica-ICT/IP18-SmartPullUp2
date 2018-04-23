@@ -176,35 +176,6 @@ public class BTReceiverService extends IntentService {
         intentResponse.putExtra(EXTRA_KEY_OUT, input);
         sendBroadcast(intentResponse);
     }
-
-//    private void InputStringToJson(){
-//        try {
-//
-//            jsonObj = new JSONObject(jsonData);
-//
-//            String up = jsonObj.getString("up");
-//
-//            Log.d(TAG, "Up= " + up);
-//
-//            Log.d(TAG, "jsonObj.toString= " + jsonObj.toString());
-//
-//        } catch (Throwable t) {
-//            Log.e(TAG, "Could not parse malformed JSON: \"" + jsonData + "\"");
-//        }
-//
-//        //sensorView0.setText(jsonData);    //update the textviews with sensor values
-//
-//        try {
-//            Log.i(TAG, "Up count = " + jsonObj.getString("up"));
-//        } catch (JSONException e) {
-//            e.printStackTrace();
-//        }
-//        try {
-//            Log.i(TAG, "Down count = " + jsonObj.getString("down"));
-//        } catch (JSONException e) {
-//            e.printStackTrace();
-//        }
-//
-//    }
+    
 
 }
