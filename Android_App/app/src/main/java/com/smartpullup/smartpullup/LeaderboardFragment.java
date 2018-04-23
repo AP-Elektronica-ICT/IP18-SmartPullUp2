@@ -50,7 +50,9 @@ public class LeaderboardFragment extends Fragment {
     LineChart lineMaxSpeed;
     LineChart lineAvgSpeed;
     LineChart lineExerciseLength;
-    List<LineChart> lineCharts;
+    List<LineChart> timeLineCharts;
+    IAxisValueFormatter xAxisValueFormatter;
+    IAxisValueFormatter yAxisValueFormatter;
 
     @Nullable
     @Override
@@ -65,15 +67,14 @@ public class LeaderboardFragment extends Fragment {
         exerciseLengths = new ArrayList<>();
         //exercises = new ArrayList<>();
 
-        lineCharts = new ArrayList<>();
+        timeLineCharts = new ArrayList<>();
         lineTotalPullups = (LineChart)view.findViewById(R.id.lineTotalPullups);
         lineMaxSpeed = (LineChart)view.findViewById(R.id.lineMaxSpeed);
         lineAvgSpeed = (LineChart)view.findViewById(R.id.lineAvgSpeed);
         lineExerciseLength = (LineChart)view.findViewById(R.id.lineExerciseLength);
-        lineCharts.add(lineTotalPullups);
-        lineCharts.add(lineMaxSpeed);
-        lineCharts.add(lineAvgSpeed);
-        lineCharts.add(lineExerciseLength);
+        timeLineCharts.add(lineMaxSpeed);
+        timeLineCharts.add(lineAvgSpeed);
+        timeLineCharts.add(lineExerciseLength);
 
         database = FirebaseDatabase.getInstance();
         databaseReference = database.getReference("Users/"+host.currentUser.getId()+"/exercises");
@@ -129,36 +130,35 @@ public class LeaderboardFragment extends Fragment {
         });
 */
 
-        IAxisValueFormatter axisValueFormatter = new IAxisValueFormatter() {
+        xAxisValueFormatter = new IAxisValueFormatter() {
             @Override
             public String getFormattedValue(float value, AxisBase axis) {
                 return dateFormat.format(new Date((long)value)) + "\n" + timeFormat.format(new java.util.Date((long)value));
             }
         };
+        yAxisValueFormatter = new IAxisValueFormatter() {
+            @Override
+            public String getFormattedValue(float value, AxisBase axis) {
+                return converTime(value);
+            }
+
+            private String converTime(float time){
+                if(time < 60)
+                    return Float.toString(time) + "s";
+                else
+                    return Integer.toString((int)time / 60) + "m" + converTime(time % 60);
+            }
+        };
         
-        for(LineChart lc : lineCharts){
-            XAxis xAxis = lc.getXAxis();
-            xAxis.setValueFormatter(axisValueFormatter);
-            xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
-            xAxis.setGranularity(millisecondsInADay());
-            xAxis.setGranularityEnabled(true);
-            xAxis.setLabelCount(4, true);
-            YAxis yAxis = lc.getAxisLeft();
-            yAxis.setGranularity(1.0f);
-            yAxis.setGranularityEnabled(true);
-            yAxis.setAxisMinimum(0f);
-            lc.getAxisRight().setDrawGridLines(false);
-            lc.getAxisRight().setDrawAxisLine(false);
-            lc.getAxisRight().setDrawLabels(false);
-            lc.setXAxisRenderer(new MyXAxisRenderer(lc.getViewPortHandler(), xAxis, lc.getTransformer(YAxis.AxisDependency.LEFT)));
-            lc.getLegend().setEnabled(false);
-            lc.getDescription().setText("");
-            lc.setNoDataText("No data found");
-            lc.setExtraOffsets(5f,35f,10f,20f);
-            TimeMarkerView mv = new TimeMarkerView(getContext());
+        for(LineChart lc : timeLineCharts){
+            createLineChart(lc);
+            MyMarkerView mv = new MyMarkerView(getContext(), R.layout.markerview_time);
             lc.setMarker(mv);
+            lc.getAxisLeft().setValueFormatter(yAxisValueFormatter);
         }
-        
+        createLineChart(lineTotalPullups);
+        MyMarkerView mv = new MyMarkerView(getContext(), R.layout.markerview_pullup);
+        lineTotalPullups.setMarker(mv);
         return view;
     }
 
@@ -180,6 +180,27 @@ public class LeaderboardFragment extends Fragment {
         calculateMinMaxXAxis(chart);
         chart.notifyDataSetChanged();
         chart.invalidate();
+    }
+
+    private void createLineChart(LineChart lc){
+        XAxis xAxis = lc.getXAxis();
+        xAxis.setValueFormatter(xAxisValueFormatter);
+        xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
+        xAxis.setGranularity(millisecondsInADay());
+        xAxis.setGranularityEnabled(true);
+        xAxis.setLabelCount(4, true);
+        YAxis yAxis = lc.getAxisLeft();
+        yAxis.setGranularity(1.0f);
+        yAxis.setGranularityEnabled(true);
+        yAxis.setAxisMinimum(0f);
+        lc.getAxisRight().setDrawGridLines(false);
+        lc.getAxisRight().setDrawAxisLine(false);
+        lc.getAxisRight().setDrawLabels(false);
+        lc.setXAxisRenderer(new MyXAxisRenderer(lc.getViewPortHandler(), xAxis, lc.getTransformer(YAxis.AxisDependency.LEFT)));
+        lc.getLegend().setEnabled(false);
+        lc.getDescription().setText("");
+        lc.setNoDataText("No data found");
+        lc.setExtraOffsets(5f,35f,10f,20f);
     }
 
     private void calculateMinMaxXAxis(LineChart chart) {

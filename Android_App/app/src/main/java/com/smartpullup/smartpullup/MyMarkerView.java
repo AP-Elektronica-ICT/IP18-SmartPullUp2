@@ -1,6 +1,7 @@
 package com.smartpullup.smartpullup;
 
 import android.content.Context;
+import android.support.annotation.LayoutRes;
 import android.widget.TextView;
 
 import com.github.mikephil.charting.components.MarkerView;
@@ -14,18 +15,20 @@ import java.text.SimpleDateFormat;
  * Created by Jorren on 21/04/2018.
  */
 
-public class TimeMarkerView extends MarkerView {
+public class MyMarkerView extends MarkerView {
 
     private TextView txt_date;
     private TextView txt_time;
+    private TextView txt_pullup;
     private SimpleDateFormat sdf;
 
-    public TimeMarkerView(Context context) {
-        super(context, R.layout.markerview_time);
+    public MyMarkerView(Context context, int layoutResource) {
+        super(context,  layoutResource);
         sdf = new SimpleDateFormat("dd/MM HH:mm");
 
         txt_date = findViewById(R.id.txt_date);
         txt_time = findViewById(R.id.txt_time);
+        txt_pullup = findViewById(R.id.txt_pullup);
     }
 
     @Override
@@ -33,15 +36,17 @@ public class TimeMarkerView extends MarkerView {
         super.refreshContent(e, highlight);
         txt_date.setText((sdf.format(e.getX())));
         if(txt_time != null)
-            txt_time.setText(converTime((int)e.getY()));
+            txt_time.setText(converTime(e.getY()));
+        else if(txt_pullup != null)
+            txt_pullup.setText((int)e.getY() + " pullups");
 
     }
 
-    private String converTime(int time){
+    private String converTime(float time){
         if(time < 60)
-            return Integer.toString(time) + "s";
+            return Float.toString(time) + "s";
         else
-            return Integer.toString(time / 60) + "m" + converTime(time % 60);
+            return Integer.toString((int)time / 60) + "m" + converTime((int)time % 60);
     }
 
     @Override
