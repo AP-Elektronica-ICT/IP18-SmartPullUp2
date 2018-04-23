@@ -33,7 +33,7 @@ import pl.pawelkleczkowski.customgauge.CustomGauge;
 
 public class ExerciseFragment extends Fragment {
     private static final String TAG = "FragmentExcercise";
-
+    double elapsedMillis;
     private FirebaseDatabase database;
     private DatabaseReference databaseReference;
 
@@ -56,7 +56,6 @@ public class ExerciseFragment extends Fragment {
 
     private TextView txt_PullupSpeed;
     private TextView txt_PullupAverageSpeed;
-    private TextView txt_TotalTime;
 
     private Button startExercise_Button;
     private Button stopExercise_Button;
@@ -114,7 +113,6 @@ public class ExerciseFragment extends Fragment {
         view = inflater.inflate(R.layout.fragment_exercise, container, false);
         txt_PullupSpeed = (TextView)view.findViewById(R.id.txt_PullupSpeed);
         txt_PullupAverageSpeed = (TextView)view.findViewById(R.id.txt_PullupAverageSpeed);
-        txt_TotalTime = (TextView)view.findViewById(R.id.txt_TotalTime);
         startExercise_Button = (Button) view.findViewById(R.id.startExercise_Button);
         stopExercise_Button = (Button) view.findViewById(R.id.stopExercise_Button);
         chrono= (Chronometer) view.findViewById(R.id.chronoTimer);
@@ -191,6 +189,7 @@ public class ExerciseFragment extends Fragment {
                             stopExercise_Button.setVisibility(view.VISIBLE);
 
                             if (pbCounterUp.getValue() >= goalExercises) {
+                                elapsedMillis = SystemClock.elapsedRealtime() - chrono.getBase();
                                 PushExercise();
                                 resetValues();
                                 isStarting = false;
@@ -262,6 +261,7 @@ public class ExerciseFragment extends Fragment {
                             chrono.setBase(SystemClock.elapsedRealtime());
                             chrono.start();
                             running=true;
+
                         }
                     }
                 }
@@ -286,7 +286,7 @@ public class ExerciseFragment extends Fragment {
         upInput = 0;
         previousValueUp = 0;
         chrono.stop();
-        running=true;
+        running=false;
         startTime = System.currentTimeMillis();
         pullupSpeeds = new ArrayList<>();
         startExercise_Button.setTextColor(Color.WHITE);
@@ -334,7 +334,6 @@ public class ExerciseFragment extends Fragment {
     private void updateUI() {
         txt_PullupSpeed.setText("Speed: " + String.format("%.2f", pullupSpeed) + " s");
         txt_PullupAverageSpeed.setText("Average Speed: " + String.format("%.2f", calculateAverage()) + " s");
-        txt_TotalTime.setText("duration: " + String.format("%.2f",(System.currentTimeMillis() - startTime)/1000) + " s");
         counterUpTextView.setText(Integer.toString(counterUp));
         //counterDownTextView.setText(Integer.toString(counterDown));
         weightTextView.setText(Double.toString(weightInput) + " kg");
@@ -367,7 +366,7 @@ public class ExerciseFragment extends Fragment {
                 maxSpeed = speed;
         }
 
-        Exercise e = new Exercise(maxSpeed, calculateAverage(), (System.currentTimeMillis() - startTime)/1000, counterUp);
+        Exercise e = new Exercise(maxSpeed, calculateAverage(), elapsedMillis/1000, counterUp);
         host.currentUser.getExercises().add(e);
         databaseReference.child("Users").child(host.currentUser.getId()).child("exercises").setValue(host.currentUser.getExercises());
     }
