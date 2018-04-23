@@ -1,18 +1,55 @@
 <resources>
     <string name="app_name">Smart Pull Up</string>
+    <string name="welcome">Welcome to Smart Pullup Bar</string>
+
     <string name="item_1">Exercise</string>
     <string name="item_2">Pofile</string>
-    <string name="email">E-mail</string>
-    <string name="password">Password</string>
-    <string name="login">Login</string>
-    <string name="register">Register</string>
+    <string name="create_account">Create account</string>
+    <string name="login">Log in</string>
     <string name="firstname">First Name</string>
     <string name="lastname">Last Name</string>
-    <string name="create_account">Create an account</string>
+    <string name="email">E-mail</string>
+    <string name="height_help">Height (cm)</string>
+    <string name="weight_help">Weight (kg)</string>
+    <string name="birthday_help">Date of Birth dd/MM/YYYY</string>
+    <string name="password">Password</string>
+    <string name="repassword">Re-enter Password</string>
 
     <string name="facebook_app_id">196148254305512</string>
     <string name="fb_login_protocol_scheme">fb196148254305512</string>
 
+    <string name="goal">How much do you want to do?</string>
+    <string name="cancel">CANCEL</string>
+    <string name="go">GO!</string>
+    <string name="save">SAVE</string>
+
+    <string name="connect">Connect</string>
+    <string name="workout">Main workout</string>
+    <string name="start">START</string>
+    <string name="stop">STOP</string>
+    <string name="type">Type</string>
+    <string name="pull_ups">0</string>
+    <string name="speed">speed</string>
+    <string name="avg_speed">avg speed</string>
+    <string name="duration">duration</string>
+
+    <string name="graph_progress">Graphical Progress</string>
+    <string name="tot_pullups">Total Pullups</string>
+    <string name="fast_pullups">Fastest Pullups</string>
+    <string name="aver_speed">Average speed</string>
+    <string name="tot_length_ex">Total Length Exercise</string>
+
+    <string name="profile">Profile</string>
+    <string name="edit_profile">Edit Profile</string>
+    <string name="height">Height</string>
+    <string name="weight">Weight</string>
+    <string name="birthday">Date of Birth</string>
+    <string name="logout">Logout</string>
+
+    <string name="connect_device">Connect device</string>
+    <string name="select_device">Select your Smart Pull Up Bar from paired devices</string>
+
+    <string name="exercices">Pull up exercises</string>
 
     <string name="card_title_workout_1">Standard chin-up</string>
     <string name="card_title_workout_2">The climber pull-up</string>

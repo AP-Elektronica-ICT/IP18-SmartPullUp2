@@ -8,7 +8,7 @@
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:paddingTop="56dp"
         android:paddingLeft="24dp"
         android:paddingRight="24dp"
@@ -18,9 +18,9 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Create account"
+            android:text="@string/create_account"
             android:textColor="@color/White"
-            android:textSize="30dp"
+            android:textSize="30sp"
             android:layout_marginBottom="25dp"/>
 
         <!-- Name Label -->
@@ -34,7 +34,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textPersonName"
-                android:hint="First name" />
+                android:hint="@string/firstname" />
         </android.support.design.widget.TextInputLayout>
 
         <!-- Address Label -->
@@ -48,7 +48,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textPostalAddress"
-                android:hint="Last name" />
+                android:hint="@string/lastname" />
         </android.support.design.widget.TextInputLayout>
 
         <!--  Email Label -->
@@ -62,7 +62,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textEmailAddress"
-                android:hint="Email" />
+                android:hint="@string/email" />
         </android.support.design.widget.TextInputLayout>
 
         <!-- Weight and Height Label -->
@@ -82,7 +82,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="number"
-                    android:hint="Height (cm)" />
+                    android:hint="@string/height" />
             </android.support.design.widget.TextInputLayout>
 
             <!--  Weight Label -->
@@ -96,7 +96,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="number"
-                    android:hint="Weight (kg)" />
+                    android:hint="@string/weight" />
             </android.support.design.widget.TextInputLayout>
 
         </LinearLayout>
@@ -112,7 +112,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="date"
-                android:hint="Date of Birth dd/MM/YYYY" />
+                android:hint="@string/birthday" />
         </android.support.design.widget.TextInputLayout>
 
         <!-- Password Label -->
@@ -126,7 +126,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textPassword"
-                android:hint="Password"/>
+                android:hint="@string/password"/>
         </android.support.design.widget.TextInputLayout>
 
         <!-- Password Re-enter Label -->
@@ -140,7 +140,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textPassword"
-                android:hint="Re-enter Password"/>
+                android:hint="@string/repassword"/>
         </android.support.design.widget.TextInputLayout>
 
         <!-- Signup Button -->
@@ -152,7 +152,7 @@
             android:layout_marginBottom="24dp"
             android:padding="12dp"
             android:textColor="#fff"
-            android:text="Create Account"
+            android:text="@string/create_account"
             android:backgroundTint="@color/Black"
             android:background="@drawable/round_button"/>
 

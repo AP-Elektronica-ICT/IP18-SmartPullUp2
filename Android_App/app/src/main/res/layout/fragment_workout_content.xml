@@ -23,8 +23,8 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Pull up exercises"
-                android:textSize="20dp"
+                android:text="@string/exercices"
+                android:textSize="20sp"
                 android:textColor="@color/White"
                 android:textStyle="bold" />
 

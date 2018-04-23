@@ -28,10 +28,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:backgroundTint="@color/Black"
-                android:text="Log in"
+                android:text="@string/login"
                 android:onClick="GoToLogin"
                 android:textColor="#fff"
-                android:layout_gravity="right"
+                android:layout_gravity="end"
                 android:background="@drawable/round_button"/>
 
             <ImageView
@@ -44,9 +44,9 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Welcome to Smart Pullup Bar"
+                android:text="@string/welcome"
                 android:textColor="@color/Black"
-                android:textSize="25dp"
+                android:textSize="25sp"
                 android:gravity="center"/>
 
             <android.support.v7.widget.AppCompatButton
@@ -58,7 +58,7 @@
                 android:onClick="GoToCrateAccount"
                 android:textColor="#fff"
                 android:padding="12dp"
-                android:text="Create account"
+                android:text="@string/create_account"
                 android:backgroundTint="@color/Black"
                 android:background="@drawable/round_button"/>
 

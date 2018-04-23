@@ -34,7 +34,6 @@ public class DialogEditProfileActivity extends Dialog implements
         super(context);
     }
 
-    private EditText Email;
     private EditText Height;
     private EditText Weight;
     private EditText DateBirth;
@@ -48,13 +47,11 @@ public class DialogEditProfileActivity extends Dialog implements
     private DatabaseReference userDatabase;
     String weight;
     String height;
-    String email;
     String dateOfBirth;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dialog_edit_profile);
-        Email = (EditText) findViewById(R.id.edit_Email);
         DateBirth = (EditText)findViewById(R.id.edit_Date_of_Birth);
         Height = (EditText)findViewById(R.id.height_edt);
         Weight = (EditText) findViewById(R.id.weight_edt);
@@ -94,14 +91,12 @@ public class DialogEditProfileActivity extends Dialog implements
 
                 weight = Weight.getText().toString();
                 height = Height.getText().toString();
-                email = Email.getText().toString();
                 dateOfBirth = DateBirth.getText().toString();
 
-                if(weight !=null && !weight.equals("") && height!=null && !height.equals("") && dateOfBirth !=null &&!dateOfBirth.equals("") && email !=null &&!email.equals("")) {
+                if(weight !=null && !weight.equals("") && height!=null && !height.equals("") && dateOfBirth !=null &&!dateOfBirth.equals("")) {
                     userDatabase.child(userId).child("weight").setValue(weight);
                     userDatabase.child(userId).child("height").setValue(height);
                     userDatabase.child(userId).child("dateBirth").setValue(dateOfBirth);
-                    userDatabase.child(userId).child("email").setValue(email);
                     dismiss();
                 }
                 else {

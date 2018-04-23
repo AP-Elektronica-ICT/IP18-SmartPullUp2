@@ -24,11 +24,11 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Connect device"
-                android:textSize="20dp"
+                android:text="@string/connect_device"
+                android:textSize="20sp"
                 android:textColor="@color/White"
                 android:textStyle="bold"
-                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
                 android:layout_centerVertical="true"/>
 
 
@@ -47,19 +47,20 @@
         android:id="@+id/texView_title_paired_devices"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Select your Smart Pull Up Bar from paired devices"
+        android:text="@string/select_device"
         android:gravity="center"
         android:visibility="gone"
         android:background="#666"
         android:textColor="#fff"
-        android:paddingLeft="5dp"
+        android:paddingStart="5dp"
+        android:paddingEnd="10dp"
         android:padding="5dp"
-        android:textSize="15dp"/>
+        android:textSize="15sp"/>
 
     <ListView
         android:id="@+id/paired_devices"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:stackFromBottom="false"
         android:layout_weight="1" />
 
