@@ -30,15 +30,9 @@
 
             <ImageView
                 android:src="@drawable/ic_connect"
-<<<<<<< HEAD
                 android:layout_width="35dp"
                 android:layout_height="55dp"
                 android:text="@string/connect"
-=======
-                android:layout_width="45dp"
-                android:layout_height="50dp"
-                android:padding="2dp"
->>>>>>> bluethootControl
                 android:onClick="ConnectToBar"
                 android:id="@+id/btn_Connect_Bar"
                 android:layout_alignParentEnd="true"
