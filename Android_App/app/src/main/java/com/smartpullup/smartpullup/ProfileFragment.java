@@ -1,6 +1,7 @@
 package com.smartpullup.smartpullup;
 
 import android.app.FragmentTransaction;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -23,6 +24,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+
+import java.security.PrivateKey;
 
 /**
  * Created by bjorn on 1/03/2018.
@@ -51,6 +54,7 @@ public class ProfileFragment extends Fragment {
     private FirebaseDatabase database;
     FirebaseUser currentUser;
     private DatabaseReference userDatabase;
+
 
     @Nullable
     @Override
@@ -127,6 +131,8 @@ public class ProfileFragment extends Fragment {
             public void onClick(View v) {
                 DialogEditProfileActivity dg = new DialogEditProfileActivity(getActivity());
                 dg.show();
+
+
             }
         });
 
@@ -139,6 +145,10 @@ public class ProfileFragment extends Fragment {
 
 
     }
+
+
+
+
 
     public void Logout(View v){
         mAuth.signOut();

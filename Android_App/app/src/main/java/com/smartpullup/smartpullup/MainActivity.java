@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
@@ -143,5 +144,12 @@ public class MainActivity extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
         unregisterReceiver(JSONBroadcastReceiver);
+    }
+    public void refreshProfile(){
+        Fragment frg = ProfileFragment;
+        final FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        ft.detach(frg);
+        ft.attach(frg);
+        ft.commit();
     }
 }

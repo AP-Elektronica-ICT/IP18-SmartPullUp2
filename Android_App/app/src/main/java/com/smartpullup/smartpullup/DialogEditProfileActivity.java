@@ -32,6 +32,13 @@ public class DialogEditProfileActivity extends Dialog implements
 
     public DialogEditProfileActivity(@NonNull Context context) {
         super(context);
+        try{
+            host=(MainActivity)context;
+        }
+        catch (ClassCastException a){
+            a.printStackTrace();
+        }
+
     }
 
     private EditText Email;
@@ -40,7 +47,7 @@ public class DialogEditProfileActivity extends Dialog implements
     private EditText DateBirth;
     private Button Save;
     private Button Cancel;
-
+    private MainActivity host;
     private String userId;
     private FirebaseAuth mAuth;
     private FirebaseDatabase database;
@@ -102,6 +109,7 @@ public class DialogEditProfileActivity extends Dialog implements
                     userDatabase.child(userId).child("height").setValue(height);
                     userDatabase.child(userId).child("dateBirth").setValue(dateOfBirth);
                     userDatabase.child(userId).child("email").setValue(email);
+                    host.refreshProfile();
                     dismiss();
                 }
                 else {
