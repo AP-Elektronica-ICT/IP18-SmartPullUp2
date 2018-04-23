@@ -151,7 +151,6 @@ public class MainActivity extends AppCompatActivity {
             BTReceiverService.getBTObject().btSocket = null;
         }
 
-        //BTReceiverService.getBTObject().btSocket.close();
     }
 
     @Override
