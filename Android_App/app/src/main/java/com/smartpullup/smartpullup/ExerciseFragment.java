@@ -45,9 +45,7 @@ public class ExerciseFragment extends Fragment {
     private SharedPreferences.OnSharedPreferenceChangeListener goalListener;
 
     private TextView counterUpTextView;
-    //private TextView counterDownTextView;
     private TextView weightTextView;
-    //private TextView machineID_TextView;
     private TextView type_TextView;
 
     private TextView txt_PullupSpeed;
@@ -58,28 +56,21 @@ public class ExerciseFragment extends Fragment {
     private Button stopExercise_Button;
 
     CustomGauge pbCounterUp;
-    //ProgressBar pbCounterDown;
 
     private double pullupSpeed;
 
     private List<Double> pullupSpeeds;
 
-    private TextView textView;
     private View view;
 
     private String typeInput;
     private double upInput;
     private double startInput;
-    private int machine_ID_Input;
     private double weightInput;
 
     private int counterUp = 0;
-    private int counterDown = 0;
     private double previousValueUp;
-    private double previousValueDown;
     private double startTime;
-
-    private String m_Text = "";
 
     String inputGoalExercises;
     int goalExercises;
@@ -115,13 +106,10 @@ public class ExerciseFragment extends Fragment {
         stopExercise_Button = (Button) view.findViewById(R.id.stopExercise_Button);
 
         counterUpTextView = (TextView) view.findViewById(R.id.pullUpCounter_textView);
-        //counterDownTextView = (TextView) view.findViewById(R.id.down_Counter_textView);
         weightTextView = (TextView) view.findViewById(R.id.weight_textView);
-        //machineID_TextView = (TextView) view.findViewById(R.id.machien_ID_textView);
         type_TextView = (TextView) view.findViewById(R.id.TypeMesurament_textView);
 
         pbCounterUp = (CustomGauge) view.findViewById(R.id.progress_pullups);
-        //pbCounterDown = (ProgressBar) view.findViewById(R.id.progress_calories);
 
         MeasurementOfExercise();
 
@@ -166,7 +154,6 @@ public class ExerciseFragment extends Fragment {
                         InputData(prefs);
                         if(isStarting) {
                             CounterUp();
-                            CounterDown();
 
                             startExercise_Button.setVisibility(view.GONE);
                             stopExercise_Button.setVisibility(view.VISIBLE);
@@ -251,7 +238,6 @@ public class ExerciseFragment extends Fragment {
     }
 
     private void resetValues(){
-        counterDown = 0;
         counterUp = 0;
         upInput = 0;
         previousValueUp = 0;
@@ -275,16 +261,6 @@ public class ExerciseFragment extends Fragment {
         }
     }
 
-    private void CounterDown(){
-        if(startInput != previousValueDown)
-        {
-            counterDown++;
-            previousValueDown = startInput;
-        }else if (startInput == 0){
-            counterDown = 0;
-        }
-    }
-
     public void setPullupSpeed(double pullupSpeed) {
         this.pullupSpeed = pullupSpeed;
         pullupSpeeds.add(pullupSpeed);
@@ -295,7 +271,6 @@ public class ExerciseFragment extends Fragment {
         upInput = prefs.getInt("up", 0);
         startInput = prefs.getInt("down", 0);
         Log.i(TAG, String.valueOf("Up: " + upInput + "Down: " + startInput));
-        //machine_ID_Input = prefs.getInt("machine_ID", 0);
         weightInput = prefs.getInt("weight", 0);
     }
 
@@ -304,12 +279,9 @@ public class ExerciseFragment extends Fragment {
         txt_PullupAverageSpeed.setText("Average Speed: " + String.format("%.2f", calculateAverage()) + " s");
         txt_TotalTime.setText("duration: " + String.format("%.2f",(System.currentTimeMillis() - startTime)/1000) + " s");
         counterUpTextView.setText(Integer.toString(counterUp));
-        //counterDownTextView.setText(Integer.toString(counterDown));
         weightTextView.setText(Double.toString(weightInput) + " kg");
-        //machineID_TextView.setText(Integer.toString(machine_ID_Input));
         type_TextView.setText(typeInput);
         pbCounterUp.setValue(counterUp);
-        Log.i(TAG, "updateUI: ");
     }
 
     private double calculateAverage() {
