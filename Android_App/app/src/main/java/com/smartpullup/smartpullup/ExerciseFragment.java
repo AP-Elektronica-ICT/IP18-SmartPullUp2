@@ -89,7 +89,6 @@ public class ExerciseFragment extends Fragment {
         database = FirebaseDatabase.getInstance();
         databaseReference = database.getReference();
 
-
         pullupSpeeds = new ArrayList<>();
     }
 
@@ -134,16 +133,10 @@ public class ExerciseFragment extends Fragment {
                 //PushExercise();
             }
         });
-
         StartExercise();
-
-
 
         return view;
     }
-
-    //Start button
-
 
     private void MeasurementOfExercise(){
         prefs.registerOnSharedPreferenceChangeListener(
@@ -159,19 +152,23 @@ public class ExerciseFragment extends Fragment {
 
                             if (pbCounterUp.getValue() >= goalExercises) {
                                 //PushExercise();
+                                showCongratsToast();
                                 resetValues();
                                 isStarting = false;
                             }
-
                         }else {
                             startExercise_Button.setVisibility(view.VISIBLE);
                             stopExercise_Button.setVisibility(view.GONE);
                             resetValues();
                         }
-
                         updateUI();
                     }
                 });
+    }
+
+    private void showCongratsToast() {
+        Context c = getContext();
+        Toast.makeText(getContext(), "congrats you completed " + goalExercises + " pullups", Toast.LENGTH_LONG);
     }
 
 
@@ -212,21 +209,16 @@ public class ExerciseFragment extends Fragment {
                 public void handleMessage( Message msg) {
                     counterUpTextView.setText(String.valueOf(second));
                     second--;
-
                     if (second == -1){
                         isStarting = true;
                         Log.i(TAG, isStarting.toString());
-
                         counterUpTextView.setText("START");
                         startTime = System.currentTimeMillis();
                     }
                 }
             };
         }).start();
-
         second = 3;
-
-
     }
 
 
