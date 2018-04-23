@@ -88,7 +88,7 @@ public class LoginActivity extends AppCompatActivity {
                                         //Notification to watch Demo video on first loging
                                         final NotificationCompat.Builder mBuilder = (NotificationCompat.Builder) new NotificationCompat.Builder(LoginActivity.this).setLargeIcon(BitmapFactory.decodeResource(getResources(), R.drawable.pull_up)).setSmallIcon(R.drawable.pull_up).setContentTitle("Demo Video").setContentText("Watch how Smart pull-up works").setPriority(Notification.PRIORITY_MAX).setVibrate(new long[]{Notification.DEFAULT_VIBRATE});
                                         Intent resultIntent = new Intent(Intent.ACTION_VIEW);
-                                        resultIntent.setData(Uri.parse("https://www.youtube.com/watch?v=-MFjTcIPPFA"));
+                                        resultIntent.setData(Uri.parse("https://www.youtube.com/watch?v=slYcC98yrVI&feature=youtu.be"));
                                         PendingIntent resultPendingIntent = PendingIntent.getActivity(LoginActivity.this, 0, resultIntent, PendingIntent.FLAG_UPDATE_CURRENT);
                                         mBuilder.setContentIntent(resultPendingIntent);
                                         mBuilder.setAutoCancel(true);
