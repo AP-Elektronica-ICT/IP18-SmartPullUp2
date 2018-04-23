@@ -175,6 +175,9 @@ public class LeaderboardFragment extends Fragment {
         LineDataSet lineDataSet = new LineDataSet(entries,"line");
         lineDataSet.setDrawValues(false);
         lineDataSet.setDrawHighlightIndicators(false);
+        lineDataSet.setLineWidth(3f);
+        lineDataSet.setColor(getResources().getColor(R.color.Red));
+        lineDataSet.setCircleColor(getResources().getColor(R.color.Red));
         chart.setData(new LineData(lineDataSet));
         calculateMinMaxYAxis(chart, chart.getAxisLeft().getLabelCount());
         calculateMinMaxXAxis(chart);
