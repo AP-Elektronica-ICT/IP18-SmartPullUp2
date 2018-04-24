@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.smartpullup.smartpullup.MainActivity" >
+    tools:context="com.smartpullup.smartpullup.MainActivity"
+    android:windowSoftInputMode="adjustPan">
 
 
     <RelativeLayout

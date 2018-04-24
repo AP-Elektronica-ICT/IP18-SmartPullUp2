@@ -13,5 +13,6 @@
     <color name="ColorThemeSelector">#91b6d4</color>
     <color name="GreenStartProgressBar">#33cc33</color>
     <color name="RedStopProgressBar">#ff0000</color>
+    <color name="Red">#ff0000</color>
 
 </resources>

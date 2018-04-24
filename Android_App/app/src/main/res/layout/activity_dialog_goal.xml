@@ -8,8 +8,8 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="How much do you want to do?"
-        android:textSize="20dp"
+        android:text="@string/goal"
+        android:textSize="20sp"
         android:paddingTop="20dp"
         android:layout_margin="5dp"
         android:paddingBottom="20dp"
@@ -36,34 +36,28 @@
             android:onClick="StartExercise"
             android:layout_width="150dp"
             android:layout_height="wrap_content"
-            android:layout_alignBottom="@+id/progress_pullups"
-            android:backgroundTint="@color/RedStopProgressBar"
+            android:backgroundTint="@color/Red"
             android:paddingLeft="10dp"
             android:paddingRight="10dp"
-            android:text="cancel"
-            android:textSize="25dp"
-            android:textStyle="bold"
-            android:layout_centerHorizontal="true"
+            android:text="@string/cancel"
+            android:textSize="25sp"
             android:textColor="#fff"
             android:background="@drawable/round_button"
-            android:layout_marginRight="5dp"/>
+            android:layout_marginEnd="5dp"/>
 
         <android.support.v7.widget.AppCompatButton
             android:id="@+id/btn_go"
             android:onClick="StartExercise"
             android:layout_width="150dp"
             android:layout_height="wrap_content"
-            android:layout_alignBottom="@+id/progress_pullups"
             android:backgroundTint="@color/GreenStartProgressBar"
             android:paddingLeft="10dp"
             android:paddingRight="10dp"
-            android:text="go!"
-            android:textSize="25dp"
-            android:textStyle="bold"
-            android:layout_centerHorizontal="true"
+            android:text="@string/go"
+            android:textSize="25sp"
             android:textColor="#fff"
             android:background="@drawable/round_button"
-            android:layout_marginLeft="5dp"/>
+            android:layout_marginStart="5dp"/>
 
 
     </LinearLayout>

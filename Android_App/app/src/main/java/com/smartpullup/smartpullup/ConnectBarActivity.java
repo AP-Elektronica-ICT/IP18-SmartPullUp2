@@ -41,6 +41,20 @@ public class ConnectBarActivity extends AppCompatActivity {
         setContentView(R.layout.activity_connect_bar);
     }
 
+    public void StopBT(View view) {
+
+        if (BTReceiverService.getBTObject().inputStream != null) {
+            try {BTReceiverService.getBTObject().inputStream.close();} catch (Exception e) {}
+            BTReceiverService.getBTObject().inputStream = null;
+        }
+
+        if (BTReceiverService.getBTObject().btSocket != null) {
+            try {BTReceiverService.getBTObject().btSocket.close();} catch (Exception e) {}
+            BTReceiverService.getBTObject().btSocket = null;
+        }
+
+    }
+
     @Override
     public void onResume()
     {

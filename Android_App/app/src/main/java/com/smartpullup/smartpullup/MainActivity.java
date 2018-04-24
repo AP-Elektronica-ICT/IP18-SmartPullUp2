@@ -7,8 +7,11 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -19,6 +22,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.Button;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -29,12 +35,20 @@ import com.google.firebase.auth.FirebaseUser;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
+
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = "MainActivityJSON";
 
     @SuppressLint("HandlerLeak")
     private FirebaseAuth mAuth;
     public User currentUser;
+    BTReceiverService BT;
+
+    ImageView connectedBttn;
+    ImageView disconnectedBttn;
+
+    //Boolean stopBT;
 
     JSONBroadcastReceiver JSONBroadcastReceiver;
 
@@ -63,6 +77,18 @@ public class MainActivity extends AppCompatActivity {
         tabLayout.setupWithViewPager(mViewPager);
 
         BottomTabLayout(tabLayout);
+
+
+//        connectedBttn = (ImageView) findViewById(R.id.btn_Connect_Bar);
+//        disconnectedBttn = (ImageView) findViewById(R.id.btn_disconnect_Bar);
+
+//        if (BTReceiverService.getBTObject().btSocket.isConnected()) {
+//            try {
+//                connectedBttn.setBackgroundColor(Color.GREEN);
+//            } catch (Exception e) {}
+//            BTReceiverService.getBTObject().inputStream = null;
+//        }
+
 
     }
 
@@ -120,9 +146,18 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void ConnectToBar(View view) {
+//        //stopBT = false;
         Intent intentConnect = new Intent(MainActivity.this, ConnectBarActivity.class);
+//        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+//        SharedPreferences.Editor editor = prefs.edit();
+//        editor.putBoolean("BTconection", stopBT); //InputString: from the EditText
+//        editor.commit();
         startActivity(intentConnect);
+
+
     }
+
+
 
     @Override
     protected void onStart() {
@@ -137,7 +172,7 @@ public class MainActivity extends AppCompatActivity {
         super.onPause();
 
         Intent MyIntentService = new Intent(this, BTReceiverService.class);
-        stopService(MyIntentService );
+        stopService(MyIntentService);
     }
 
     @Override
