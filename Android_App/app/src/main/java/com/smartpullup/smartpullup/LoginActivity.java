@@ -201,7 +201,7 @@ public class LoginActivity extends AppCompatActivity {
 
     public void goToMainActivity(){
         currentUser = mAuth.getCurrentUser();
-        checkIfFirstFacebookLogin();
+        //checkIfFirstFacebookLogin();
         Intent login = new Intent(LoginActivity.this,MainActivity.class);
         startActivity(login);
         overlay.setVisibility(View.GONE);

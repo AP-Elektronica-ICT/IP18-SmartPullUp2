@@ -38,7 +38,6 @@ public class DialogEditProfileActivity extends Dialog implements
         catch (ClassCastException a){
             a.printStackTrace();
         }
-
     }
 
     private EditText Height;
@@ -75,17 +74,12 @@ public class DialogEditProfileActivity extends Dialog implements
         userDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-
                 Log.d("User", userId);
                 Log.d("User", dataSnapshot.getValue().toString());
-
-
-
             }
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
-
                 Toast.makeText(getContext(), "Hello",
                         Toast.LENGTH_SHORT).show();
             }
@@ -110,9 +104,6 @@ public class DialogEditProfileActivity extends Dialog implements
                 else {
                     Toast.makeText(getContext(), "Please fill all fields", Toast.LENGTH_LONG).show();
                 }
-
-
-
             }
         });
 
@@ -123,7 +114,6 @@ public class DialogEditProfileActivity extends Dialog implements
             }
         });
     }
-
 
     @Override
     public void onClick(View v) {
